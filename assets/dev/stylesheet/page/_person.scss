@@ -1,0 +1,230 @@
+.blur {
+  width: 100%;
+  background: url("../image/person-bg.jpg");
+  height: 60vw;
+  background-size: 100%;
+}
+
+/*对背景图片模糊的设置*/
+.bg {
+  width: 100%;
+  background: rgba(0, 0, 0, .3);
+  -webkit-background-size: cover;
+
+}
+
+.user-box {
+  width: 50%;
+  z-index: 999;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.profile-img img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-information {
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.icon-white {
+  color: #fff;
+  font-size: 16px;
+}
+
+.nickname {
+  color: #fff;
+  text-align: center;
+}
+
+.profile-list {
+  margin-top: -1rem;
+}
+
+/*------------------login*/
+
+.area {
+  margin: 20px auto 0 auto;
+}
+
+.mui-input-row label ~ input,
+.mui-input-row label ~ select,
+.mui-input-row label ~ textarea {
+  width: 78%;
+}
+
+.mui-checkbox input[type=checkbox],
+.mui-radio input[type=radio] {
+  top: 6px;
+}
+
+.mui-content-padded {
+  margin-top: 25px;
+}
+
+.mui-btn {
+  padding: 10px;
+}
+
+.link-area {
+  display: block;
+  margin-top: 25px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.spliter {
+  color: #bbb;
+  padding: 0 8px;
+}
+
+/*-----------------------user photo*/
+.photo-con {
+  width: 6rem;
+  margin: 3rem auto 3rem;
+  display: block;
+}
+
+.photo-con img {
+  width: 100%;
+}
+
+/*----------------------reg*/
+.area {
+  margin: 20px auto 0 auto;
+}
+
+.mui-input-group label {
+  width: 22%;
+}
+
+.mui-input-row label ~ input,
+.mui-input-row label ~ select,
+.mui-input-row label ~ textarea {
+  width: 78%;
+}
+
+.mui-checkbox input[type=checkbox],
+.mui-radio input[type=radio] {
+  top: 6px;
+}
+
+.mui-btn {
+  padding: 10px;
+}
+
+.area {
+  margin: 20px auto 0 auto;
+}
+
+.mui-input-group label {
+  width: 22%;
+}
+
+.mui-input-row label ~ input,
+.mui-input-row label ~ select,
+.mui-input-row label ~ textarea {
+  width: 78%;
+}
+
+.mui-checkbox input[type=checkbox],
+.mui-radio input[type=radio] {
+  top: 6px;
+}
+
+.mui-btn {
+  padding: 10px;
+}
+
+.mui-input-row label ~ input, .mui-input-row label ~ select, .mui-input-row label ~ textarea {
+  margin-top: 1px;
+}
+
+.input-phone {
+  width: 70% !important;
+  height: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+
+}
+
+.get-code {
+  text-align: right;
+  display: inline-block;
+  font-size: 15px;
+}
+
+.button-r {
+  line-height: 44px;
+  font-size: 15px;
+}
+
+#reg-a{
+  background-color: #ed242c;
+  border: 0;
+  color: #fff;
+}
+
+.mui-red {
+  background-color: #ed242c;
+  border: 0;
+  color: #fff;
+}
+
+.profile-list ul:nth-child(2) {
+  margin-top: 1rem;
+}
+
+
+
+.input-padding-right {
+  padding-right: 60px !important;
+}
+
+.button-white {
+  color: #fff;
+  line-height: 44px;
+}
+
+/*收藏的css*/
+.favourite-ul {
+  margin-top: 0 !important;
+}
+
+.favourite-ul:before, .favourite-ul:after {
+  height: 0;
+}
+
+.none {
+  width: 100%;
+  height: 20rem;
+  display: none;
+}
+
+.none-pic {
+  width: 100%;
+}
+
+.none-pic img {
+  width: 100%;
+}
+
+.notice {
+  width: 25%;
+}
+
+.link-cell {
+  color: #666;
+}
+
+.mui-input{
+  ime-mode:disabled;
+}

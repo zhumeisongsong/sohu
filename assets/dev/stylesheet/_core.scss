@@ -1,24 +1,16 @@
-body {
-  -webkit-overflow-scrolling: touch; //快速滚动和回弹的效果
-}
-
-html {
-  color: map-get($global-color, b);
-  background-color:map-get($global-color,c);
-}
-
 * {
   box-sizing: border-box;
 }
 
-main {
-  width: 100%;
-  height: 100%;
-  max-width: 414px;
-  margin: 0 auto;
-  margin-bottom: 50px;
-  font-weight: 200;
-  background-color: map-get($global-color, e);
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+html {
+  color: map-get($global-color, b);
+  background-color: map-get($global-color, c);
 }
 
 .img-con {
@@ -52,6 +44,16 @@ h3 {
 p {
   text-align: justify;
   word-break: break-all;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  max-width: 414px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  font-weight: 200;
+  background-color: map-get($global-color, e);
 }
 
 .clear {
@@ -179,50 +181,6 @@ p {
   }
 }
 
-/*搜索框*/
-.nav-search {
-  width: 20%;
-  height: 100%;
-  text-align: right;
-}
-
-.search-con {
-  width: 100%;
-  margin-top: 1.5rem;
-  margin-left: 1rem;
-  float: left;
-}
-
-.search-bar-normal {
-  width: 80%;
-  float: left;
-}
-
-.result-con {
-  width: 100%;
-  margin-top: 2rem;
-  float: left;
-  display: none;
-}
-
-.search-cell {
-  width: 100%;
-}
-
-.search-text {
-  padding-right: 2rem;
-}
-
-.search-btn {
-  display: flex;
-  width: 20%;
-  height: 3rem;
-  padding: 2rem 1rem;
-  margin-top: -1.5rem;
-  color: #333;
-  text-align: center;
-}
-
 /*按钮不可点击*/
 .disabled {
   pointer-events: none;
@@ -233,17 +191,28 @@ p {
 }
 
 .no-padding {
-  padding: 0!important;
+  padding: 0 !important;
 }
 
 .no-padding-l {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 
 .no-padding-r {
-  padding-right: 0!important;
+  padding-right: 0 !important;
 }
 
-.refresh-list{
+.refresh-list {
+  max-width: 414px;
+  left: 50%;
   bottom: 50px;
+  margin-left: -207px;
+}
+
+@media(max-width: 414px) {
+  .refresh-list {
+    left: 0;
+    margin-left: 0;
+    bottom: 50px;
+  }
 }

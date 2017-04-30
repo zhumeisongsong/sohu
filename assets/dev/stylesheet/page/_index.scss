@@ -1,9 +1,22 @@
 /*------------------------------------*\
     page index
 \*------------------------------------*/
+.search-con {
+  width: 24px;
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  z-index: 9;
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
 .swiper-container {
   width: 100%;
   height: 100%;
+  position: relative;
   min-height: 139px;
   max-height: 176px;
   overflow: hidden;
@@ -58,10 +71,10 @@
 
 .list-item {
   width: 100%;
-  padding-bottom: 5px;
+  padding-bottom: 5px !important;
   background-color: map-get($global-color, e);
   &:last-child {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
   .wrapper {
     width: 100%;
@@ -84,6 +97,7 @@
   }
   .location-text {
     width: 40%;
+    color: map-get($global-color, d);
     float: left;
   }
   .price-con {
@@ -119,4 +133,10 @@
   letter-spacing: -0.5px;
   font-weight: 400;
   z-index: 999;
+}
+
+.building-list {
+  .mui-table-view-cell:after {
+    display: none;
+  }
 }

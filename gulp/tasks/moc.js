@@ -11,6 +11,12 @@ gulp.task('moc.clean', function (cb) {
     return rimraf(config.moc.dest, cb);
 });
 
+gulp.task('moc.data', function (cb) {
+    return gulp.src(config.moc.entry + 'data')
+        .pipe(gulp.dest(config.image.dest));
+});
+
+
 gulp.task('moc.assemble', function () {
     assemble.data([config.moc.entry + 'data/*.{json,yml}']);
     assemble.layouts([config.moc.entry + 'layouts/*.hbs']);

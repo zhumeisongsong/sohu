@@ -38,6 +38,63 @@
 
   <body>
     <div class="main">
+      <div id="pullrefresh" class="mui-content mui-scroll-wrapper refresh-list building-list">
+        <div class="mui-scroll">
+          <section class="search-con"> <img src="../image/icon/icon-search.png" alt="search"> </section>
+          <!--header banner-->
+          <header class="swiper-container">
+            <div class="swiper-wrapper banner-con">
+              <div class="swiper-slide img-con" data-href="http://maysongshow.cn"> <img src="../image/banner.png" alt="cover"> </div>
+              <div class="swiper-slide img-con" data-href="http://maysongshow.cn"> <img src="../image/banner.png" alt="cover"> </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </header>
+          <!--sohu focus-->
+          <section class="focus-container ui-border-b">
+            <div class="title-con img-con"> <img src="../image/focus-title.png" alt="狐享会头条"> </div>
+            <div class="scroll-con" id="scroll_con">
+              <section class="news-con">
+                <div class="scroll-cell" data-href="">ddd</div>
+                <div class="scroll-cell" data-href="">ddd</div>
+                <div class="scroll-cell" data-href="">ddd</div>
+              </section>
+            </div>
+          </section>
+          <div class="clear"></div>
+          <!--recommend buiding-->
+          <div class="recommend-container">
+            <h1>推荐楼盘</h1>
+            <div class="list-con mui-table-view">
+              <div class="list-item mui-table-view-cell no-padding">
+                <div class="list-badge no-collect" id="collect_btn">关注</div>
+                <div class="wrapper list-tap" data-href="http://maysongshow.cn/1111">
+                  <div class="cover-large img-con"> <img src="../image/cover.png" alt="cover"> </div>
+                  <div class="item-info">
+                    <h2 class="title-text">ddddd</h2>
+                    <h3 class="location-text">成化</h3>
+                    <div class="price-con">
+                      <a class="phone-num img-con" href="tel:1234566"> <img src="../image/icon/icon-phone.png" alt="icon-phone"> </a> 约<span>3555</span>元/㎡ </div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
+              <div class="list-item mui-table-view-cell no-padding">
+                <div class="list-badge no-collect" id="collect_btn">关注</div>
+                <div class="wrapper list-tap" data-href="http://maysongshow.cn/1111">
+                  <div class="cover-large img-con"> <img src="../image/cover.png" alt="cover"> </div>
+                  <div class="item-info">
+                    <h2 class="title-text">ddddd</h2>
+                    <h3 class="location-text">成化</h3>
+                    <div class="price-con">
+                      <a class="phone-num img-con" href="tel:1234566"> <img src="../image/icon/icon-phone.png" alt="icon-phone"> </a> 约<span>3555</span>元/㎡ </div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!--footer nav bar-->
       <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
         <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span class="mui-tab-label">明星楼盘</span> </a>
@@ -47,7 +104,7 @@
       </nav>
     </div>
   </body>
-  <script src="../javascript/vendor.min.js"></script>
-  <script src="../javascript/site.js"></script>
+  <script src="../javascript/vendor.js"></script>
+  <script src="../javascript/app.js"></script>
 
 </html>

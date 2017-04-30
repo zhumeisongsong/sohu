@@ -1,2 +1,2 @@
 const gulp = require('gulp');
-gulp.task('default', ['browserSync','moc.build', 'css.build','js.build','image.build','watch']);
+gulp.task('default', ['browserSync', 'css.build','js.build','watch']);

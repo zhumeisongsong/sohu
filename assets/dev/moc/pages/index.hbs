@@ -1,1 +1,49 @@
+---
+  title: "狐享会"
+---
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper refresh-list building-list">
+  <div class="mui-scroll">
+    <section class="search-con">
+        <img src="../image/icon/icon-search.png" alt="search">
+    </section>
+
+    <!--header banner-->
+    <header class="swiper-container">
+      <div class="swiper-wrapper banner-con">
+        <div class="swiper-slide img-con"
+             data-href="http://maysongshow.cn">
+          <img src="../image/banner.png" alt="cover">
+        </div>
+        <div class="swiper-slide img-con"
+             data-href="http://maysongshow.cn">
+          <img src="../image/banner.png" alt="cover">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </header>
+
+    <!--sohu focus-->
+    <section class="focus-container ui-border-b">
+      <div class="title-con img-con">
+        <img src="../image/focus-title.png" alt="狐享会头条">
+      </div>
+      <div class="scroll-con" id="scroll_con">
+        <section class="news-con">
+          <div class="scroll-cell" data-href="">ddd</div>
+          <div class="scroll-cell" data-href="">ddd</div>
+          <div class="scroll-cell" data-href="">ddd</div>
+        </section>
+      </div>
+    </section>
+    <div class="clear"></div>
+
+    <!--recommend buiding-->
+    <div class="recommend-container">
+    <h1>推荐楼盘</h1>
+
+    {{>list_building}}
+
+    </div>
+  </div>
+</div>
 {{>nav}}

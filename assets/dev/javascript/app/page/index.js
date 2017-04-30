@@ -19,14 +19,22 @@ Page.index = (function () {
         });
         mui.ready(function () {
             Util.swiper();
-            // Api.banner.fetch()
-            //     .done(function (_data) {
-            //         render_banner(_data);
-            bind();
-            //     })
-            //     .fail(function (err_msg, error) {
-            //         console.log(err_msg);
-            //     });
+            Api.banner.fetch()
+                .done(function (_data) {
+                    render_banner(_data);
+                    bind();
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
+            Api.news.fetch()
+                .done(function (_data) {
+                    render_building(_data);
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
+
             Api.building.fetch()
                 .done(function (_data) {
                     render_building(_data);
@@ -62,6 +70,14 @@ Page.index = (function () {
         Util.go_to_detail($('.swiper-slide'));
         Util.go_to_detail($('.scroll-cell'));
         Util.go_to_detail($('.list-tap'));
+
+        $('.nav-select').on('tap', function () {
+            Util.call_login($(this), 'select');
+        });
+
+        $('.nav-person').on('tap', function () {
+            Util.call_login($(this), 'person');
+        });
     };
     return {
         init: init

@@ -1,97 +1,110 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta name="description" content="<?php bloginfo('description'); ?>">
-    <!--不识别电话号码和邮箱-->
-    <meta name="format-detection" content="telephone=no; email=no" />
-    <!--网站开启对 web app 程序的支持-->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!--状态栏颜色-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- uc强制竖屏 -->
-    <meta name="screen-orientation" content="portrait">
-    <!-- QQ强制竖屏 -->
-    <meta name="x5-orientation" content="portrait">
-    <!-- UC强制全屏 -->
-    <meta name="full-screen" content="yes">
-    <!-- QQ强制全屏 -->
-    <meta name="x5-fullscreen" content="true">
-    <!-- UC应用模式 -->
-    <meta name="browsermode" content="application">
-    <!-- QQ应用模式 -->
-    <meta name="x5-page-mode" content="app">
-    <!-- 使用 webkit 引擎渲染 -->
-    <meta name="renderer" content="webkit">
-    <!-- No Baidu Siteapp-->
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>狐享会</title>
-    <!--css-->
-    <link rel="stylesheet" href="../stylesheet/vendor.min.css">
-    <link rel="stylesheet" href="../stylesheet/style.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="description" content="<?php bloginfo('description'); ?>">
+  <!--不识别电话号码和邮箱-->
+  <meta name="format-detection" content="telephone=no; email=no"/>
+  <!--网站开启对 web app 程序的支持-->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!--状态栏颜色-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- 使用 webkit 引擎渲染 -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <title>狐享会</title>
+  <!--css-->
+  <link rel="stylesheet" href="../stylesheet/vendor.min.css">
+  <link rel="stylesheet" href="../stylesheet/style.css">
+</head>
 
-  <body>
-    <div class="main">
-      <div id="pullrefresh" class="mui-content mui-scroll-wrapper refresh-list building-list">
-        <div class="mui-scroll">
-          <section class="search-con"> <img src="../image/icon/icon-search.png" alt="search"> </section>
-          <!--header banner-->
-          <header class="swiper-container">
-            <div class="swiper-wrapper banner-con">
-              <div class="swiper-slide img-con" data-href="http://maysongshow.cn"> <img src="../image/banner.png" alt="cover"> </div>
-              <div class="swiper-slide img-con" data-href="http://maysongshow.cn"> <img src="../image/banner.png" alt="cover"> </div>
-            </div>
-            <div class="swiper-pagination"></div>
-          </header>
-          <!--sohu focus-->
-          <section class="focus-container ui-border-b">
-            <div class="title-con img-con"> <img src="../image/focus-title.png" alt="狐享会头条"> </div>
-            <div class="scroll-con" id="scroll_con">
-              <section class="news-con">
-                <div class="scroll-cell" data-href="">ddd</div>
-                <div class="scroll-cell" data-href="">ddd</div>
-                <div class="scroll-cell" data-href="">ddd</div>
-              </section>
-            </div>
+<body>
+<div class="main">
+  <div id="pullrefresh" class="mui-content mui-scroll-wrapper refresh-list building-list">
+    <div class="mui-scroll">
+      <section class="search-con"><img src="../image/icon/icon-search.png" alt="search"></section>
+      <!--header banner-->
+      <header class="swiper-container">
+        <div class="swiper-wrapper banner-con">
+          <div class="swiper-slide img-con" data-href="http://maysongshow.cn">
+            <img src="../image/banner.png" alt="cover"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </header>
+      <!--sohu focus-->
+      <section class="focus-container ui-border-b">
+        <div class="title-con img-con"><img src="../image/focus-title.png" alt="狐享会头条"></div>
+        <div class="scroll-con" id="scroll_con">
+          <section class="news-con">
+            <div class="scroll-cell" data-href="">ddd</div>
+            <div class="scroll-cell" data-href="">ddd</div>
           </section>
-          <div class="clear"></div>
-          <!--recommend buiding-->
-          <div class="recommend-container">
-            <h1>推荐楼盘</h1>
-            <div class="list-con mui-table-view">
-              <div class="list-item mui-table-view-cell no-padding">
-                <div class="list-badge no-collect" id="collect_btn">关注</div>
-                <div class="wrapper list-tap" data-href="http://maysongshow.cn/1111">
-                  <div class="cover-large img-con"> <img src="../image/cover.png" alt="cover"> </div>
-                  <div class="item-info">
-                    <h2 class="title-text">ddddd</h2>
-                    <h3 class="location-text">成化</h3>
-                    <div class="price-con">
-                      <a class="phone-num img-con" href="tel:1234566"> <img src="../image/icon/icon-phone.png" alt="icon-phone"> </a> 约<span>3555</span>元/㎡ </div>
-                  </div>
-                  <div class="clear"></div>
-                </div>
+        </div>
+      </section>
+      <div class="clear"></div>
+      <!--recommend buiding-->
+      <script type="text/x-handlebars-template" id="template_building">
+        {{#each this}}
+        <div class="list-item mui-table-view-cell no-padding">
+          <div class="list-badge no-collect collect-btn">关注</div>
+          <div class="wrapper list-tap" data-href="http://maysongshow.cn/1111">
+            <div class="cover-large img-con"><img src="../image/cover.png" alt="cover"></div>
+            <div class="item-info">
+              <h2 class="title-text">{{title}}</h2>
+              <h3 class="location-text">{{location}}</h3>
+              <div class="price-con">
+                <a class="phone-num img-con" href="tel:{{phone}}">
+                  <img src="../image/icon/icon-phone.png" alt="icon-phone">
+                </a>
+                约<span>{{price}}</span>元/㎡
               </div>
             </div>
+            <div class="clear"></div>
           </div>
         </div>
+        {{/each}}
+      </script>
+
+      <div class="recommend-container">
+        <h1>推荐楼盘</h1>
+        <div class="list-con mui-table-view" id="list_con">
+        </div>
       </div>
-      <!--footer nav bar-->
-      <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
-        <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span class="mui-tab-label">明星楼盘</span> </a>
-        <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span class="mui-tab-label">小狐送福</span> </a>
-        <a class="nav-item" href="./select.html"> <span class="mui-icon back-img img-select"></span> <span class="mui-tab-label">帮你配对</span> </a>
-        <a class="nav-item" href="./person.html"> <span class="mui-icon back-img img-person"></span> <span class="mui-tab-label">我的</span> </a>
-      </nav>
+
     </div>
-  </body>
-  <script src="../javascript/vendor.js"></script>
-  <script src="../javascript/app.js"></script>
+  </div>
+  <!--footer nav bar-->
+  <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
+    <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span
+        class="mui-tab-label">明星楼盘</span> </a>
+    <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span
+        class="mui-tab-label">小狐送福</span> </a>
+    <a class="nav-item nav-select" href="javascript:;"> <span class="mui-icon back-img img-select"></span> <span
+        class="mui-tab-label">帮你配对</span> </a>
+    <a class="nav-item nav-person" href="javascript:;"> <span class="mui-icon back-img img-person"></span> <span
+        class="mui-tab-label">我的</span> </a>
+  </nav>
+</div>
+</body>
+<script src="../javascript/vendor.js"></script>
+<script src="../javascript/app.js"></script>
 
 </html>

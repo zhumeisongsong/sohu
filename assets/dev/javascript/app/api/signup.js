@@ -1,10 +1,10 @@
-Api.building_select = function ($) {
-    var fetch = function (_option) {
+Api.reg = function ($) {
+    var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
-            url: 'buildings_condition',
             type: 'post',
-            data: _option.data
+            url: 'signup',
+            data: _option
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -15,7 +15,7 @@ Api.building_select = function ($) {
     };
 
     return {
-        fetch: fetch
+        submit:submit
     };
 
 }(jQuery);

@@ -3,7 +3,7 @@ Api.banner = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: '../data/banner.json'
+            url: 'get_banners'
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);

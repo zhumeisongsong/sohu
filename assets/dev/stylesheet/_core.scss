@@ -10,7 +10,7 @@ body {
 
 html {
   color: map-get($global-color, b);
-  background-color: map-get($global-color, c);
+  background-color: map-get($global-color, e);
 }
 
 .img-con {
@@ -208,6 +208,12 @@ p {
   bottom: 50px;
   margin-left: -207px;
 }
+.mui-red {
+  background-color:map-get($global-color,a);
+  border: 0;
+  color: #fff;
+}
+
 
 @media(max-width: 414px) {
   .refresh-list {

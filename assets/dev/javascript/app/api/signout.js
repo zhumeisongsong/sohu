@@ -1,9 +1,9 @@
-Api.building = function ($) {
+Api.signout = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'bulidings/1/'
+            url: 'signout'
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -12,10 +12,8 @@ Api.building = function ($) {
         });
         return $defer.promise();
     };
-
     return {
         fetch: fetch
     };
-
 
 }(jQuery);

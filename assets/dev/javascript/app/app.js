@@ -58,6 +58,13 @@ $(function () {
                 Page.score.init();
             });
         }
+        else if (pathname == Route.person) {
+            Util.dispatcher(Route.person, function () {
+                Config.currentPage = Route.person;
+                Page.person.init();
+            });
+        }
+
 
     // dispatch
     Util.dispatcher(pathname);

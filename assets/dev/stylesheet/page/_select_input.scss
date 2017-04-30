@@ -1,0 +1,22 @@
+.page-select-input{
+  .input-item{
+    height: 35px;
+    border:0;
+    padding-right: 50px;
+  }
+  .input-unit{
+    position: absolute;
+    top: 7px;
+    right: 10px;
+  }
+  .input-tip{
+    font-size: 1.2rem;
+    color: map-get($global-color,d);
+  }
+}
+.fix-bottom{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

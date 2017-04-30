@@ -22,29 +22,41 @@ Page.index = (function () {
             // Api.banner.fetch()
             //     .done(function (_data) {
             //         render_banner(_data);
-                    bind();
+            bind();
             //     })
             //     .fail(function (err_msg, error) {
             //         console.log(err_msg);
             //     });
+            Api.building.fetch()
+                .done(function (_data) {
+                    render_building(_data);
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
         })
     };
 
     var render_banner = function (_data) {
-
-        console.log(_data.banner);
         var template = Handlebars.compile($('#template_banner').html());
         $('.banner-con').html(template(_data.banner));
     };
 
+    var render_building = function (_data) {
+        console.log(_data);
+        var template = Handlebars.compile($('#template_building').html());
+        $('#list_con').html(template(_data.list));
+    };
+
+
     var bind = function () {
         Util.scroll();
 
-        $('.search-con').on('tap',function () {
-           mui.openWindow({
-               url:'search.html',
-               id:'search'
-           })
+        $('.search-con').on('tap', function () {
+            mui.openWindow({
+                url: 'search.html',
+                id: 'search'
+            })
         });
 
         Util.go_to_detail($('.swiper-slide'));

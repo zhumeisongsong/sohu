@@ -11,7 +11,7 @@ Util.ajax = function (_option) {
         baseUrl = baseUrl + '?' + $.param(query);
     }
     var opt = {
-        url: baseUrl,
+        url: API_host.path_join(baseUrl),
         type: _option.type,
         dataType: 'json',
         data: _option.data,

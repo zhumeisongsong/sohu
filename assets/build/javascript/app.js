@@ -60,16 +60,23 @@ $(function () {
                 Page.score.init();
             });
         }
+        else if (pathname == Route.person) {
+            Util.dispatcher(Route.person, function () {
+                Config.currentPage = Route.person;
+                Page.person.init();
+            });
+        }
+
 
     // dispatch
     Util.dispatcher(pathname);
 });
 
-// var host = 'http://222.211.86.167:8080/';
-// var API_root = 'fzapp';
+var host = 'http://119.23.27.133:8102/';
+var API_root = 'main';
 
-var host = 'localhost:3000/';
-var API_root = '';
+// var host = 'localhost:3000/';
+// var API_root = '';
 var API_host = host + API_root;
 
 /*
@@ -115,7 +122,7 @@ Util.ajax = function (_option) {
         baseUrl = baseUrl + '?' + $.param(query);
     }
     var opt = {
-        url: baseUrl,
+        url: API_host.path_join(baseUrl),
         type: _option.type,
         dataType: 'json',
         data: _option.data,
@@ -127,7 +134,7 @@ Util.ajax = function (_option) {
 };
 
 Handlebars.registerHelper("cover_img", function (cover) {
-    image = API_host.path_join(cover);
+    var image = API_host.path_join(cover);
     console.log(image);
     return image
 });
@@ -419,15 +426,75 @@ Api.banner = function ($) {
 
 }(jQuery);
 
+Api.building = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'bulidings/1/'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
 
+    return {
+        fetch: fetch
+    };
+
+
+}(jQuery);
+
+Api.building_select = function ($) {
+    var fetch = function( _option) {
+        var $defer    = $.Deferred();
+        var options = {
+            url: 'buildings_condition',
+            type: 'post',
+            data: _option.data
+        };
+        Util.ajax(options).done(function(result) {
+                $defer.resolve(result);
+        }).fail(function(xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
 
 /**
  * Created by songzhumei on 17/4/29.
  */
 
-/**
- * Created by songzhumei on 17/4/29.
- */
+
+
+Api.signout = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'signout'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
 
 Page.activity = (function () {
     var init = function () {
@@ -467,6 +534,7 @@ Page.activity = (function () {
 Page.all = (function () {
     var init = function () {
         Util.string.path_join();
+        Util.string.format();
     };
     return {
         init: init
@@ -497,29 +565,41 @@ Page.index = (function () {
             // Api.banner.fetch()
             //     .done(function (_data) {
             //         render_banner(_data);
-                    bind();
+            bind();
             //     })
             //     .fail(function (err_msg, error) {
             //         console.log(err_msg);
             //     });
+            Api.building.fetch()
+                .done(function (_data) {
+                    render_building(_data);
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
         })
     };
 
     var render_banner = function (_data) {
-
-        console.log(_data.banner);
         var template = Handlebars.compile($('#template_banner').html());
         $('.banner-con').html(template(_data.banner));
     };
 
+    var render_building = function (_data) {
+        console.log(_data);
+        var template = Handlebars.compile($('#template_building').html());
+        $('#list_con').html(template(_data.list));
+    };
+
+
     var bind = function () {
         Util.scroll();
 
-        $('.search-con').on('tap',function () {
-           mui.openWindow({
-               url:'search.html',
-               id:'search'
-           })
+        $('.search-con').on('tap', function () {
+            mui.openWindow({
+                url: 'search.html',
+                id: 'search'
+            })
         });
 
         Util.go_to_detail($('.swiper-slide'));
@@ -541,6 +621,42 @@ Page.input = (function () {
     };
     var render = function () {
         Util.go_to_detail($('.submit-btn'));
+    };
+    return {
+        init: init
+    };
+})();
+
+Page.person = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            // render();
+            bind();
+        })
+    };
+
+    var bind = function () {
+        //退出登录
+        $('#logout').on('tap', function () {
+
+            var btnArray = ['确定', '取消'];
+            mui.confirm('你要退出当前账户，确认？', '', btnArray, function (e) {
+                if (e.index === 0) {
+                    Api.signout.fetch()
+                        .done(function (_data) {
+                            console.log(_data);
+                            mui.toast('退出登录成功!');
+                            window.location.href = '../index.html';
+                            alert('out')
+                        })
+                        .fail(function (err_msg, error) {
+                            console.log(err_msg);
+                        });
+                }
+            })
+
+        });
     };
     return {
         init: init

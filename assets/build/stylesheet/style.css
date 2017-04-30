@@ -512,9 +512,33 @@ p {
   border-bottom: 1px solid #ddd;
 }
 
+.page-select-input .input-item {
+  height: 35px;
+  border: 0;
+  padding-right: 50px;
+}
+
+.page-select-input .input-unit {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+}
+
+.page-select-input .input-tip {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.fix-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
 .page-person .header-con {
   width: 100%;
-  height: 40px;
+  height: 200px;
   background: url("../image/person-bg.jpg") 0 0 no-repeat;
   background-size: cover;
 }
@@ -524,45 +548,56 @@ p {
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
   background-size: cover;
-}
-
-.user-box {
-  width: 50%;
-  z-index: 999;
-}
-
-.profile-img {
-  width: 60px;
-  height: 60px;
   position: relative;
 }
 
-.profile-img img {
-  width: 100%;
-  border-radius: 50%;
-}
-
-.user-information {
-  margin-top: 1rem;
-  text-align: center;
-  width: 100%;
-}
-
-.icon-white {
-  color: #fff;
-  font-size: 16px;
-}
-
-.nickname {
-  color: #fff;
+.page-person .info-con {
+  width: 100px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 80px;
+  margin-left: -50px;
+  z-index: 9;
   text-align: center;
 }
 
-.profile-list {
-  margin-top: -1rem;
+.page-person .info-con .user-photo {
+  width: 54px;
+  margin-left: 23px;
+  margin-bottom: 10px;
 }
 
-/*------------------login*/
+.page-person .info-con .user-photo img {
+  width: 100%;
+  display: block;
+}
+
+.page-person .info-con .user-name {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.page-person .list-con .log-out {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.page-login .photo-con {
+  width: 6rem;
+  padding: 3rem 0;
+  margin: 0 auto;
+  display: block;
+}
+
+.page-login .photo-con img {
+  width: 100%;
+}
+
+.page-login .photo-con img {
+  width: 100%;
+}
+
 .area {
   margin: 20px auto 0 auto;
 }
@@ -598,18 +633,6 @@ p {
   padding: 0 8px;
 }
 
-/*-----------------------user photo*/
-.photo-con {
-  width: 6rem;
-  margin: 3rem auto 3rem;
-  display: block;
-}
-
-.photo-con img {
-  width: 100%;
-}
-
-/*----------------------reg*/
 .area {
   margin: 20px auto 0 auto;
 }
@@ -703,7 +726,6 @@ p {
   line-height: 44px;
 }
 
-/*收藏的css*/
 .favourite-ul {
   margin-top: 0 !important;
 }

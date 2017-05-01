@@ -3,7 +3,7 @@ Api.reg = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'signup',
+            url: 'signup/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -15,7 +15,7 @@ Api.reg = function ($) {
     };
 
     return {
-        submit:submit
+        submit: submit
     };
 
 }(jQuery);

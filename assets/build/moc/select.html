@@ -1,258 +1,121 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta name="description" content="<?php bloginfo('description'); ?>">
-    <!--不识别电话号码和邮箱-->
-    <meta name="format-detection" content="telephone=no; email=no" />
-    <!--网站开启对 web app 程序的支持-->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!--状态栏颜色-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- uc强制竖屏 -->
-    <meta name="screen-orientation" content="portrait">
-    <!-- QQ强制竖屏 -->
-    <meta name="x5-orientation" content="portrait">
-    <!-- UC强制全屏 -->
-    <meta name="full-screen" content="yes">
-    <!-- QQ强制全屏 -->
-    <meta name="x5-fullscreen" content="true">
-    <!-- UC应用模式 -->
-    <meta name="browsermode" content="application">
-    <!-- QQ应用模式 -->
-    <meta name="x5-page-mode" content="app">
-    <!-- 使用 webkit 引擎渲染 -->
-    <meta name="renderer" content="webkit">
-    <!-- No Baidu Siteapp-->
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>帮你配对</title>
-    <!--css-->
-    <link rel="stylesheet" href="../stylesheet/vendor.min.css">
-    <link rel="stylesheet" href="../stylesheet/style.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="description" content="<?php bloginfo('description'); ?>">
+  <!--不识别电话号码和邮箱-->
+  <meta name="format-detection" content="telephone=no; email=no"/>
+  <!--网站开启对 web app 程序的支持-->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!--状态栏颜色-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- 使用 webkit 引擎渲染 -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <title>帮你配对</title>
+  <!--css-->
+  <link rel="stylesheet" href="../stylesheet/vendor.min.css">
+  <link rel="stylesheet" href="../stylesheet/style.css">
+</head>
 
-  <body>
-    <div class="main">
-      <header class="select-header">
-        <nav> <img src="../image/select-progress.png" alt="nav"> </nav>
-      </header>
-      <div class="mui-content">
-        <section class="label-con">
-          <h2 class="title-con">您的购房目的(单选)</h2>
-          <div class="mui-row">
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_marry">
-            <input type="radio" name="doc-js-btn" id="purpose_marry" class="label-perpose">结婚
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_baby">
-            <input type="radio" name="doc-js-btn" id="purpose_baby" class="label-perpose">生孩子
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_old">
-            <input type="radio" name="doc-js-btn" id="purpose_old" class="label-perpose">养老人
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_school">
-            <input type="radio" name="doc-js-btn" id="purpose_school" class="label-perpose">学区房
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_bigger">
-            <input type="radio" name="doc-js-btn" id="purpose_bigger" class="label-perpose">小换大
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="purpose_home" class="label-perpose">有个家
-          </label> </section>
-            </div>
-          </div>
-        </section>
-        <section class="label-con">
-          <h2 class="title-con">您的意向区域（可多选)</h2>
-          <div class="mui-row">
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_marry">
-            <input type="radio" name="doc-js-btn" id="location_jj" class="label-location">锦江
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_baby">
-            <input type="radio" name="doc-js-btn" id="location_qy" class="label-location">青羊
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_old">
-            <input type="radio" name="doc-js-btn" id="location_jn" class="label-location">金牛
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_school">
-            <input type="radio" name="doc-js-btn" id="location_wh" class="label-location">武侯
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_bigger">
-            <input type="radio" name="doc-js-btn" id="location_ch" class="label-location">成华
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_gx" class="label-location">高新区
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_gxx" class="label-location">高新西区
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_wj" class="label-location">温江
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_sl" class="label-location">双流
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_lqy" class="label-location">龙泉驿
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_xd" class="label-location">新都
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_px" class="label-location">郫县
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_djy" class="label-location">都江堰
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_qbj" class="label-location">青白江
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_pz" class="label-location">彭州
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_pj" class="label-location">浦江
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_dy" class="label-location">大邑
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_xj" class="label-location">新津
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_cz" class="label-location">崇州
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_ql" class="label-location">邛崃
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="location_jt" class="label-location">金堂
-          </label> </section>
-            </div>
-          </div>
-        </section>
-        <section class="label-con">
-          <h2 class="title-con">您的意向面积(单选)</h2>
-          <div class="mui-row">
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_marry">
-            <input type="radio" name="doc-js-btn" id="area_all" class="label-area">不限
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_baby">
-            <input type="radio" name="doc-js-btn" id="area_50_down" class="label-area">50㎡以下
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_old">
-            <input type="radio" name="doc-js-btn" id="area_50_70" class="label-area">50-70㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_school">
-            <input type="radio" name="doc-js-btn" id="area_70_90" class="label-area">70-90㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_bigger">
-            <input type="radio" name="doc-js-btn" id="area_90_110" class="label-area">90-110㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="area_110_150" class="label-area">110-150㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="area_150_200" class="label-area">150-200㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="area_200_300" class="label-area">200-300㎡
-          </label> </section>
-            </div>
-            <div class="mui-col-xs-4">
-              <section class="label-wrapper"> <label class="mui-btn label-btn" for="purpose_home">
-            <input type="radio" name="doc-js-btn" id="area_300" class="label-area">300㎡以上
-          </label> </section>
-            </div>
-          </div>
-        </section>
+<body>
+<div class="main">
+  <header class="select-header">
+    <nav><img src="../image/select-progress.png" alt="nav"></nav>
+  </header>
+  <div class="mui-content">
+    <section class="label-con">
+      <h2 class="title-con">您的购房目的</h2>
+
+      <script type="text/x-handlebars-template" id="template_label_perpose">
+        {{#each this}}
+        <div class="mui-col-xs-4">
+          <section class="label-wrapper">
+            <label class="mui-btn label-btn" for="{{id}}">
+            <input type="radio" name="doc-js-btn" id="{{id}}" class="label-perpose">{{title}}
+          </label></section>
+        </div>
+        {{/each}}
+      </script>
+
+      <div class="mui-row" id="perpose_con">
       </div>
-      <footer class="submit-btn" data-href="select-input.html"> <button type="button" class="mui-btn mui-btn-block submit-loading mui-btn-primary btn-standard">下一步</button> </footer>
-      <!--  打星标准：-->
-      <!--  80万以下：三星-->
-      <!--  80-120万：四星-->
-      <!--  120万以上：五星-->
-      <!--footer nav bar-->
-      <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
-        <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span class="mui-tab-label">明星楼盘</span> </a>
-        <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span class="mui-tab-label">小狐送福</span> </a>
-        <a class="nav-item" href="./select.html"> <span class="mui-icon back-img img-select"></span> <span class="mui-tab-label">帮你配对</span> </a>
-        <a class="nav-item" href="./person.html"> <span class="mui-icon back-img img-person"></span> <span class="mui-tab-label">我的</span> </a>
-      </nav>
-    </div>
-  </body>
-  <script src="../javascript/vendor.js"></script>
-  <script src="../javascript/app.js"></script>
+    </section>
 
+    <section class="label-con">
+      <h2 class="title-con">您的意向区域</h2>
+
+      <script type="text/x-handlebars-template" id="template_label_location">
+        {{#each this}}
+        <div class="mui-col-xs-4">
+          <section class="label-wrapper">
+            <label class="mui-btn label-btn" for="{{id}}">
+            <input type="radio" name="doc-js-btn" id="{{id}}" class="label-location">{{title}}
+          </label>
+          </section>
+        </div>
+        {{/each}}
+      </script>
+
+      <div class="mui-row" id="location_con">
+      </div>
+    </section>
+
+    <section class="label-con">
+      <h2 class="title-con">您的意向面积</h2>
+
+      <script type="text/x-handlebars-template" id="template_label_area">
+        {{#each this}}
+        <div class="mui-col-xs-4">
+          <section class="label-wrapper">
+            <label class="mui-btn label-btn" for="{{id}}">
+            <input type="radio" name="doc-js-btn" id="{{id}}" class="label-area">{{title}}
+          </label>
+          </section>
+        </div>
+        {{/each}}
+      </script>
+
+      <div class="mui-row" id="area_con">
+      </div>
+    </section>
+  </div>
+
+  <footer class="submit-btn" data-href="select_input.html">
+    <button type="button" class="mui-btn mui-btn-block submit-loading mui-btn-primary btn-standard">下一步</button>
+  </footer>
+
+  <!--footer nav bar-->
+  <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
+    <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span
+        class="mui-tab-label">明星楼盘</span> </a>
+    <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span
+        class="mui-tab-label">小狐送福</span> </a>
+    <a class="nav-item nav-select" href="javascript:;"> <span class="mui-icon back-img img-select"></span> <span
+        class="mui-tab-label">帮你配对</span> </a>
+    <a class="nav-item nav-person" href="javascript:;"> <span class="mui-icon back-img img-person"></span> <span
+        class="mui-tab-label">我的</span> </a>
+  </nav>
+</div>
+<script src="../javascript/vendor.js"></script>
+<script src="../javascript/app.js"></script>
+</body>
 </html>

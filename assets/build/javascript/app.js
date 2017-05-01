@@ -85,12 +85,6 @@ $(function () {
             Page.login.init();
         });
     }
-    else if (pathname == Route.login) {
-        Util.dispatcher(Route.login, function () {
-            Config.currentPage = Route.login;
-            Page.login.init();
-        });
-    }
     else if (pathname == Route.reg) {
         Util.dispatcher(Route.reg, function () {
             Config.currentPage = Route.reg;
@@ -115,45 +109,54 @@ $(function () {
     Util.dispatcher(pathname);
 });
 
-var host = 'http://119.23.27.133:8102/';
+var host = 'http://www.sohuhxh.com/';
 var API_root = 'main';
-
-// var host = 'localhost:3000/';
-// var API_root = '';
 var API_host = host + API_root;
 
-/*
- *active
- */
-Util.active = function (pathname) {
-    if (pathname == Route.top) {
-        $('.img-index').addClass('item-active')
-    } else if (pathname == Route.activity) {
-        $('.img-activities').addClass('item-active')
-    } else if (pathname == Route.select) {
-        $('.img-select').addClass('item-active')
-    } else if (pathname == Route.person) {
-        $('.img-person').addClass('item-active')
-    }
-};
-
 Util.call_login = function ($dom, str) {
-    var user_id = localStorage.getItem('user_id');
+    var user_id = owner.getState().user_id;
 
-    if (user_id == undefined) {
-        $dom.attr('href', 'reg_login.html');
-        console.log(user_id);
-    } else {
-        if (str == 'select') {
+    if (str == 'like') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            })
+        } else {
+            return true;
+        }
+    }
+
+    if (str == 'list_cell') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            })
+        } else {
+            var url = $dom.data('href');
+            console.log(url);
+            mui.openWindow({
+                url: url
+            })
+        }
+    }
+
+    if (str == 'select') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            });
+        } else {
             $dom.attr('href', 'select.html');
-            console.log(user_id);
-        } else if (str == 'person') {
+        }
+    }
+
+    if (str == 'person') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            });
+        } else {
             $dom.attr('href', 'person.html');
-            console.log(user_id);
-        } else if (str == 'like') {
-
-        } else if (str == 'list_cell') {
-
         }
     }
 };
@@ -188,8 +191,8 @@ Util.ajax = function (_option) {
     var opt = {
         url: API_host.path_join(baseUrl),
         type: _option.type,
-        dataType: 'json',
         data: _option.data,
+        timeout: 10000,
         success: $defer.resolve,
         error: $defer.reject
     };
@@ -198,30 +201,79 @@ Util.ajax = function (_option) {
 };
 
 Handlebars.registerHelper("cover_img", function (cover) {
-    var image = API_host.path_join(cover);
-    console.log(image);
+    var image = host.path_join(cover);
     return image
 });
 
 Handlebars.registerHelper("location_trans", function (location) {
-    var image = API_host.path_join(cover);
-    console.log(image);
-    return image
+    var location_name;
+
+
+    return location_name
 });
+
+/*
+ * local
+ */
+
+Util.local_ajax = function (_option) {
+    var baseUrl = _option.url;
+    var query = {};
+    var $defer = $.Deferred();
+    $.extend(query, _option.params);
+    if (_option.params) {
+        baseUrl = baseUrl + '?' + $.param(query);
+    }
+    var opt = {
+        url: baseUrl,
+        type: _option.type,
+        data: _option.data,
+        timeout: 10000,
+        success: $defer.resolve,
+        error: $defer.reject
+    };
+    $.ajax(opt);
+    return $defer.promise();
+};
+
+Util.active = function (pathname) {
+    if (pathname == Route.top) {
+        $('.img-index').addClass('item-active')
+    }
+    else if (pathname == Route.activity) {
+        $('.img-activities').addClass('item-active')
+    }
+    else if (pathname == Route.select) {
+        $('.img-select').addClass('item-active')
+        Util.call_login($('.nav-select'), 'select');
+    }
+    else if (pathname == Route.person) {
+        $('.img-person').addClass('item-active')
+        Util.call_login($('.nav-person'), 'person');
+    }
+
+    $('.nav-select').on('tap', function () {
+        Util.call_login($(this), 'select');
+    });
+
+    $('.nav-person').on('tap', function () {
+        Util.call_login($(this), 'person');
+    });
+};
 
 /**
  * 获取当前状态
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
+    console.log(JSON.parse(stateText))
     return JSON.parse(stateText);
 };
 
 /**
  * 清空当前状态
  **/
-owner.remove = function ($state) {
-    // var stateText = localStorage.getItem('$state') || "{}";
+owner.remove = function () {
     localStorage.removeItem('$state');
 };
 
@@ -236,197 +288,162 @@ owner.setState = function (state) {
 /**
  * 创建当前状态
  **/
-owner.createState = function (account, nickName, tokenKey, callback) {
+owner.createState = function (user_id, callback) {
     var state = owner.getState();
-    state.account = account;
+
+    state.user_id = user_id;
     owner.setState(state);
+
     return callback('登录成功!');
 };
 
 //手机号check
-var checkPhone = function (phone_num) {
+owner.check_phone = function (phone) {
     var phonereg = /^((\d{3,4}-)?\d{7,8})?(1[3587]\d{9})?$/;
-    if (!phonereg.exec(phone_num)) {
-        return false;
-    }
-
-    if (phone_num.length < 11) {
-        return false;
-    }
+    return (phonereg.exec(phone) && phone.length == 11)
+};
+owner.check_email = function (email) {
+    email = email || '';
+    return (email.length > 3 && email.indexOf('@') > -1);
 };
 
 /**
  * 用户登录
  **/
-owner.login = function (loginInfo, callback) {
+owner.login = function (login_info, callback) {
     callback = callback || $.noop;
-    loginInfo = loginInfo || {};
-    loginInfo.phone = loginInfo.phone || '';
-    loginInfo.password = loginInfo.password || '';
+    login_info = login_info || {};
+    login_info.phone = login_info.phone || '';
+    login_info.password = login_info.password || '';
 
-    checkPhone(loginInfo.phoneNum);
-    if (checkPhone(loginInfo.phoneNum) === false) {
+    if (!owner.check_phone(login_info.phone)) {
         return callback("请填写正确的手机号码");
     }
 
-    if (loginInfo.password.length < 6) {
-        return callback('密码最短为 6 个字符');
+    if (login_info.password.length < 8) {
+        return callback('密码最短为8个字符');
     }
+
     //加密
-    loginInfo.password = jQuery.md5(loginInfo.password);
-
-    $.ajax(API_host.path_join('/user/login'), {
-        data: loginInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status == 'U000') {
-                //写入本地缓存
-                owner.createState(loginInfo.phoneNum, obj.data.nickName, obj.data.tokenKey, callback);
-
-                //登录成功后关闭
-                plus.webview.getLaunchWebview().show("pop-in", 200, function () {
-                    plus.webview.currentWebview().close("none");
-                });
-                var Scanner = plus.webview.getWebviewById('tab-person.html');
-                //触发前往页面的自定义事件,从而进行数据刷新
-                mui.fire(Scanner, 'profile_refresh');
-
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            //异常处理；
-            app_error('wireless');
-        }
-    });
+    login_info.password = jQuery.md5(login_info.password);
+    Api.login.submit(login_info)
+        .done(function (_data) {
+            owner.createState(login_info.phone, callback);
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'index.html',
+                    id: 'index'
+                })
+            }, 1000);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 新用户注册
  **/
-owner.reg = function (regInfo, callback) {
+owner.reg = function (reg_info, callback) {
     callback = callback || $.noop;
-    regInfo = regInfo || {};
-    regInfo.phoneNum = regInfo.phoneNum || '';
-    regInfo.password = regInfo.password || '';
-    regInfo.phoneVerificationCode = regInfo.phoneVerificationCode || '';
+    reg_info = reg_info || {};
+    reg_info.phone = reg_info.phone || '';
+    reg_info.email = reg_info.email || '';
+    reg_info.password = reg_info.password || '';
+    reg_info.password2 = reg_info.password || '';
 
-    if (regInfo.password.length < 6) {
-        return callback('密码最短为 6 个字符');
+    console.log(owner.check_phone(login_info.phone));
+    if (!owner.check_phone(login_info.phone)) {
+        return callback("请填写正确的手机号码");
+    }
+    if (!owner.check_email(reg_info.email)) {
+        return callback("请填写正确的邮箱");
+    }
+
+
+    if (reg_info.password.length < 8) {
+        return callback('密码最短为8个字符');
+    }
+
+    if (reg_info.password2 != reg_info.password) {
+        return callback('两次密码输入不一致');
     }
 
     //md5加密
-    regInfo.password = jQuery.md5(regInfo.password);
+    reg_info.password = jQuery.md5(reg_info.password);
+    reg_info.password2 = jQuery.md5(reg_info.password2);
 
-    // 调用注册API
-    $.ajax({
-        url: API_host.path_join('/user/register'),
-        type: 'post',
-        dataType: 'json',
-        data: regInfo,
-        timeout: 10000,
-        success: function (data) {
-            if (data && data.status == 'U000') {
-                //发送成功
-                mui.toast(data.msg);
-                call_login()
-            } else {
-                return callback(data.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            app_error('wireless');
-        }
 
-    });
-
-    return callback();
+    Api.reg.submit(reg_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 忘记密码
  **/
-owner.forgetPassword = function (changeInfo, callback) {
+owner.forgetPassword = function (change_info, callback) {
     callback = callback || $.noop;
-    changeInfo = changeInfo || {};
-    changeInfo.phone = changeInfo.phone || '';
-    changeInfo.password = changeInfo.password || '';
-    //md5加密
-    changeInfo.password = jQuery.md5(changeInfo.password);
-    $.ajax(API_host.path_join('user/retrievePassword'), {
-        data: changeInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status === 'U000') {
-                //发送成功
-                mui.toast(obj.msg);
-                call_login();
-                jQuery('#password').val('');
-                jQuery('#password_confirm').val('');
-                jQuery('#phone_number').val('');
-                jQuery('#verifyCode').val('');
+    change_info = change_info || {};
+    change_info.email = change_info.email || '';
 
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
+    if (!owner.check_email(change_info.email)) {
+        return callback("请填写正确的邮箱");
+    }
 
-        }
-    });
-    return callback();
+    Api.forget_psw.submit(change_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 修改密码
  **/
-owner.changePassword = function (changeInfo, callback) {
+owner.changePassword = function (change_info, callback) {
     callback = callback || $.noop;
-    changeInfo = changeInfo || {};
-    changeInfo.password = changeInfo.password || '';
-    changeInfo.newPassword = changeInfo.newPassword || '';
+    change_info = change_info || {};
+    change_info.old_password = change_info.old_password || '';
+    change_info.password0 = change_info.password0 || '';
+    change_info.password1 = change_info.password1 || '';
 
     //加密
-    changeInfo.password = jQuery.md5(changeInfo.password);
-    changeInfo.newPassword = jQuery.md5(changeInfo.newPassword);
+    change_info.old_password = jQuery.md5(change_info.old_password);
+    change_info.password0 = jQuery.md5(change_info.password0);
+    change_info.password1 = jQuery.md5(change_info.password1);
 
-    var _option = {
-
-    };
-
-    $.ajax(API_host.path_join('user/changepassword'), {
-        data: changeInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status == 'U000') {
-                //发送成功
-                mui.toast(obj.msg);
-                localStorage.removeItem('$state');
-                call_login();
-                $('#password').val('');
-                $('#password_confirm').val('');
-                $('#old_password').val('');
-
-            } else if (obj && obj.status == 'U168') {
-                mui.toast(obj.msg);
-                call_login()
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            //异常处理；
-            app_error('wireless');
-        }
-    });
-    return callback();
+    Api.change_psw.submit(change_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /*
@@ -440,19 +457,102 @@ Util.refresh = function () {
         window.location.reload();
         mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
     };
-    var count = 0;
+    var page = 1;
     /**
      * 上拉加载具体业务实现
      */
-    var pullupRefresh = function () {
 
-        //list_old = content_list;
-        var up_count = 3;
-        mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > up_count)); //参数为true代表没有更多数据了。
+    var render_building = function (_data) {
+        console.log(_data);
+        var template = Handlebars.compile($('#template_building').html());
+        if (_data.list.length == 0) {
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+        }
+        else if (_data.list.length == 10) {
+            $('#list_con').html(template(_data.list));
+            page++
+        }
+        else if (_data.list.length < 10) {
+            $('#list_con').html(template(_data.list));
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+        }
     };
+
+    var bind_building = function () {
+        Util.go_to_detail($('.list-tap'));
+        $('.like-btn').on('tap', function () {
+            Util.like($(this));
+        })
+    };
+
+    var pullupRefresh_building = function () {
+        Api.building.fetch(page)
+            .done(function (_data) {
+                render_building(_data);
+                bind_building();
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+    };
+
+    var pullupRefresh_activity = function () {
+        Api.activity.fetch(page)
+            .done(function (_data) {
+                render(_data);
+                bind()
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+
+        var render = function (_data) {
+            console.log(_data);
+            var template = Handlebars.compile($('#template_activity').html());
+            if (_data.list.length == 0) {
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+            else if (_data.list.length == 10) {
+                $('#activity_list_con').html(template(_data.list));
+                page++
+            }
+            else if (_data.list.length < 10) {
+                $('#activity_list_con').html(template(_data.list));
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+
+        };
+        var bind = function () {
+            $('.list-cell').on('tap', function () {
+                Util.call_login($(this), "list_cell")
+            });
+        };
+
+    };
+
+    var pullupRefresh_building_select = function () {
+        var _option = {
+            location:'',
+            aera_setion:'',
+            price_setion:'',
+        };
+
+        Api.building_select.fetch(_option)
+            .done(function (_data) {
+                render_building(_data);
+                bind_building();
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+    };
+
+
     return {
-        pullupRefresh: pullupRefresh,
-        pulldownRefresh: pulldownRefresh
+        pulldownRefresh: pulldownRefresh,
+        pullupRefresh_building: pullupRefresh_building,
+        pullupRefresh_activity: pullupRefresh_activity,
+        pullupRefresh_building_select: pullupRefresh_building_select,
     }
 };
 
@@ -520,6 +620,30 @@ Util.scroll = function () {
     return {
         scroll: scroll()
     }
+};
+
+Util.like=function ($dom) {
+    var id = $dom.data('id');
+    var status = $dom.data('status');
+    console.log(id,status)
+
+        Api.like_set.fetch(id)
+            .done(function (_data) {
+                console.log(_data);
+                if(status){
+                    $dom.addClass('is_like');
+                    $dom.text('关注');
+                    $dom.attr('data-status','false');
+                }else{
+                    $dom.removeClass('is_like');
+                    $dom.text('取消');
+                    $dom.attr('data-status','true');
+                }
+
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
 };
 
 /*
@@ -717,11 +841,11 @@ Api.banner = function ($) {
 }(jQuery);
 
 Api.building = function ($) {
-    var fetch = function () {
+    var fetch = function (page) {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'bulidings/1/'
+            url: 'bulidings/{0}/'.format(page)
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -804,9 +928,107 @@ Api.forget_psw = function ($) {
 
 }(jQuery);
 
-/**
- * Created by songzhumei on 17/4/29.
- */
+Api.form_get = function ($) {
+    var fetch = function (id) {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'get_collect_items/{0}/'.format(id)
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
+
+Api.form_submit = function ($) {
+    var submit = function (_option) {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'post',
+            url: 'post_participator_info/',
+            data: _option
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        submit: submit
+    };
+
+}(jQuery);
+
+Api.like = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'get_user_likes/'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
+
+Api.like_set = function ($) {
+    var fetch = function (id) {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'post',
+            url: 'set_liked/{0}/'.format(id)
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
+
+Api.activity = function ($) {
+    var fetch = function (page) {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'get_activitys/{0}'.format(page)
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
 
 Api.news = function ($) {
     var fetch = function () {
@@ -828,12 +1050,32 @@ Api.news = function ($) {
 
 }(jQuery);
 
+Api.select = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: '../data/select.json'
+        };
+        Util.local_ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+
+    return {
+        fetch: fetch
+    };
+}(jQuery);
+
 Api.login = function ($) {
     var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'signin',
+            url: 'signin/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -875,7 +1117,7 @@ Api.reg = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'signup',
+            url: 'signup/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -887,7 +1129,7 @@ Api.reg = function ($) {
     };
 
     return {
-        submit:submit
+        submit: submit
     };
 
 }(jQuery);
@@ -907,7 +1149,7 @@ Page.activity = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
-                    callback: Util.refresh().pullupRefresh
+                    callback: Util.refresh().pullupRefresh_activity
                 }
             }
         });
@@ -915,11 +1157,7 @@ Page.activity = (function () {
             mui('#pullrefresh').pullRefresh().pullupLoading();
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);
-            render()
         });
-    };
-    var render = function () {
-        Util.go_to_detail($('.mui-table-view-cell'));
     };
     return {
         init: init
@@ -937,6 +1175,38 @@ Page.all = (function () {
     };
 })();
 
+Page.change_psw = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            bind();
+        })
+    };
+
+    var bind = function () {
+        $('#change_psw').on('tap', function () {
+            var email = $.trim($("#email").val());
+
+            var reg_info = {
+                "email": email
+            };
+
+            owner.reg(reg_info, function (err) {
+                console.log(err);
+                if (err) {
+                    mui.toast(err);
+                }
+            });
+        })
+    };
+
+    return {
+        init: init
+    }
+})();
+
+
+
 Page.index = (function () {
     var init = function () {
         mui.init({
@@ -952,7 +1222,7 @@ Page.index = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
-                    callback: Util.refresh().pullupRefresh
+                    callback: Util.refresh().pullupRefresh_building
                 }
             }
         });
@@ -961,63 +1231,58 @@ Page.index = (function () {
             Api.banner.fetch()
                 .done(function (_data) {
                     render_banner(_data);
-                    bind();
-                })
-                .fail(function (err_msg, error) {
-                    console.log(err_msg);
-                });
-            Api.news.fetch()
-                .done(function (_data) {
-                    render_building(_data);
+                    bind_banner();
                 })
                 .fail(function (err_msg, error) {
                     console.log(err_msg);
                 });
 
-            Api.building.fetch()
+            Api.news.fetch()
                 .done(function (_data) {
-                    render_building(_data);
+                    render_news(_data);
+                    bind_news();
                 })
                 .fail(function (err_msg, error) {
                     console.log(err_msg);
                 });
+
+            mui('#pullrefresh').pullRefresh().pullupLoading();
+            mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
+            window.scrollTo(0, 0);
+
+            bind();
         })
     };
 
     var render_banner = function (_data) {
         var template = Handlebars.compile($('#template_banner').html());
-        $('.banner-con').html(template(_data.banner));
+        $('#banner_con').html(template(_data.list));
     };
 
-    var render_building = function (_data) {
-        console.log(_data);
-        var template = Handlebars.compile($('#template_building').html());
-        $('#list_con').html(template(_data.list));
+    var render_news = function (_data) {
+        var template = Handlebars.compile($('#template_news').html());
+        $('#news_con').html(template(_data.list));
+    };
+
+    var bind_banner = function () {
+        Util.go_to_detail($('.swiper-slide'));
+    };
+
+    var bind_news = function () {
+        Util.go_to_detail($('.scroll-cell'));
+        Util.scroll();
     };
 
 
     var bind = function () {
-        Util.scroll();
-
         $('.search-con').on('tap', function () {
             mui.openWindow({
                 url: 'search.html',
                 id: 'search'
             })
         });
-
-        Util.go_to_detail($('.swiper-slide'));
-        Util.go_to_detail($('.scroll-cell'));
-        Util.go_to_detail($('.list-tap'));
-
-        $('.nav-select').on('tap', function () {
-            Util.call_login($(this), 'select');
-        });
-
-        $('.nav-person').on('tap', function () {
-            Util.call_login($(this), 'person');
-        });
     };
+
     return {
         init: init
     };
@@ -1028,11 +1293,51 @@ Page.input = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            render();
-        })
-    };
-    var render = function () {
-        Util.go_to_detail($('.submit-btn'));
+            Api.select.fetch()
+                .done(function (_data) {
+                    render(_data);
+                    bind()
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
+        });
+
+        var render = function (_data) {
+            console.log(_data);
+            var template = Handlebars.compile($('#template_label_time').html());
+            $('#time_con').html(template(_data.time));
+        };
+
+        var bind = function () {
+            mui('#time_con').on('tap', '.label-btn', function () {
+                var title = $(this).text();
+                $('#time_con').find('.label-btn').removeClass('mui-red');
+                $(this).addClass('mui-red');
+                localStorage.setItem("time", title);
+            });
+
+            $('.submit-btn').on('tap', function () {
+                event.stopPropagation();
+                var total = $.trim($("#total").val());
+                var time = localStorage.getItem("time");
+                var pay_month = $.trim($("#pay_month").val());
+
+                localStorage.setItem("total", total);
+                localStorage.setItem("pay_month", pay_month);
+
+                if (total && time && pay_month) {
+                    var url = $(this).data('href');
+                    mui.openWindow({
+                        url: url,
+                        id: 'select_score'
+                    })
+                } else {
+                    mui.toast('您还没有填完奥～')
+
+                }
+            })
+        }
     };
     return {
         init: init
@@ -1041,7 +1346,17 @@ Page.input = (function () {
 
 Page.login = (function () {
     var init = function () {
-        mui.init();
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up: {
+                    contentdown: '',
+                    contentover: '',
+                    contentrefresh: '',
+                    callback: Util.refresh().pullupRefresh_building_select
+                }
+            }
+        });
         mui.ready(function () {
             bind_form();
             bind()
@@ -1055,14 +1370,12 @@ Page.login = (function () {
                 "phone": phone,
                 "password": psw
             };
-
-            Api.login.fetch(_option)
-                .done(function (_data) {
-                    console.log('suu' + _data)
-                })
-                .fail(function (err_msg, error) {
-                    console.log(err_msg);
-                });
+            owner.login(_option, function (err) {
+                console.log(err);
+                if (err) {
+                    mui.toast(err);
+                }
+            });
         })
     };
     var bind = function () {
@@ -1088,13 +1401,12 @@ Page.person = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            // render();
             bind();
         })
     };
 
     var bind = function () {
-        //退出登录
+        //logout
         $('#logout').on('tap', function () {
 
             var btnArray = ['确定', '取消'];
@@ -1102,10 +1414,14 @@ Page.person = (function () {
                 if (e.index === 0) {
                     Api.signout.fetch()
                         .done(function (_data) {
-                            console.log(_data);
-                            mui.toast('退出登录成功!');
-                            window.location.href = '../index.html';
-                            alert('out')
+                            mui.toast('退出登录成功');
+                            owner.remove();
+                            console.log(owner.getState());
+                            setTimeout(function () {
+                                mui.openWindow({
+                                    url:'index.html'
+                                })
+                            },1000)
                         })
                         .fail(function (err_msg, error) {
                             console.log(err_msg);
@@ -1120,42 +1436,119 @@ Page.person = (function () {
     };
 })();
 
+Page.reg = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            bind();
+        })
+    };
+
+    var bind = function () {
+        $('#reg_btn').on('tap', function () {
+            var phone = $.trim($("#phone").val());
+            var email = $.trim($("#email").val());
+            var password = $.trim($("#password").val());
+            var password_confirm = $.trim($("#password_confirm").val());
+
+            var reg_info = {
+                "phone": phone,
+                "email": email,
+                "password": password,
+                "password2": password_confirm
+            };
+
+            owner.reg(reg_info, function (err) {
+                console.log(err);
+                if (err) {
+                    mui.toast(err);
+                }
+            });
+        })
+    };
+
+    return {
+        init: init
+    }
+})();
+
 Page.score = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            // var score = localStorage.getItem(select.score);
-            var score = 3;
-            var score_star = function (score) {
-                var i = 0;
-                var $score_key = $('.score-key');
-                var $score_info = $('.score-info');
-                var score_test = [
-                    {
-                        "key": "还不错",
-                        "info": "快买个房子奔小康！"
-                    },
-                    {
-                        "key": "超强",
-                        "info": "财大气粗的主儿，成都70%新盘您随便选！"
-                    },
-                    {
-                        "key": "无与伦比",
-                        "info": "全城楼盘任您选，壕，我挑你肿么样！"
-                    }
-                ];
-                for (i = 0; i < score; i++) {
-                    $('.mui-icon-star').eq(i).addClass('mui-icon-star-filled')
-
-                }
-                $score_key.text(score_test[score - 3].key);
-                $score_info.text(score_test[score - 3].info);
-            };
-            score_star(score);
             render();
+            mui('#pullrefresh').pullRefresh().pullupLoading();
+            mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
+            window.scrollTo(0, 0);
         })
     };
+
+    var score_num = function () {
+        var total = localStorage.getItem('total');
+        var score;
+        var price;
+
+        if (total <= 80) {
+            score = 3;
+            price = '5000-15000'
+        } else if (total > 80 && total <= 120) {
+            score = 4;
+            price = '8000-20000'
+        } else if (total > 120) {
+            score = 5;
+            price = '10000-25000'
+        }
+        return {
+            score: score,
+            price: price
+        };
+    };
+
+    var score_star = function () {
+        var score = score_num().score;
+
+        var $score_key = $('.score-key');
+        var $score_info = $('.score-info');
+        var score_test = [
+            {
+                "key": "还不错",
+                "info": "快买个房子奔小康！"
+            },
+            {
+                "key": "超强",
+                "info": "财大气粗的主儿，成都70%新盘您随便选！"
+            },
+            {
+                "key": "无与伦比",
+                "info": "全城楼盘任您选，壕，我挑你肿么样！"
+            }
+        ];
+
+        for (var i = 0; i < score; i++) {
+            $('.mui-icon-star').eq(i).addClass('mui-icon-star-filled')
+        }
+        $score_key.text(score_test[score - 3].key);
+        $score_info.text(score_test[score - 3].info);
+    };
+
+    var price = function () {
+        var price = score_num().price;
+        $('.pre-price-num').text(price);
+        $('.total-price-top').text(localStorage.getItem('total'));
+    };
+
+    var render_building = function () {
+
+
+    };
+
+    var list = function () {
+
+    };
+
     var render = function () {
+        score_star();
+        price();
     };
     return {
         init: init
@@ -1168,11 +1561,66 @@ Page.select = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            render();
-        })
-    };
-    var render = function () {
-        Util.go_to_detail($('.submit-btn'));
+            Api.select.fetch()
+                .done(function (_data) {
+                    render(_data);
+                    bind()
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
+        });
+
+        var render = function (_data) {
+            console.log(_data)
+            var template_perpose = Handlebars.compile($('#template_label_perpose').html());
+            $('#perpose_con').html(template_perpose(_data.perpose));
+
+            var template_location = Handlebars.compile($('#template_label_location').html());
+            $('#location_con').html(template_location(_data.location));
+
+            var template_area = Handlebars.compile($('#template_label_area').html());
+            $('#area_con').html(template_location(_data.area));
+        };
+        var bind = function () {
+            mui('#perpose_con').on('tap', '.label-btn', function () {
+                var title = $(this).text();
+                $('#perpose_con').find('.label-btn').removeClass('mui-red');
+                $(this).addClass('mui-red');
+                localStorage.setItem("perpose", title);
+            });
+
+            mui('#location_con').on('tap', '.label-btn', function () {
+                var title = $(this).text();
+                $('#location_con').find('.label-btn').removeClass('mui-red');
+                $(this).addClass('mui-red');
+                localStorage.setItem("location", title);
+            });
+
+            mui('#area_con').on('tap', '.label-btn', function () {
+                var title = $(this).text();
+                $('#area_con').find('.label-btn').removeClass('mui-red');
+                $(this).addClass('mui-red');
+                localStorage.setItem("area", title);
+            });
+
+            $('.submit-btn').on('tap', function () {
+                event.stopPropagation();
+                var perpose = localStorage.getItem("perpose");
+                var location = localStorage.getItem("location");
+                var area = localStorage.getItem("area");
+                console.log(perpose, location, area);
+                if (perpose && location && area) {
+                    var url = $(this).data('href');
+                    mui.openWindow({
+                        url: url,
+                        id: 'select_input'
+                    })
+                } else {
+                    mui.toast('您还没有选完奥～')
+                }
+            })
+        }
     };
     return {
         init: init

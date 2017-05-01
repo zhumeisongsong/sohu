@@ -1,9 +1,10 @@
-Api.building = function ($) {
-    var fetch = function (page) {
+Api.form_submit = function ($) {
+    var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
-            url: 'bulidings/{0}/'.format(page)
+            type: 'post',
+            url: 'post_participator_info/',
+            data: _option
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -12,10 +13,8 @@ Api.building = function ($) {
         });
         return $defer.promise();
     };
-
     return {
-        fetch: fetch
+        submit: submit
     };
-
 
 }(jQuery);

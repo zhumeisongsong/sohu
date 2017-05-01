@@ -1,85 +1,96 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta name="description" content="<?php bloginfo('description'); ?>">
-    <!--不识别电话号码和邮箱-->
-    <meta name="format-detection" content="telephone=no; email=no" />
-    <!--网站开启对 web app 程序的支持-->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!--状态栏颜色-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!-- windows phone 点击无高光 -->
-    <meta name="msapplication-tap-highlight" content="no">
-    <!-- uc强制竖屏 -->
-    <meta name="screen-orientation" content="portrait">
-    <!-- QQ强制竖屏 -->
-    <meta name="x5-orientation" content="portrait">
-    <!-- UC强制全屏 -->
-    <meta name="full-screen" content="yes">
-    <!-- QQ强制全屏 -->
-    <meta name="x5-fullscreen" content="true">
-    <!-- UC应用模式 -->
-    <meta name="browsermode" content="application">
-    <!-- QQ应用模式 -->
-    <meta name="x5-page-mode" content="app">
-    <!-- 使用 webkit 引擎渲染 -->
-    <meta name="renderer" content="webkit">
-    <!-- No Baidu Siteapp-->
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>我的</title>
-    <!--css-->
-    <link rel="stylesheet" href="../stylesheet/vendor.min.css">
-    <link rel="stylesheet" href="../stylesheet/style.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="description" content="<?php bloginfo('description'); ?>">
+  <!--不识别电话号码和邮箱-->
+  <meta name="format-detection" content="telephone=no; email=no"/>
+  <!--网站开启对 web app 程序的支持-->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!--状态栏颜色-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- 使用 webkit 引擎渲染 -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <title>我的</title>
+  <!--css-->
+  <link rel="stylesheet" href="../stylesheet/vendor.min.css">
+  <link rel="stylesheet" href="../stylesheet/style.css">
+</head>
 
-  <body>
-    <div class="main">
-      <div class="mui-content page-person">
-        <!--背景模糊-->
-        <header class="header-con">
-          <div class="wrapper">
-            <!--个人信息-->
-            <div class="info-con">
-              <div class="user-photo"> <img src="../image/icon/icon-user.png" /> </div>
-              <div class="user-name"> <span id="nickname" class="nickname">用户</span> </div>
-            </div>
+<body>
+<div class="main">
+  <div class="mui-content page-person">
+    <!--背景模糊-->
+    <header class="header-con">
+      <div class="wrapper">
+        <!--个人信息-->
+        <div class="info-con">
+          <div class="user-photo"><img src="../image/icon/icon-user.png"/></div>
+          <div class="user-name">
+            <span id="user_name" class="user-name">用户</span>
           </div>
-        </header>
-        <!--list start-->
-        <div class="list-con">
-          <ul class="mui-table-view ">
-            <li class="mui-table-view-cell" id="change_pw"> <a class="mui-navigate-right" href="javascript:;">
-          我的资料
-        </a> </li>
-            <li class="mui-table-view-cell" id="change_pw"> <a class="mui-navigate-right" href="javascript:;">
-          修改密码
-        </a> </li>
-            <li class="mui-table-view-cell" id="favourite"> <a class="mui-navigate-right" href="javascript:;">
-          我的收藏
-        </a> </li>
-          </ul>
-          <ul class="mui-table-view log-out">
-            <li class="mui-table-view-cell" id="logout"> <a href="javascript:;">
-          退出账号
-        </a> </li>
-          </ul>
         </div>
-        <!--list end-->
       </div>
-      <!--footer nav bar-->
-      <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
-        <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span class="mui-tab-label">明星楼盘</span> </a>
-        <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span class="mui-tab-label">小狐送福</span> </a>
-        <a class="nav-item" href="./select.html"> <span class="mui-icon back-img img-select"></span> <span class="mui-tab-label">帮你配对</span> </a>
-        <a class="nav-item" href="./person.html"> <span class="mui-icon back-img img-person"></span> <span class="mui-tab-label">我的</span> </a>
-      </nav>
+    </header>
+    <!--list start-->
+    <div class="list-con">
+      <ul class="mui-table-view ">
+        <li class="mui-table-view-cell" id="user_info">
+          <a class="mui-navigate-right" href="reg_info.html">
+          我的资料
+        </a></li>
+        <li class="mui-table-view-cell" id="change_pw">
+          <a class="mui-navigate-right" href="reg_change.html">
+          修改密码
+        </a></li>
+        <li class="mui-table-view-cell" id="user-like">
+          <a class="mui-navigate-right" href="reg_like.html">
+          我的收藏
+        </a></li>
+      </ul>
+      <ul class="mui-table-view log-out">
+        <li class="mui-table-view-cell" id="logout">
+          <a href="javascript:;">
+          退出账号
+        </a></li>
+      </ul>
     </div>
-  </body>
-  <script src="../javascript/vendor.js"></script>
-  <script src="../javascript/app.js"></script>
+    <!--list end-->
+  </div>
 
+  <!--footer nav bar-->
+  <nav class="mui-bar mui-bar-tab footer-navbar ui-border-t">
+    <a class="nav-item" href="./index.html"> <span class="mui-icon back-img img-index"></span> <span
+        class="mui-tab-label">明星楼盘</span> </a>
+    <a class="nav-item" href="./list.html"> <span class="mui-icon back-img img-activities"></span> <span
+        class="mui-tab-label">小狐送福</span> </a>
+    <a class="nav-item nav-select" href="javascript:;"> <span class="mui-icon back-img img-select"></span> <span
+        class="mui-tab-label">帮你配对</span> </a>
+    <a class="nav-item nav-person" href="javascript:;"> <span class="mui-icon back-img img-person"></span> <span
+        class="mui-tab-label">我的</span> </a>
+  </nav>
+</div>
+
+<script src="../javascript/vendor.js"></script>
+<script src="../javascript/app.js"></script>
+</body>
 </html>

@@ -1,8 +1,8 @@
 /*
- * fetch
+ * local
  */
 
-Util.ajax = function (_option) {
+Util.local_ajax = function (_option) {
     var baseUrl = _option.url;
     var query = {};
     var $defer = $.Deferred();
@@ -11,7 +11,7 @@ Util.ajax = function (_option) {
         baseUrl = baseUrl + '?' + $.param(query);
     }
     var opt = {
-        url: API_host.path_join(baseUrl),
+        url: baseUrl,
         type: _option.type,
         data: _option.data,
         timeout: 10000,

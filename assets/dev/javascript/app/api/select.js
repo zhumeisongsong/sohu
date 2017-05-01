@@ -1,11 +1,11 @@
-Api.building = function ($) {
-    var fetch = function (page) {
+Api.select = function ($) {
+    var fetch = function () {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'bulidings/{0}/'.format(page)
+            url: '../data/select.json'
         };
-        Util.ajax(options).done(function (result) {
+        Util.local_ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {
             $defer.reject(xhr);
@@ -16,6 +16,4 @@ Api.building = function ($) {
     return {
         fetch: fetch
     };
-
-
 }(jQuery);

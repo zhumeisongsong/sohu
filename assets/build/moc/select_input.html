@@ -59,49 +59,20 @@
 
     <section class="label-con">
       <h2 class="title-con">您期望的贷款年限（单选）</h2>
-      <div class="mui-row">
+
+      <script type="text/x-handlebars-template" id="template_label_time">
+        {{#each this}}
         <div class="mui-col-xs-4">
           <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="5_year">
-              <input type="radio" name="doc-js-btn" id="5_year" class="label-perpose"> 5年及以下
+            <label class="mui-btn label-btn" for="{{id}}">
+              <input type="radio" name="doc-js-btn" id="{{id}}" class="label-perpose">{{title}}
             </label>
           </section>
         </div>
-        <div class="mui-col-xs-4">
-          <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="10_year">
-              <input type="radio" name="doc-js-btn" id="10_year" class="label-perpose">10年
-            </label>
-          </section>
-        </div>
-        <div class="mui-col-xs-4">
-          <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="15_year">
-              <input type="radio" name="doc-js-btn" id="15_year" class="label-perpose">15年
-            </label>
-          </section>
-        </div>
-        <div class="mui-col-xs-4">
-          <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="20_year">
-              <input type="radio" name="doc-js-btn" id="20_year" class="label-perpose">20年
-            </label>
-          </section>
-        </div>
-        <div class="mui-col-xs-4">
-          <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="25_year">
-              <input type="radio" name="doc-js-btn" id="25_year" class="label-perpose">25年
-            </label>
-          </section>
-        </div>
-        <div class="mui-col-xs-4">
-          <section class="label-wrapper">
-            <label class="mui-btn label-btn" for="30_year">
-              <input type="radio" name="doc-js-btn" id="30_year" class="label-perpose">30年
-            </label>
-          </section>
-        </div>
+        {{/each}}
+      </script>
+
+      <div class="mui-row" id="time_con">
       </div>
     </section>
 
@@ -109,7 +80,7 @@
       <h2 class="title-con">您每月可用于购房的支出（填写数字）</h2>
       <div class="mui-row">
         <div class="mui-col-xs-12">
-          <input title="pay_month" id="pay_month" name="pay_month" type="number" class="input-item mui-input"  oninput="if(value.length>10)value=value.slice(0,10)" >
+          <input title="pay_month" id="pay_month" name="pay_month" type="number" class="input-item mui-input"  oninput="if(value.length>10)value=value.slice(0,10)">
           <div class="input-unit">元</div>
           <div class="input-tip">为了保证您的生活质量，建议月供上限不超过家庭月收入的50%。</div>
         </div>
@@ -118,7 +89,7 @@
     </section>
   </div>
 
-  <footer class="submit-btn" data-href="select-score.html">
+  <footer class="submit-btn fix-bottom" data-href="select_score.html">
     <button type="button" class="mui-btn mui-btn-block submit-loading mui-btn-primary btn-standard">下一步</button>
   </footer>
 </div>

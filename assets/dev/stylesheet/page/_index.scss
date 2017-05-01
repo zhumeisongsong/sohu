@@ -2,7 +2,7 @@
     page index
 \*------------------------------------*/
 .search-con {
-  width: 24px;
+  width: 22px;
   position: absolute;
   top: 12px;
   right: 18px;
@@ -60,7 +60,8 @@
   margin-top: 5px;
   background-color: #fff;
   h1 {
-    padding: 12px 12px 0 12px;
+    padding: 12px;
+    margin-bottom: -12px !important;
   }
   .mui-table-view {
     &:before, &:after {
@@ -86,6 +87,10 @@
   .cover-large {
     width: 100%;
     position: relative;
+    img {
+      max-height: 165px;
+      overflow: hidden;
+    }
   }
   .item-info {
     width: 100%;

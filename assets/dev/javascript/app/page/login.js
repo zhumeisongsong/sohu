@@ -1,6 +1,16 @@
 Page.login = (function () {
     var init = function () {
-        mui.init();
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up: {
+                    contentdown: '',
+                    contentover: '',
+                    contentrefresh: '',
+                    callback: Util.refresh().pullupRefresh_building_select
+                }
+            }
+        });
         mui.ready(function () {
             bind_form();
             bind()
@@ -14,14 +24,12 @@ Page.login = (function () {
                 "phone": phone,
                 "password": psw
             };
-
-            Api.login.fetch(_option)
-                .done(function (_data) {
-                    console.log('suu' + _data)
-                })
-                .fail(function (err_msg, error) {
-                    console.log(err_msg);
-                });
+            owner.login(_option, function (err) {
+                console.log(err);
+                if (err) {
+                    mui.toast(err);
+                }
+            });
         })
     };
     var bind = function () {

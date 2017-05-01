@@ -13,7 +13,7 @@ Page.activity = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
-                    callback: Util.refresh().pullupRefresh
+                    callback: Util.refresh().pullupRefresh_activity
                 }
             }
         });
@@ -21,11 +21,7 @@ Page.activity = (function () {
             mui('#pullrefresh').pullRefresh().pullupLoading();
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);
-            render()
         });
-    };
-    var render = function () {
-        Util.go_to_detail($('.mui-table-view-cell'));
     };
     return {
         init: init

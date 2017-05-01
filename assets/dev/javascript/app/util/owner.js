@@ -3,14 +3,14 @@
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
+    console.log(JSON.parse(stateText))
     return JSON.parse(stateText);
 };
 
 /**
  * 清空当前状态
  **/
-owner.remove = function ($state) {
-    // var stateText = localStorage.getItem('$state') || "{}";
+owner.remove = function () {
     localStorage.removeItem('$state');
 };
 
@@ -25,195 +25,160 @@ owner.setState = function (state) {
 /**
  * 创建当前状态
  **/
-owner.createState = function (account, nickName, tokenKey, callback) {
+owner.createState = function (user_id, callback) {
     var state = owner.getState();
-    state.account = account;
+
+    state.user_id = user_id;
     owner.setState(state);
+
     return callback('登录成功!');
 };
 
 //手机号check
-var checkPhone = function (phone_num) {
+owner.check_phone = function (phone) {
     var phonereg = /^((\d{3,4}-)?\d{7,8})?(1[3587]\d{9})?$/;
-    if (!phonereg.exec(phone_num)) {
-        return false;
-    }
-
-    if (phone_num.length < 11) {
-        return false;
-    }
+    return (phonereg.exec(phone) && phone.length == 11)
+};
+owner.check_email = function (email) {
+    email = email || '';
+    return (email.length > 3 && email.indexOf('@') > -1);
 };
 
 /**
  * 用户登录
  **/
-owner.login = function (loginInfo, callback) {
+owner.login = function (login_info, callback) {
     callback = callback || $.noop;
-    loginInfo = loginInfo || {};
-    loginInfo.phone = loginInfo.phone || '';
-    loginInfo.password = loginInfo.password || '';
+    login_info = login_info || {};
+    login_info.phone = login_info.phone || '';
+    login_info.password = login_info.password || '';
 
-    checkPhone(loginInfo.phoneNum);
-    if (checkPhone(loginInfo.phoneNum) === false) {
+    if (!owner.check_phone(login_info.phone)) {
         return callback("请填写正确的手机号码");
     }
 
-    if (loginInfo.password.length < 6) {
-        return callback('密码最短为 6 个字符');
+    if (login_info.password.length < 8) {
+        return callback('密码最短为8个字符');
     }
+
     //加密
-    loginInfo.password = jQuery.md5(loginInfo.password);
-
-    $.ajax(API_host.path_join('/user/login'), {
-        data: loginInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status == 'U000') {
-                //写入本地缓存
-                owner.createState(loginInfo.phoneNum, obj.data.nickName, obj.data.tokenKey, callback);
-
-                //登录成功后关闭
-                plus.webview.getLaunchWebview().show("pop-in", 200, function () {
-                    plus.webview.currentWebview().close("none");
-                });
-                var Scanner = plus.webview.getWebviewById('tab-person.html');
-                //触发前往页面的自定义事件,从而进行数据刷新
-                mui.fire(Scanner, 'profile_refresh');
-
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            //异常处理；
-            app_error('wireless');
-        }
-    });
+    login_info.password = jQuery.md5(login_info.password);
+    Api.login.submit(login_info)
+        .done(function (_data) {
+            owner.createState(login_info.phone, callback);
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'index.html',
+                    id: 'index'
+                })
+            }, 1000);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 新用户注册
  **/
-owner.reg = function (regInfo, callback) {
+owner.reg = function (reg_info, callback) {
     callback = callback || $.noop;
-    regInfo = regInfo || {};
-    regInfo.phoneNum = regInfo.phoneNum || '';
-    regInfo.password = regInfo.password || '';
-    regInfo.phoneVerificationCode = regInfo.phoneVerificationCode || '';
+    reg_info = reg_info || {};
+    reg_info.phone = reg_info.phone || '';
+    reg_info.email = reg_info.email || '';
+    reg_info.password = reg_info.password || '';
+    reg_info.password2 = reg_info.password || '';
 
-    if (regInfo.password.length < 6) {
-        return callback('密码最短为 6 个字符');
+    console.log(owner.check_phone(login_info.phone));
+    if (!owner.check_phone(login_info.phone)) {
+        return callback("请填写正确的手机号码");
+    }
+    if (!owner.check_email(reg_info.email)) {
+        return callback("请填写正确的邮箱");
+    }
+
+
+    if (reg_info.password.length < 8) {
+        return callback('密码最短为8个字符');
+    }
+
+    if (reg_info.password2 != reg_info.password) {
+        return callback('两次密码输入不一致');
     }
 
     //md5加密
-    regInfo.password = jQuery.md5(regInfo.password);
+    reg_info.password = jQuery.md5(reg_info.password);
+    reg_info.password2 = jQuery.md5(reg_info.password2);
 
-    // 调用注册API
-    $.ajax({
-        url: API_host.path_join('/user/register'),
-        type: 'post',
-        dataType: 'json',
-        data: regInfo,
-        timeout: 10000,
-        success: function (data) {
-            if (data && data.status == 'U000') {
-                //发送成功
-                mui.toast(data.msg);
-                call_login()
-            } else {
-                return callback(data.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            app_error('wireless');
-        }
 
-    });
-
-    return callback();
+    Api.reg.submit(reg_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 忘记密码
  **/
-owner.forgetPassword = function (changeInfo, callback) {
+owner.forgetPassword = function (change_info, callback) {
     callback = callback || $.noop;
-    changeInfo = changeInfo || {};
-    changeInfo.phone = changeInfo.phone || '';
-    changeInfo.password = changeInfo.password || '';
-    //md5加密
-    changeInfo.password = jQuery.md5(changeInfo.password);
-    $.ajax(API_host.path_join('user/retrievePassword'), {
-        data: changeInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status === 'U000') {
-                //发送成功
-                mui.toast(obj.msg);
-                call_login();
-                jQuery('#password').val('');
-                jQuery('#password_confirm').val('');
-                jQuery('#phone_number').val('');
-                jQuery('#verifyCode').val('');
+    change_info = change_info || {};
+    change_info.email = change_info.email || '';
 
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
+    if (!owner.check_email(change_info.email)) {
+        return callback("请填写正确的邮箱");
+    }
 
-        }
-    });
-    return callback();
+    Api.forget_psw.submit(change_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /**
  * 修改密码
  **/
-owner.changePassword = function (changeInfo, callback) {
+owner.changePassword = function (change_info, callback) {
     callback = callback || $.noop;
-    changeInfo = changeInfo || {};
-    changeInfo.password = changeInfo.password || '';
-    changeInfo.newPassword = changeInfo.newPassword || '';
+    change_info = change_info || {};
+    change_info.old_password = change_info.old_password || '';
+    change_info.password0 = change_info.password0 || '';
+    change_info.password1 = change_info.password1 || '';
 
     //加密
-    changeInfo.password = jQuery.md5(changeInfo.password);
-    changeInfo.newPassword = jQuery.md5(changeInfo.newPassword);
+    change_info.old_password = jQuery.md5(change_info.old_password);
+    change_info.password0 = jQuery.md5(change_info.password0);
+    change_info.password1 = jQuery.md5(change_info.password1);
 
-    var _option = {
-
-    };
-
-    $.ajax(API_host.path_join('user/changepassword'), {
-        data: changeInfo,
-        dataType: 'json', //服务器返回json格式数据
-        type: 'post', //HTTP请求类型
-        timeout: 10000, //超时时间设置为10秒；
-        success: function (obj) {
-            if (obj && obj.status == 'U000') {
-                //发送成功
-                mui.toast(obj.msg);
-                localStorage.removeItem('$state');
-                call_login();
-                $('#password').val('');
-                $('#password_confirm').val('');
-                $('#old_password').val('');
-
-            } else if (obj && obj.status == 'U168') {
-                mui.toast(obj.msg);
-                call_login()
-            } else {
-                return callback(obj.msg);
-            }
-        },
-        error: function (xhr, type, errorThrown) {
-            //异常处理；
-            app_error('wireless');
-        }
-    });
-    return callback();
+    Api.change_psw.submit(change_info)
+        .done(function (_data) {
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'reg_login.html',
+                    id: 'reg'
+                })
+            }, 1000);
+            return callback(_data.message);
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };

@@ -83,12 +83,6 @@ $(function () {
             Page.login.init();
         });
     }
-    else if (pathname == Route.login) {
-        Util.dispatcher(Route.login, function () {
-            Config.currentPage = Route.login;
-            Page.login.init();
-        });
-    }
     else if (pathname == Route.reg) {
         Util.dispatcher(Route.reg, function () {
             Config.currentPage = Route.reg;

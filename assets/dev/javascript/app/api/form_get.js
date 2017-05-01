@@ -1,9 +1,9 @@
-Api.building = function ($) {
-    var fetch = function (page) {
+Api.form_get = function ($) {
+    var fetch = function (id) {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'bulidings/{0}/'.format(page)
+            url: 'get_collect_items/{0}/'.format(id)
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -12,10 +12,8 @@ Api.building = function ($) {
         });
         return $defer.promise();
     };
-
     return {
         fetch: fetch
     };
-
 
 }(jQuery);

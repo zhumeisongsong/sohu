@@ -3,7 +3,7 @@ Api.login = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'signin',
+            url: 'signin/',
             data: _option
         };
         Util.ajax(options).done(function (result) {

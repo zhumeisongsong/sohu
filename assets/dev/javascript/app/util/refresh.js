@@ -9,18 +9,101 @@ Util.refresh = function () {
         window.location.reload();
         mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
     };
-    var count = 0;
+    var page = 1;
     /**
      * 上拉加载具体业务实现
      */
-    var pullupRefresh = function () {
 
-        //list_old = content_list;
-        var up_count = 3;
-        mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > up_count)); //参数为true代表没有更多数据了。
+    var render_building = function (_data) {
+        console.log(_data);
+        var template = Handlebars.compile($('#template_building').html());
+        if (_data.list.length == 0) {
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+        }
+        else if (_data.list.length == 10) {
+            $('#list_con').html(template(_data.list));
+            page++
+        }
+        else if (_data.list.length < 10) {
+            $('#list_con').html(template(_data.list));
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+        }
     };
+
+    var bind_building = function () {
+        Util.go_to_detail($('.list-tap'));
+        $('.like-btn').on('tap', function () {
+            Util.like($(this));
+        })
+    };
+
+    var pullupRefresh_building = function () {
+        Api.building.fetch(page)
+            .done(function (_data) {
+                render_building(_data);
+                bind_building();
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+    };
+
+    var pullupRefresh_activity = function () {
+        Api.activity.fetch(page)
+            .done(function (_data) {
+                render(_data);
+                bind()
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+
+        var render = function (_data) {
+            console.log(_data);
+            var template = Handlebars.compile($('#template_activity').html());
+            if (_data.list.length == 0) {
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+            else if (_data.list.length == 10) {
+                $('#activity_list_con').html(template(_data.list));
+                page++
+            }
+            else if (_data.list.length < 10) {
+                $('#activity_list_con').html(template(_data.list));
+                mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+            }
+
+        };
+        var bind = function () {
+            $('.list-cell').on('tap', function () {
+                Util.call_login($(this), "list_cell")
+            });
+        };
+
+    };
+
+    var pullupRefresh_building_select = function () {
+        var _option = {
+            location:'',
+            aera_setion:'',
+            price_setion:'',
+        };
+
+        Api.building_select.fetch(_option)
+            .done(function (_data) {
+                render_building(_data);
+                bind_building();
+            })
+            .fail(function (err_msg, error) {
+                console.log(err_msg);
+            });
+    };
+
+
     return {
-        pullupRefresh: pullupRefresh,
-        pulldownRefresh: pulldownRefresh
+        pulldownRefresh: pulldownRefresh,
+        pullupRefresh_building: pullupRefresh_building,
+        pullupRefresh_activity: pullupRefresh_activity,
+        pullupRefresh_building_select: pullupRefresh_building_select,
     }
 };

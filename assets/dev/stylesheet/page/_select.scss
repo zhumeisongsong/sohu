@@ -82,7 +82,7 @@
     font-size: 1.4rem;
     color: map-get($global-color,g);
     .price-title{
-      margin-right: 20px;
+      margin-right: 10px;
     }
     .text-num{
       font-weight: 400;
@@ -111,4 +111,27 @@
     padding: 12px 0;
     border-bottom: 1px solid map-get($global-color, f);
   }
+}
+
+.page-select-input{
+  .input-item{
+    height: 35px;
+    border:0;
+    padding-right: 50px;
+  }
+  .input-unit{
+    position: absolute;
+    top: 7px;
+    right: 10px;
+  }
+  .input-tip{
+    font-size: 1.2rem;
+    color: map-get($global-color,d);
+  }
+}
+.fix-bottom{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

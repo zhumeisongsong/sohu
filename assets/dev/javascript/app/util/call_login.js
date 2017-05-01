@@ -1,20 +1,47 @@
 Util.call_login = function ($dom, str) {
-    var user_id = localStorage.getItem('user_id');
+    var user_id = owner.getState().user_id;
 
-    if (user_id == undefined) {
-        $dom.attr('href', 'reg_login.html');
-        console.log(user_id);
-    } else {
-        if (str == 'select') {
+    if (str == 'like') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            })
+        } else {
+            return true;
+        }
+    }
+
+    if (str == 'list_cell') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            })
+        } else {
+            var url = $dom.data('href');
+            console.log(url);
+            mui.openWindow({
+                url: url
+            })
+        }
+    }
+
+    if (str == 'select') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            });
+        } else {
             $dom.attr('href', 'select.html');
-            console.log(user_id);
-        } else if (str == 'person') {
+        }
+    }
+
+    if (str == 'person') {
+        if (user_id == null) {
+            mui.openWindow({
+                url: 'reg_login.html'
+            });
+        } else {
             $dom.attr('href', 'person.html');
-            console.log(user_id);
-        } else if (str == 'like') {
-
-        } else if (str == 'list_cell') {
-
         }
     }
 };

@@ -2,13 +2,12 @@ Page.person = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            // render();
             bind();
         })
     };
 
     var bind = function () {
-        //退出登录
+        //logout
         $('#logout').on('tap', function () {
 
             var btnArray = ['确定', '取消'];
@@ -16,10 +15,14 @@ Page.person = (function () {
                 if (e.index === 0) {
                     Api.signout.fetch()
                         .done(function (_data) {
-                            console.log(_data);
-                            mui.toast('退出登录成功!');
-                            window.location.href = '../index.html';
-                            alert('out')
+                            mui.toast('退出登录成功');
+                            owner.remove();
+                            console.log(owner.getState());
+                            setTimeout(function () {
+                                mui.openWindow({
+                                    url:'index.html'
+                                })
+                            },1000)
                         })
                         .fail(function (err_msg, error) {
                             console.log(err_msg);

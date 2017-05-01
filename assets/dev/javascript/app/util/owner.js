@@ -3,7 +3,7 @@
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
-    console.log(JSON.parse(stateText))
+    console.log(JSON.parse(stateText));
     return JSON.parse(stateText);
 };
 
@@ -70,14 +70,15 @@ owner.login = function (login_info, callback) {
             Api.like_set.fetch(1)
                 .done(function (_data) {
                     console.log(_data)
+                });
+            owner.createState(login_info.phone, callback);
+
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'index.html',
+                    id: 'index'
                 })
-            // owner.createState(login_info.phone, callback);
-            // setTimeout(function () {
-            //     mui.openWindow({
-            //         url: 'index.html',
-            //         id: 'index'
-            //     })
-            // }, 1000);
+            }, 1000);
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
@@ -95,8 +96,8 @@ owner.reg = function (reg_info, callback) {
     reg_info.password = reg_info.password || '';
     reg_info.password2 = reg_info.password || '';
 
-    console.log(owner.check_phone(login_info.phone));
-    if (!owner.check_phone(login_info.phone)) {
+    console.log(owner.check_phone(reg_info.phone));
+    if (!owner.check_phone(reg_info.phone)) {
         return callback("请填写正确的手机号码");
     }
     if (!owner.check_email(reg_info.email)) {

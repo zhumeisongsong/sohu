@@ -7,7 +7,7 @@ Util.scroll = function () {
             $.fn.myScroll = function (options) {
                 //默认配置
                 var defaults = {
-                    speed: 40,  //滚动速度,值越大速度越慢
+                    speed: 50,  //滚动速度,值越大速度越慢
                     rowHeight: 24 //每行的高度
                 };
 

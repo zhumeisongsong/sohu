@@ -40,11 +40,21 @@
   <div class="mui-content page-reg">
 
     <form class="mui-input-group">
-
-      <div class="mui-input-row">
-        <input id='email' name="email" type="email" class="mui-input-clear mui-input input-padding-right"
-               placeholder="邮箱地址" maxlength="50">
+      <div class="mui-input-row ui-border-b">
+        <input id='old_password' name="old_password" type="password" class="mui-input-clear input-mode"
+               placeholder="旧密码" oninput="if(value.length>20)value=value.slice(0,20)">
       </div>
+
+      <div class="mui-input-row ui-border-b">
+        <input id='password' name="password" type="password" class="mui-input-clear input-mode" placeholder="新密码"
+               oninput="if(value.length>20)value=value.slice(0,20)">
+      </div>
+
+      <div class="mui-input-row ui-border-b">
+        <input id='password_confirm' name="password_confirm" type="password" class="mui-input-clear input-mode"
+               placeholder="确认新密码" oninput="if(value.length>20)value=value.slice(0,20)">
+      </div>
+
     </form>
 
     <div class="submit-con">

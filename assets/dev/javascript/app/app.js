@@ -116,6 +116,12 @@ $(function () {
             Page.like.init();
         });
     }
+    else if (pathname == Route.search) {
+        Util.dispatcher(Route.search, function () {
+            Config.currentPage = Route.search;
+            Page.search.init();
+        });
+    }
 
 
     // dispatch

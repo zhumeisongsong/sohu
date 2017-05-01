@@ -1,6 +1,17 @@
 Page.score = (function () {
     var init = function () {
-        mui.init();
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up: {
+                    contentdown: '',
+                    contentover: '',
+                    contentrefresh: '',
+                    contentnomore: '已经全部加载完',
+                    callback: Util.refresh().pullupRefresh_building_select
+                }
+            }
+        });
         mui.ready(function () {
             render();
             mui('#pullrefresh').pullRefresh().pullupLoading();

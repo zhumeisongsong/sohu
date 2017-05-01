@@ -118,6 +118,12 @@ $(function () {
             Page.like.init();
         });
     }
+    else if (pathname == Route.search) {
+        Util.dispatcher(Route.search, function () {
+            Config.currentPage = Route.search;
+            Page.search.init();
+        });
+    }
 
 
     // dispatch
@@ -127,6 +133,38 @@ $(function () {
 var host = 'https://www.sohuhxh.com/';
 var API_root = 'main';
 var API_host = host + API_root;
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+var setionid = getCookie('setionid');
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
 
 Util.call_login = function ($dom, str) {
     var user_id = owner.getState().user_id;
@@ -281,7 +319,7 @@ Util.active = function (pathname) {
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
-    console.log(JSON.parse(stateText))
+    console.log(JSON.parse(stateText));
     return JSON.parse(stateText);
 };
 
@@ -348,14 +386,15 @@ owner.login = function (login_info, callback) {
             Api.like_set.fetch(1)
                 .done(function (_data) {
                     console.log(_data)
+                });
+            owner.createState(login_info.phone, callback);
+
+            setTimeout(function () {
+                mui.openWindow({
+                    url: 'index.html',
+                    id: 'index'
                 })
-            // owner.createState(login_info.phone, callback);
-            // setTimeout(function () {
-            //     mui.openWindow({
-            //         url: 'index.html',
-            //         id: 'index'
-            //     })
-            // }, 1000);
+            }, 1000);
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
@@ -373,8 +412,8 @@ owner.reg = function (reg_info, callback) {
     reg_info.password = reg_info.password || '';
     reg_info.password2 = reg_info.password || '';
 
-    console.log(owner.check_phone(login_info.phone));
-    if (!owner.check_phone(login_info.phone)) {
+    console.log(owner.check_phone(reg_info.phone));
+    if (!owner.check_phone(reg_info.phone)) {
         return callback("请填写正确的手机号码");
     }
     if (!owner.check_email(reg_info.email)) {
@@ -586,7 +625,7 @@ Util.scroll = function () {
             $.fn.myScroll = function (options) {
                 //默认配置
                 var defaults = {
-                    speed: 40,  //滚动速度,值越大速度越慢
+                    speed: 50,  //滚动速度,值越大速度越慢
                     rowHeight: 24 //每行的高度
                 };
 
@@ -1015,8 +1054,12 @@ Api.like_set = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'set_liked/{0}/'.format(id)
+            url: 'set_liked/{0}/'.format(id),
+            data: {
+                'user_id': owner.getState().user_id
+            }
         };
+        console.log(options.data)
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {
@@ -1190,6 +1233,7 @@ Page.activity = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
+                    contentnomore:'已经全部加载完',
                     callback: Util.refresh().pullupRefresh_activity
                 }
             }
@@ -1210,6 +1254,7 @@ Page.all = (function () {
     var init = function () {
         Util.string.path_join();
         Util.string.format();
+        
     };
     return {
         init: init
@@ -1263,6 +1308,7 @@ Page.index = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
+                    contentnomore:'已经全部加载完',
                     callback: Util.refresh().pullupRefresh_building
                 }
             }
@@ -1610,7 +1656,18 @@ Page.reg = (function () {
 
 Page.score = (function () {
     var init = function () {
-        mui.init();
+        mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up: {
+                    contentdown: '',
+                    contentover: '',
+                    contentrefresh: '',
+                    contentnomore: '已经全部加载完',
+                    callback: Util.refresh().pullupRefresh_building_select
+                }
+            }
+        });
         mui.ready(function () {
             render();
             mui('#pullrefresh').pullRefresh().pullupLoading();
@@ -1690,7 +1747,28 @@ Page.score = (function () {
     };
 })();
 
+Page.search = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
 
+            $('.search-btn').on('tap',function () {
+                Api.search.fetch()
+                    .done(function (_data) {
+                        console.log(_data)
+
+                    })
+                    .fail(function (err_msg, error) {
+                        console.log(err_msg);
+                    });
+            })
+
+        });
+    };
+    return{
+        init:init
+    }
+})();
 
 Page.select = (function () {
     var init = function () {

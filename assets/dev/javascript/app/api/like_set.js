@@ -3,8 +3,12 @@ Api.like_set = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'set_liked/{0}/'.format(id)
+            url: 'set_liked/{0}/'.format(id),
+            data: {
+                'user_id': owner.getState().user_id
+            }
         };
+        console.log(options.data)
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {

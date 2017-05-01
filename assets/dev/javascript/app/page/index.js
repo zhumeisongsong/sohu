@@ -13,6 +13,7 @@ Page.index = (function () {
                     contentdown: '',
                     contentover: '',
                     contentrefresh: '',
+                    contentnomore:'已经全部加载完',
                     callback: Util.refresh().pullupRefresh_building
                 }
             }

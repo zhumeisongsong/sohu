@@ -19,7 +19,11 @@ var Route = App.Route = {
     login: 'reg_login.html',
     forget: 'reg_forget.html',
     change: 'reg_change.html',
-    like: 'reg_like.html'
+    like: 'reg_like.html',
+    info: 'reg_info.html',
+
+    search: 'search.html',
+    form: 'form.html'
 };
 
 /*
@@ -28,7 +32,6 @@ var Route = App.Route = {
 $(function () {
     var pathname = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
     //nav active
-    console.log(pathname);
     Util.active(pathname);
 
     /*
@@ -99,6 +102,12 @@ $(function () {
         Util.dispatcher(Route.change, function () {
             Config.currentPage = Route.change;
             Page.change.init();
+        });
+    }
+    else if (pathname == Route.info) {
+        Util.dispatcher(Route.info, function () {
+            Config.currentPage = Route.info;
+            Page.info.init();
         });
     }
 

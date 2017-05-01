@@ -635,6 +635,25 @@ p {
   color: #666;
 }
 
+.page-info .mui-btn-block {
+  height: 50px;
+  margin-bottom: 0;
+  border: 0;
+  color: #999;
+  padding-left: 15px;
+  text-align: left;
+  font-size: 17px;
+}
+
+.page-info .submit-con button {
+  text-align: center;
+  color: #fff;
+}
+
+.mui-input-group input {
+  font-weight: 400;
+}
+
 .footer-navbar {
   width: 100%;
   max-width: 414px;

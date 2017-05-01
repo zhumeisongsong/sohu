@@ -3,6 +3,7 @@ Page.login = (function () {
         mui.init({
             pullRefresh: {
                 container: '#pullrefresh',
+
                 up: {
                     contentdown: '',
                     contentover: '',

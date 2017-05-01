@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no"/>
   <meta name="description" content="<?php bloginfo('description'); ?>">
   <!--不识别电话号码和邮箱-->
-  <meta name="format-detection" content="telephone=no; email=no" />
+  <meta name="format-detection" content="telephone=no; email=no"/>
   <!--网站开启对 web app 程序的支持-->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <!--状态栏颜色-->
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <!-- windows phone 点击无高光 -->
@@ -29,7 +29,7 @@
   <!-- 使用 webkit 引擎渲染 -->
   <meta name="renderer" content="webkit">
   <!-- No Baidu Siteapp-->
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <title>搜索</title>
   <!--css-->
   <link rel="stylesheet" href="../stylesheet/vendor.min.css">
@@ -39,7 +39,24 @@
 <body>
 <div class="main">
   <div class="mui-content page-search">
-嗖嗖
+    <header class="search-con">
+      <div class="mui-input-row mui-search mui-plus-visible search-bar-normal">
+        <input id="search" type="search" class="mui-input-speech mui-input-clear grey" placeholder="搜索" maxlength="20">
+      </div>
+      <a href="javascript:;" class="search-btn">搜索</a>
+    </header>
+
+    <script type="text/x-handlebars-template" id="template_result"> 
+      {{#each this}}
+      <div class="mui-table-view-cell search-cell"   data-href="{{detail_url}}"> 
+       {{title}}
+      </div>
+      {{/each}}
+    </script>
+
+    <section class="result-con" id="result_con">
+
+    </section>
   </div>
 </div>
 

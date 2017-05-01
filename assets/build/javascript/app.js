@@ -21,7 +21,11 @@ var Route = App.Route = {
     login: 'reg_login.html',
     forget: 'reg_forget.html',
     change: 'reg_change.html',
-    like: 'reg_like.html'
+    like: 'reg_like.html',
+    info: 'reg_info.html',
+
+    search: 'search.html',
+    form: 'form.html'
 };
 
 /*
@@ -30,7 +34,6 @@ var Route = App.Route = {
 $(function () {
     var pathname = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
     //nav active
-    console.log(pathname);
     Util.active(pathname);
 
     /*
@@ -103,13 +106,19 @@ $(function () {
             Page.change.init();
         });
     }
+    else if (pathname == Route.info) {
+        Util.dispatcher(Route.info, function () {
+            Config.currentPage = Route.info;
+            Page.info.init();
+        });
+    }
 
 
     // dispatch
     Util.dispatcher(pathname);
 });
 
-var host = 'http://www.sohuhxh.com/';
+var host = 'https://www.sohuhxh.com/';
 var API_root = 'main';
 var API_host = host + API_root;
 
@@ -1050,6 +1059,26 @@ Api.news = function ($) {
 
 }(jQuery);
 
+Api.search = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'search_building/'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
+
 Api.select = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
@@ -1289,6 +1318,72 @@ Page.index = (function () {
 
 })();
 
+Page.info = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            render()
+            bind();
+        })
+    };
+    var picker_sex = function () {
+        var userPicker = new $.PopPicker();
+        userPicker.setData([
+            {
+                value: 'male',
+                text: '男'
+            },
+            {
+                value: 'famal',
+                text: '女'
+            }
+        ]);
+        var showUserPickerButton = doc.getElementById('showUserPicker');
+        var userResult = doc.getElementById('userResult');
+        showUserPickerButton.addEventListener('tap', function (event) {
+            userPicker.show(function (items) {
+                userResult.innerText = JSON.stringify(items[0]);
+                //返回 false 可以阻止选择框的关闭
+                //return false;
+            });
+        }, false);
+    };
+    var render = function () {
+
+
+    };
+
+    var bind = function () {
+        $('#info_btn').on('tap', function () {
+            var name = $.trim($("#name").val());
+            var weichat = $.trim($("#wechat").val());
+            var sex;
+            var location;
+            var style;
+            var address;
+
+
+
+            var _option = {
+                "weichat": weichat,
+                "name": name,
+                "address": address,
+                "styles": style,
+                "gender": sex,
+                "regions ": location
+            };
+
+            Api.info.submit = function (_option) {
+
+            };
+        })
+    };
+
+    return {
+        init: init
+    }
+})();
+
 Page.input = (function () {
     var init = function () {
         mui.init();
@@ -1349,6 +1444,7 @@ Page.login = (function () {
         mui.init({
             pullRefresh: {
                 container: '#pullrefresh',
+
                 up: {
                     contentdown: '',
                     contentover: '',
@@ -1538,7 +1634,6 @@ Page.score = (function () {
     };
 
     var render_building = function () {
-
 
     };
 

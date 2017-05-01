@@ -65,7 +65,6 @@ Page.score = (function () {
 
     var render_building = function () {
 
-
     };
 
     var list = function () {

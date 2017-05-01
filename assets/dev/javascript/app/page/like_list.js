@@ -12,7 +12,9 @@ Page.like = (function () {
                 });
         });
         var render = function (_data) {
-            console.log(data)
+            console.log(_data)
+            var template ;
+
 
         };
 

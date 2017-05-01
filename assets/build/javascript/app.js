@@ -1033,8 +1033,11 @@ Api.like_list = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
-            url: 'get_user_likes/'
+            type: 'post',
+            url: 'get_user_likes/',
+            data:{
+                'user_id': owner.getState().user_id
+            }
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -1511,7 +1514,9 @@ Page.like = (function () {
                 });
         });
         var render = function (_data) {
-            console.log(data)
+            console.log(_data)
+            var template ;
+
 
         };
 

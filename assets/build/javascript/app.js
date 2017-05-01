@@ -342,14 +342,20 @@ owner.login = function (login_info, callback) {
     //加密
     login_info.password = jQuery.md5(login_info.password);
     Api.login.submit(login_info)
+
         .done(function (_data) {
-            owner.createState(login_info.phone, callback);
-            setTimeout(function () {
-                mui.openWindow({
-                    url: 'index.html',
-                    id: 'index'
+            console.log(_data);
+            Api.like_set.fetch(1)
+                .done(function (_data) {
+                    console.log(_data)
                 })
-            }, 1000);
+            // owner.createState(login_info.phone, callback);
+            // setTimeout(function () {
+            //     mui.openWindow({
+            //         url: 'index.html',
+            //         id: 'index'
+            //     })
+            // }, 1000);
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);

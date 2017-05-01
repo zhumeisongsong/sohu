@@ -621,7 +621,7 @@ Util.refresh = function () {
         pulldownRefresh: pulldownRefresh,
         pullupRefresh_building: pullupRefresh_building,
         pullupRefresh_activity: pullupRefresh_activity,
-        pullupRefresh_building_select: pullupRefresh_building_select,
+        pullupRefresh_building_select: pullupRefresh_building_select
     }
 };
 
@@ -691,20 +691,20 @@ Util.scroll = function () {
     }
 };
 
-Util.like=function ($dom) {
+Util.like=function ($dom, status) {
     var id = $dom.data('id');
     var status = $dom.data('status');
-    console.log(id,status)
+    alert(status)
 
         Api.like_set.fetch(id)
             .done(function (_data) {
                 console.log(_data);
                 if(status){
-                    $dom.addClass('is_like');
+                    $dom.removeClass('is-like');
                     $dom.text('关注');
                     $dom.attr('data-status','false');
                 }else{
-                    $dom.removeClass('is_like');
+                    $dom.addClass('is-like');
                     $dom.text('取消');
                     $dom.attr('data-status','true');
                 }
@@ -960,7 +960,7 @@ Api.change_psw = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'change_password',
+            url: 'change_password/',
             data: _option
         };
 
@@ -1073,7 +1073,6 @@ Api.like_set = function ($) {
                 'user_id': owner.getState().user_id
             }
         };
-        console.log(options.data)
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {
@@ -1291,7 +1290,8 @@ Page.change= (function () {
     };
 
     var bind = function () {
-        $('#change_psw').on('tap', function () {
+        console.log('in')
+        $('#change_psw_btn').on('tap', function () {
             var old_password = $.trim($("#old_password").val());
             var password0 = $.trim($("#password").val());
             var password1 = $.trim($("#password_confirm").val());
@@ -1299,7 +1299,8 @@ Page.change= (function () {
             var change_info = {
                 "old_password": old_password,
                 "password0": password0,
-                "password1": password1
+                "password1": password1,
+                "user_id":owner.getState().user_id
             };
             console.log(change_info)
 
@@ -1421,8 +1422,8 @@ Page.info = (function () {
                 text: '女'
             }
         ]);
-        var showUserPickerButton = doc.getElementById('showUserPicker');
-        var userResult = doc.getElementById('userResult');
+        var showUserPickerButton = doc.getElementById('sex');
+        var userResult = doc.getElementById('sex_result');
         showUserPickerButton.addEventListener('tap', function (event) {
             userPicker.show(function (items) {
                 userResult.innerText = JSON.stringify(items[0]);
@@ -1431,12 +1432,15 @@ Page.info = (function () {
             });
         }, false);
     };
+
+    //fetch
     var render = function () {
 
 
     };
 
     var bind = function () {
+        picker_sex();
         $('#info_btn').on('tap', function () {
             var name = $.trim($("#name").val());
             var weichat = $.trim($("#wechat").val());
@@ -1444,8 +1448,6 @@ Page.info = (function () {
             var location;
             var style;
             var address;
-
-
 
             var _option = {
                 "weichat": weichat,
@@ -1538,8 +1540,6 @@ Page.like = (function () {
         var render = function (_data) {
             console.log(_data)
             var template ;
-
-
         };
 
         var bind = function () {
@@ -1609,8 +1609,12 @@ Page.person = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
+            render()
             bind();
         })
+    };
+    var render = function () {
+      $('#user_name').text(owner.getState().user_id)
     };
 
     var bind = function () {
@@ -1627,9 +1631,9 @@ Page.person = (function () {
                             console.log(owner.getState());
                             setTimeout(function () {
                                 mui.openWindow({
-                                    url:'index.html'
+                                    url: 'index.html'
                                 })
-                            },1000)
+                            }, 1000)
                         })
                         .fail(function (err_msg, error) {
                             console.log(err_msg);

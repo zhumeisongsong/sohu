@@ -1,17 +1,17 @@
-Util.like=function ($dom) {
+Util.like=function ($dom, status) {
     var id = $dom.data('id');
     var status = $dom.data('status');
-    console.log(id,status)
+    alert(status)
 
         Api.like_set.fetch(id)
             .done(function (_data) {
                 console.log(_data);
                 if(status){
-                    $dom.addClass('is_like');
+                    $dom.removeClass('is-like');
                     $dom.text('关注');
                     $dom.attr('data-status','false');
                 }else{
-                    $dom.removeClass('is_like');
+                    $dom.addClass('is-like');
                     $dom.text('取消');
                     $dom.attr('data-status','true');
                 }

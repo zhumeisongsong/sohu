@@ -8,7 +8,6 @@ Api.like_set = function ($) {
                 'user_id': owner.getState().user_id
             }
         };
-        console.log(options.data)
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {

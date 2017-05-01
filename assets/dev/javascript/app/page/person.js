@@ -2,8 +2,12 @@ Page.person = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
+            render()
             bind();
         })
+    };
+    var render = function () {
+      $('#user_name').text(owner.getState().user_id)
     };
 
     var bind = function () {
@@ -20,9 +24,9 @@ Page.person = (function () {
                             console.log(owner.getState());
                             setTimeout(function () {
                                 mui.openWindow({
-                                    url:'index.html'
+                                    url: 'index.html'
                                 })
-                            },1000)
+                            }, 1000)
                         })
                         .fail(function (err_msg, error) {
                             console.log(err_msg);

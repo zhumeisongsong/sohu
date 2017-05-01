@@ -1,20 +1,22 @@
-.activities-list{
-  &.mui-table-view{
+.page-activity{
+  &.mui-table-view {
     background: none;
   }
-  .list-item{
-  margin-bottom: 5px;
-    h2{
-      height: 100%;
+  .list-item {
+    margin-bottom: 5px;
+    .title-text {
+      height: 35px;
       line-height: 35px;
+      overflow: hidden;
       padding: 0 12px 0 12px;
-      color: map-get($global-color,d);
+      color: map-get($global-color, d);
     }
   }
 }
-.activity-banner{
+
+.activity-banner {
   min-height: 38px;
   .swiper-pagination {
-    bottom: 0!important;
+    bottom: 0 !important;
   }
 }

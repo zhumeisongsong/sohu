@@ -3,7 +3,7 @@ Api.change_psw = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'change_password',
+            url: 'change_password/',
             data: _option
         };
 

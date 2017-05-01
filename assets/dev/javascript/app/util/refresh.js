@@ -117,6 +117,6 @@ Util.refresh = function () {
         pulldownRefresh: pulldownRefresh,
         pullupRefresh_building: pullupRefresh_building,
         pullupRefresh_activity: pullupRefresh_activity,
-        pullupRefresh_building_select: pullupRefresh_building_select,
+        pullupRefresh_building_select: pullupRefresh_building_select
     }
 };

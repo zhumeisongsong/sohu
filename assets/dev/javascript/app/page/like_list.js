@@ -14,8 +14,6 @@ Page.like = (function () {
         var render = function (_data) {
             console.log(_data)
             var template ;
-
-
         };
 
         var bind = function () {

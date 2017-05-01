@@ -18,8 +18,8 @@ Page.info = (function () {
                 text: '女'
             }
         ]);
-        var showUserPickerButton = doc.getElementById('showUserPicker');
-        var userResult = doc.getElementById('userResult');
+        var showUserPickerButton = doc.getElementById('sex');
+        var userResult = doc.getElementById('sex_result');
         showUserPickerButton.addEventListener('tap', function (event) {
             userPicker.show(function (items) {
                 userResult.innerText = JSON.stringify(items[0]);
@@ -28,12 +28,15 @@ Page.info = (function () {
             });
         }, false);
     };
+
+    //fetch
     var render = function () {
 
 
     };
 
     var bind = function () {
+        picker_sex();
         $('#info_btn').on('tap', function () {
             var name = $.trim($("#name").val());
             var weichat = $.trim($("#wechat").val());
@@ -41,8 +44,6 @@ Page.info = (function () {
             var location;
             var style;
             var address;
-
-
 
             var _option = {
                 "weichat": weichat,

@@ -83,11 +83,24 @@ Util.refresh = function () {
     };
 
     var pullupRefresh_building_select = function () {
+        var location =localStorage.getItem('location').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        if(location=='不限'){
+            location='';
+        }
+        var area =localStorage.getItem('area').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        console.log(area)
+        if(area=='不限'){
+            area='';
+        }
+        var price=localStorage.getItem('price').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+
         var _option = {
-            location:'',
-            aera_setion:'',
-            price_setion:'',
+            "location":location ,
+            "aera_setion": area,
+            "price_setion": price,
+            "user_id": owner.getState().user_id
         };
+        console.log(_option)
 
         Api.building_select.fetch(_option)
             .done(function (_data) {

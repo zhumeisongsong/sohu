@@ -67,6 +67,16 @@
 }
 
 /*score*/
+.page-score{
+  .mui-table-view{
+    &:before{
+      display: none;
+    }
+    &:after{
+      display: none;
+    }
+  }
+}
 .price-info {
   width: 100%;
   padding: 0 12px;
@@ -115,13 +125,13 @@
 
 .page-select-input{
   .input-item{
-    height: 35px;
+    height: 40px;
     border:0;
     padding-right: 50px;
   }
   .input-unit{
     position: absolute;
-    top: 7px;
+    top: 10px;
     right: 10px;
   }
   .input-tip{
@@ -131,7 +141,23 @@
 }
 .fix-bottom{
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
+  .mui-btn-block{
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 414px) {
+  .fix-bottom{
+   width: 414px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-left: -207px;
+  }
+}
+.page-select{
+  margin-bottom: 50px;
 }

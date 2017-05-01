@@ -19,6 +19,10 @@ Page.activity = (function () {
             }
         });
         mui.ready(function () {
+            Util.swiper();
+
+            Util.go_to_detail($('.swiper-slide'));
+
             mui('#pullrefresh').pullRefresh().pullupLoading();
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);

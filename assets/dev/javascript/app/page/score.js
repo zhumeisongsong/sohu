@@ -27,13 +27,13 @@ Page.score = (function () {
 
         if (total <= 80) {
             score = 3;
-            price = '5000-15000'
+            price = '9000-11000'
         } else if (total > 80 && total <= 120) {
             score = 4;
-            price = '8000-20000'
+            price = '11000-15000'
         } else if (total > 120) {
             score = 5;
-            price = '10000-25000'
+            price = '20000以上'
         }
         return {
             score: score,
@@ -70,15 +70,15 @@ Page.score = (function () {
 
     var price = function () {
         var price = score_num().price;
+
         $('.pre-price-num').text(price);
-        $('.total-price-top').text(localStorage.getItem('total'));
-    };
+        localStorage.setItem('price',price)
 
-    var render_building = function () {
-
-    };
-
-    var list = function () {
+        if(localStorage.getItem('total')<50){
+            $('.total-price-top').text(50);
+        }else{
+            $('.total-price-top').text(localStorage.getItem('total')+10);
+        }
 
     };
 

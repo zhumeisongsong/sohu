@@ -67,12 +67,7 @@ owner.login = function (login_info, callback) {
 
         .done(function (_data) {
             console.log(_data);
-            Api.like_set.fetch(1)
-                .done(function (_data) {
-                    console.log(_data)
-                });
             owner.createState(login_info.phone, callback);
-
             setTimeout(function () {
                 mui.openWindow({
                     url: 'index.html',
@@ -177,6 +172,7 @@ owner.changePassword = function (change_info, callback) {
 
     Api.change_psw.submit(change_info)
         .done(function (_data) {
+            console.log('in')
             setTimeout(function () {
                 mui.openWindow({
                     url: 'reg_login.html',

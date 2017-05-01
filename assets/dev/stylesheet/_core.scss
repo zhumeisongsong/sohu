@@ -51,7 +51,6 @@ p {
   height: 100%;
   max-width: 414px;
   margin: 0 auto;
-  margin-bottom: 50px;
   font-weight: 200;
   background-color: map-get($global-color, e);
 }
@@ -226,8 +225,4 @@ p {
     margin-left: 0;
     bottom: 50px;
   }
-}
-
-input {
-  font-size: 14px;
 }

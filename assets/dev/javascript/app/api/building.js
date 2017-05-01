@@ -2,8 +2,11 @@ Api.building = function ($) {
     var fetch = function (page) {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
-            url: 'bulidings/{0}/'.format(page)
+            type: 'post',
+            url: 'bulidings/{0}/'.format(page),
+            data:{
+                "user_id":owner.getState().user_id
+            }
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -16,6 +19,5 @@ Api.building = function ($) {
     return {
         fetch: fetch
     };
-
 
 }(jQuery);

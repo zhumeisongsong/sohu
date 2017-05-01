@@ -26,7 +26,6 @@ Page.login = (function () {
                 "password": psw
             };
             owner.login(_option, function (err) {
-                console.log(err);
                 if (err) {
                     mui.toast(err);
                 }

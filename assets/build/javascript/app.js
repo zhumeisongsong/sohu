@@ -383,12 +383,7 @@ owner.login = function (login_info, callback) {
 
         .done(function (_data) {
             console.log(_data);
-            Api.like_set.fetch(1)
-                .done(function (_data) {
-                    console.log(_data)
-                });
             owner.createState(login_info.phone, callback);
-
             setTimeout(function () {
                 mui.openWindow({
                     url: 'index.html',
@@ -493,6 +488,7 @@ owner.changePassword = function (change_info, callback) {
 
     Api.change_psw.submit(change_info)
         .done(function (_data) {
+            console.log('in')
             setTimeout(function () {
                 mui.openWindow({
                     url: 'reg_login.html',
@@ -591,11 +587,24 @@ Util.refresh = function () {
     };
 
     var pullupRefresh_building_select = function () {
+        var location =localStorage.getItem('location').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        if(location=='不限'){
+            location='';
+        }
+        var area =localStorage.getItem('area').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        console.log(area)
+        if(area=='不限'){
+            area='';
+        }
+        var price=localStorage.getItem('price').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+
         var _option = {
-            location:'',
-            aera_setion:'',
-            price_setion:'',
+            "location":location ,
+            "aera_setion": area,
+            "price_setion": price,
+            "user_id": owner.getState().user_id
         };
+        console.log(_option)
 
         Api.building_select.fetch(_option)
             .done(function (_data) {
@@ -904,8 +913,11 @@ Api.building = function ($) {
     var fetch = function (page) {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
-            url: 'bulidings/{0}/'.format(page)
+            type: 'post',
+            url: 'bulidings/{0}/'.format(page),
+            data:{
+                "user_id":owner.getState().user_id
+            }
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -919,16 +931,15 @@ Api.building = function ($) {
         fetch: fetch
     };
 
-
 }(jQuery);
 
 Api.building_select = function ($) {
     var fetch = function (_option) {
         var $defer = $.Deferred();
         var options = {
-            url: 'buildings_condition',
-            type: 'post',
-            data: _option.data
+            url: 'buildings_condition/',
+            type: 'get',
+            data: _option
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -1118,11 +1129,14 @@ Api.news = function ($) {
 }(jQuery);
 
 Api.search = function ($) {
-    var fetch = function () {
+    var fetch = function (val) {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'search_building/'
+            url: 'search_building/',
+            data:{
+                "q":val
+            }
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
@@ -1242,6 +1256,10 @@ Page.activity = (function () {
             }
         });
         mui.ready(function () {
+            Util.swiper();
+
+            Util.go_to_detail($('.swiper-slide'));
+
             mui('#pullrefresh').pullRefresh().pullupLoading();
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);
@@ -1264,7 +1282,7 @@ Page.all = (function () {
     };
 })();
 
-Page.change_psw = (function () {
+Page.change= (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
@@ -1274,14 +1292,18 @@ Page.change_psw = (function () {
 
     var bind = function () {
         $('#change_psw').on('tap', function () {
-            var email = $.trim($("#email").val());
+            var old_password = $.trim($("#old_password").val());
+            var password0 = $.trim($("#password").val());
+            var password1 = $.trim($("#password_confirm").val());
 
-            var reg_info = {
-                "email": email
+            var change_info = {
+                "old_password": old_password,
+                "password0": password0,
+                "password1": password1
             };
+            console.log(change_info)
 
-            owner.reg(reg_info, function (err) {
-                console.log(err);
+            owner.changePassword(change_info, function (err) {
                 if (err) {
                     mui.toast(err);
                 }
@@ -1558,7 +1580,6 @@ Page.login = (function () {
                 "password": psw
             };
             owner.login(_option, function (err) {
-                console.log(err);
                 if (err) {
                     mui.toast(err);
                 }
@@ -1688,13 +1709,13 @@ Page.score = (function () {
 
         if (total <= 80) {
             score = 3;
-            price = '5000-15000'
+            price = '9000-11000'
         } else if (total > 80 && total <= 120) {
             score = 4;
-            price = '8000-20000'
+            price = '11000-15000'
         } else if (total > 120) {
             score = 5;
-            price = '10000-25000'
+            price = '20000以上'
         }
         return {
             score: score,
@@ -1731,15 +1752,15 @@ Page.score = (function () {
 
     var price = function () {
         var price = score_num().price;
+
         $('.pre-price-num').text(price);
-        $('.total-price-top').text(localStorage.getItem('total'));
-    };
+        localStorage.setItem('price',price)
 
-    var render_building = function () {
-
-    };
-
-    var list = function () {
+        if(localStorage.getItem('total')<50){
+            $('.total-price-top').text(50);
+        }else{
+            $('.total-price-top').text(localStorage.getItem('total')+10);
+        }
 
     };
 
@@ -1758,14 +1779,21 @@ Page.search = (function () {
         mui.ready(function () {
 
             $('.search-btn').on('tap',function () {
-                Api.search.fetch()
-                    .done(function (_data) {
-                        console.log(_data)
+                var val = $.trim($("#search").val());
+                if(val==''){
+                    mui.toast("请输入内容")
+                }else{
+                    Api.search.fetch(val)
+                        .done(function (_data) {
+                            console.log(_data)
+                        })
+                        .fail(function (err_msg, error) {
+                            console.log(err_msg);
+                            mui.toast("暂无搜索结果")
+                        });
+                }
 
-                    })
-                    .fail(function (err_msg, error) {
-                        console.log(err_msg);
-                    });
+
             })
 
         });

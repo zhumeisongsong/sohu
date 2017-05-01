@@ -38,27 +38,49 @@
 
 <body>
 <div class="main">
-  <script type="text/x-handlebars-template" id="template_activity">
-    {{#each this}}
-    <div class="list-item mui-table-view-cell no-padding list-cell" data-href="{{detail_url}}">
-      <div class="wrapper no-padding">
-        <div class="cover-large img-con">
-          <img src="{{cover_img cover}}" alt="{{cover}}">
-        </div>
-        <div class="item-info">
-          <h2 class="title-text">{{title}}</h2>
-        </div>
-        <div class="clear"></div>
-      </div>
-    </div>
-    {{/each}}
-  </script>
 
   <div id="pullrefresh" class="mui-content mui-scroll-wrapper refresh-list">
     <div class="mui-scroll">
-      <div class="list-con mui-table-view" id="activity_list_con">
+      <!--header banner-->
+      <!--<script type="text/x-handlebars-template" id="template_banner"> -->
+        <!--{{#each this}}-->
+        <!--<div class="swiper-slide img-con"   data-href="{{detail_url}}"> -->
+          <!--<img src="{{cover_img cover}}" alt="cover">-->
+        <!--</div>-->
+        <!--{{/each}}-->
+      <!--</script>-->
 
+      <header class="swiper-container activity-banner">
+        <div class="swiper-wrapper banner-con" id="banner_con">
+          <div class="swiper-slide img-con"   data-href="http://baidu.com"> 
+            <img src="../image/banner_activity.png" alt="cover">
+          </div>
+          <div class="swiper-slide img-con"   data-href="http://baidu.com"> 
+            <img src="../image/banner_activity.png" alt="cover">
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </header>
+
+      <!--list-->
+      <script type="text/x-handlebars-template" id="template_activity">
+        {{#each this}}
+        <div class="list-item mui-table-view-cell no-padding list-cell" data-href="{{detail_url}}">
+          <div class="wrapper no-padding">
+            <div class="cover-large img-con">
+              <img src="{{cover_img cover}}" alt="{{cover}}">
+            </div>
+            <div class="item-info">
+              <h2 class="title-text">{{title}}</h2>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        {{/each}}
+      </script>
+      <div class="list-con mui-table-view" id="activity_list_con">
       </div>
+
     </div>
   </div>
   <!--footer nav bar-->

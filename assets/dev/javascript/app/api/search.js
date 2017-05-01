@@ -1,9 +1,12 @@
 Api.search = function ($) {
-    var fetch = function () {
+    var fetch = function (val) {
         var $defer = $.Deferred();
         var options = {
             type: 'get',
-            url: 'search_building/'
+            url: 'search_building/',
+            data:{
+                "q":val
+            }
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);

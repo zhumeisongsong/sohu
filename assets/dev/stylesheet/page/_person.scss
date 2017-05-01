@@ -85,25 +85,24 @@
 }
 
 //reg
-.page-info{
-
-  .mui-btn-block{
-    height: 50px;
-    margin-bottom: 0;
-    border: 0;
-    color:map-get($global-color,h);
-    padding-left: 15px;
-    text-align: left;
-    font-size: 17px;
-  }
-  .submit-con{
-    button{
+.page-info {
+  .submit-con {
+    button {
       text-align: center;
       color: #fff;
     }
   }
+  .picker-btn {
+    height: 50px;
+    margin-bottom: 0;
+    color: map-get($global-color, h);
+    padding-left: 15px;
+    text-align: left;
+    font-size: 17px;
+    border-color: #fff;
+  }
 }
 
-.mui-input-group input{
+.mui-input-group input {
   font-weight: 400;
 }

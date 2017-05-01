@@ -61,7 +61,6 @@ p {
   height: 100%;
   max-width: 414px;
   margin: 0 auto;
-  margin-bottom: 50px;
   font-weight: 200;
   background-color: #f5f5f5;
 }
@@ -223,10 +222,6 @@ p {
     margin-left: 0;
     bottom: 50px;
   }
-}
-
-input {
-  font-size: 14px;
 }
 
 /*------------------------------------*    page index
@@ -404,6 +399,14 @@ input {
   color: #666;
 }
 
+.activity-banner {
+  min-height: 38px;
+}
+
+.activity-banner .swiper-pagination {
+  bottom: 0 !important;
+}
+
 .select-header {
   width: 100%;
   padding: 20px 12px 0 12px;
@@ -479,6 +482,14 @@ input {
 }
 
 /*score*/
+.page-score .mui-table-view:before {
+  display: none;
+}
+
+.page-score .mui-table-view:after {
+  display: none;
+}
+
 .price-info {
   width: 100%;
   padding: 0 12px;
@@ -534,14 +545,14 @@ input {
 }
 
 .page-select-input .input-item {
-  height: 35px;
+  height: 40px;
   border: 0;
   padding-right: 50px;
 }
 
 .page-select-input .input-unit {
   position: absolute;
-  top: 7px;
+  top: 10px;
   right: 10px;
 }
 
@@ -552,9 +563,27 @@ input {
 
 .fix-bottom {
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
+}
+
+.fix-bottom .mui-btn-block {
+  margin-bottom: 0;
+}
+
+@media (min-width: 414px) {
+  .fix-bottom {
+    width: 414px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-left: -207px;
+  }
+}
+
+.page-select {
+  margin-bottom: 50px;
 }
 
 .search-bar-con {
@@ -653,19 +682,19 @@ input {
   color: #666;
 }
 
-.page-info .mui-btn-block {
+.page-info .submit-con button {
+  text-align: center;
+  color: #fff;
+}
+
+.page-info .picker-btn {
   height: 50px;
   margin-bottom: 0;
-  border: 0;
   color: #999;
   padding-left: 15px;
   text-align: left;
   font-size: 17px;
-}
-
-.page-info .submit-con button {
-  text-align: center;
-  color: #fff;
+  border-color: #fff;
 }
 
 .mui-input-group input {

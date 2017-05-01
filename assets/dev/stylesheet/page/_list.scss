@@ -12,3 +12,9 @@
     }
   }
 }
+.activity-banner{
+  min-height: 38px;
+  .swiper-pagination {
+    bottom: 0!important;
+  }
+}

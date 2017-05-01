@@ -112,6 +112,12 @@ $(function () {
             Page.info.init();
         });
     }
+    else if (pathname == Route.like) {
+        Util.dispatcher(Route.like, function () {
+            Config.currentPage = Route.like;
+            Page.like.init();
+        });
+    }
 
 
     // dispatch
@@ -978,7 +984,7 @@ Api.form_submit = function ($) {
 
 }(jQuery);
 
-Api.like = function ($) {
+Api.like_list = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
         var options = {
@@ -1437,6 +1443,34 @@ Page.input = (function () {
     return {
         init: init
     };
+})();
+
+Page.like = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            Api.like_list.fetch()
+                .done(function (_data) {
+                    render(_data);
+                    bind();
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
+        });
+        var render = function (_data) {
+            console.log(data)
+
+        };
+
+        var bind = function () {
+            Util.go_to_detail($('.like-cell'))
+        }
+    };
+    return {
+        init: init
+    };
+
 })();
 
 Page.login = (function () {

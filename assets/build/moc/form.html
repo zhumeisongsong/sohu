@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="description" content="<?php bloginfo('description'); ?>">
+  <!--不识别电话号码和邮箱-->
+  <meta name="format-detection" content="telephone=no; email=no"/>
+  <!--网站开启对 web app 程序的支持-->
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <!--状态栏颜色-->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- 使用 webkit 引擎渲染 -->
+  <meta name="renderer" content="webkit">
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <title>报名表</title>
+  <!--css-->
+  <link rel="stylesheet" href="../stylesheet/vendor.min.css">
+  <link rel="stylesheet" href="../stylesheet/style.css">
+</head>
+
+<body>
+
+<div class="main">
+  <div class="mui-content page-form">
+
+    <h1 class="title">标题</h1>
+
+    <form id='activity_form' class="mui-input-group form-input">
+      <div class="mui-input-row ui-border-b">
+        <input id='name' name="name" type="text" class="mui-input-clear mui-input input-padding-right"
+               placeholder="您的称呼" oninput="if(value.length>20)value=value.slice(0,20)">
+      </div>
+      <div class="mui-input-row ui-border-b">
+        <input id='phone' name="phone" type="number" class="mui-input-clear mui-input input-padding-right"
+               placeholder="手机号码" oninput="if(value.length>11)value=value.slice(0,11)">
+      </div>
+      <div class="mui-input-row ui-border-b">
+        <input id='address' name="address" type="text" class="mui-input-clear mui-input input-padding-right"
+               placeholder="您的住址" oninput="if(value.length>30)value=value.slice(0,30)">
+      </div>
+
+      <div class="mui-input-row ui-border-b">
+        <input id='join_num' name="join_num" type="num" class="mui-input-clear mui-input input-padding-right"
+               placeholder="参与人数" oninput="if(value.length>1)value=value.slice(0,1)">
+      </div>
+    </form>
+
+    <div class="submit-con">
+      <button id='info_btn' class="mui-btn mui-red mui-btn-block" type="button">立即报名</button>
+    </div>
+  </div>
+</div>
+
+<script src="../javascript/vendor.js"></script>
+<script src="../javascript/app.js"></script>
+</body>
+</html>

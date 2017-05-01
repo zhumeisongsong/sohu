@@ -110,6 +110,12 @@ $(function () {
             Page.info.init();
         });
     }
+    else if (pathname == Route.like) {
+        Util.dispatcher(Route.like, function () {
+            Config.currentPage = Route.like;
+            Page.like.init();
+        });
+    }
 
 
     // dispatch

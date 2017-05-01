@@ -1,4 +1,4 @@
-Api.like = function ($) {
+Api.like_list = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
         var options = {

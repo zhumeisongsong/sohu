@@ -18,7 +18,6 @@
   height: 100%;
   position: relative;
   min-height: 139px;
-  max-height: 176px;
   overflow: hidden;
   background-color: #fff;
   .swiper-wrapper {
@@ -89,7 +88,7 @@
     width: 100%;
     position: relative;
     img {
-      max-height: 165px;
+      //max-height: 165px;
       overflow: hidden;
     }
   }

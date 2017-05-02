@@ -1,12 +1,9 @@
-Api.search = function ($) {
-    var fetch = function (val) {
+Api.banner_activity = function ($) {
+    var fetch = function () {
         var $defer = $.Deferred();
         var options = {
-            type: 'post',
-            url: 'search_building/',
-            data:{
-                "q":val
-            }
+            type: 'get',
+            url: 'activity_banner/'
         };
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);

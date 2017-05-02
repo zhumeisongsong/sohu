@@ -393,6 +393,7 @@ owner.login = function (login_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -432,15 +433,17 @@ owner.reg = function (reg_info, callback) {
     Api.reg.submit(reg_info)
         .done(function (_data) {
             setTimeout(function () {
+
                 mui.openWindow({
                     url: 'reg_login.html',
                     id: 'reg'
                 })
             }, 1000);
-            return callback(_data.message);
+            return callback('注册成功，为您跳转登录');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -468,6 +471,7 @@ owner.forgetPassword = function (change_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -488,7 +492,6 @@ owner.changePassword = function (change_info, callback) {
 
     Api.change_psw.submit(change_info)
         .done(function (_data) {
-            console.log('in')
             setTimeout(function () {
                 mui.openWindow({
                     url: 'reg_login.html',
@@ -499,6 +502,7 @@ owner.changePassword = function (change_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -537,7 +541,11 @@ Util.refresh = function () {
     var bind_building = function () {
         Util.go_to_detail($('.list-tap'));
         $('.like-btn').on('tap', function () {
-            Util.like($(this));
+            Util.call_login($(this),'like')
+            if (Util.call_login($(this),'like')) {
+                Util.like($(this));
+            }
+
         })
     };
 
@@ -587,19 +595,19 @@ Util.refresh = function () {
     };
 
     var pullupRefresh_building_select = function () {
-        var location =localStorage.getItem('location').replace(/[\r\n]/g,"").replace(/\ +/g,"");
-        if(location=='不限'){
-            location='';
+        var location = localStorage.getItem('location').replace(/[\r\n]/g, "").replace(/\ +/g, "");
+        if (location == '不限') {
+            location = '';
         }
-        var area =localStorage.getItem('area').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        var area = localStorage.getItem('area').replace(/[\r\n]/g, "").replace(/\ +/g, "");
         console.log(area)
-        if(area=='不限'){
-            area='';
+        if (area == '不限') {
+            area = '';
         }
-        var price=localStorage.getItem('price').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        var price = localStorage.getItem('price').replace(/[\r\n]/g, "").replace(/\ +/g, "");
 
         var _option = {
-            "location":location ,
+            "location": location,
             "aera_setion": area,
             "price_setion": price,
             "user_id": owner.getState().user_id
@@ -909,6 +917,26 @@ Api.banner = function ($) {
 
 }(jQuery);
 
+Api.banner_activity = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'activity_banner/'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+    return {
+        fetch: fetch
+    };
+
+}(jQuery);
+
 Api.building = function ($) {
     var fetch = function (page) {
         var $defer = $.Deferred();
@@ -1131,7 +1159,7 @@ Api.search = function ($) {
     var fetch = function (val) {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
+            type: 'post',
             url: 'search_building/',
             data:{
                 "q":val

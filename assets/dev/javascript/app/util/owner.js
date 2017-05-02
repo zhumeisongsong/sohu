@@ -77,6 +77,7 @@ owner.login = function (login_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -116,15 +117,17 @@ owner.reg = function (reg_info, callback) {
     Api.reg.submit(reg_info)
         .done(function (_data) {
             setTimeout(function () {
+
                 mui.openWindow({
                     url: 'reg_login.html',
                     id: 'reg'
                 })
             }, 1000);
-            return callback(_data.message);
+            return callback('注册成功，为您跳转登录');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -152,6 +155,7 @@ owner.forgetPassword = function (change_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };
 
@@ -172,7 +176,6 @@ owner.changePassword = function (change_info, callback) {
 
     Api.change_psw.submit(change_info)
         .done(function (_data) {
-            console.log('in')
             setTimeout(function () {
                 mui.openWindow({
                     url: 'reg_login.html',
@@ -183,5 +186,6 @@ owner.changePassword = function (change_info, callback) {
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
+            mui.toast(err_msg.responseText)
         });
 };

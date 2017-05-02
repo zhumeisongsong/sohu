@@ -33,7 +33,11 @@ Util.refresh = function () {
     var bind_building = function () {
         Util.go_to_detail($('.list-tap'));
         $('.like-btn').on('tap', function () {
-            Util.like($(this));
+            Util.call_login($(this),'like')
+            if (Util.call_login($(this),'like')) {
+                Util.like($(this));
+            }
+
         })
     };
 
@@ -83,19 +87,19 @@ Util.refresh = function () {
     };
 
     var pullupRefresh_building_select = function () {
-        var location =localStorage.getItem('location').replace(/[\r\n]/g,"").replace(/\ +/g,"");
-        if(location=='不限'){
-            location='';
+        var location = localStorage.getItem('location').replace(/[\r\n]/g, "").replace(/\ +/g, "");
+        if (location == '不限') {
+            location = '';
         }
-        var area =localStorage.getItem('area').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        var area = localStorage.getItem('area').replace(/[\r\n]/g, "").replace(/\ +/g, "");
         console.log(area)
-        if(area=='不限'){
-            area='';
+        if (area == '不限') {
+            area = '';
         }
-        var price=localStorage.getItem('price').replace(/[\r\n]/g,"").replace(/\ +/g,"");
+        var price = localStorage.getItem('price').replace(/[\r\n]/g, "").replace(/\ +/g, "");
 
         var _option = {
-            "location":location ,
+            "location": location,
             "aera_setion": area,
             "price_setion": price,
             "user_id": owner.getState().user_id

@@ -70,8 +70,8 @@ owner.login = function (login_info, callback) {
             owner.createState(login_info.phone, callback);
             setTimeout(function () {
                 mui.openWindow({
-                    url: 'index.html',
-                    id: 'index'
+                    url: 'person.html',
+                    id: 'person'
                 })
             }, 1000);
         })
@@ -119,11 +119,11 @@ owner.reg = function (reg_info, callback) {
             setTimeout(function () {
 
                 mui.openWindow({
-                    url: 'reg_login.html',
-                    id: 'reg'
+                    url: 'person.html',
+                    id: 'person'
                 })
             }, 1000);
-            return callback('注册成功，为您跳转登录');
+            return callback('注册成功!');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);

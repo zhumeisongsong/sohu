@@ -373,6 +373,11 @@ p {
   display: none;
 }
 
+.page-activity .swiper-slide {
+  max-height: 90px;
+  max-height: 24vw;
+}
+
 .page-activity.mui-table-view {
   background: none;
 }

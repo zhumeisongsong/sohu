@@ -1,4 +1,8 @@
 .page-activity{
+  .swiper-slide{
+    max-height: 90px;
+    max-height: 24vw;
+  }
   &.mui-table-view {
     background: none;
   }

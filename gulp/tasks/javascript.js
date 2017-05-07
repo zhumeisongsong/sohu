@@ -23,8 +23,8 @@ gulp.task('js.vendor', function () {
 
 gulp.task('js.app', function () {
     return gulp.src([
-        config.js.entry + 'app/app.js',
         config.js.entry + 'app/config.js',
+        config.js.entry + 'app/app.js',
         config.js.entry + 'app/util/*.js',
         config.js.entry + 'app/api/*.js',
         config.js.entry + 'app/page/*.js'

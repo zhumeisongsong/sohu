@@ -1,5 +1,41 @@
 (function(window, document, undefined) {
 'use strict';
+var host = 'https://www.sohuhxh.com/';
+var API_root = 'main';
+var API_host = host + API_root;
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+var setionid = getCookie('setionid');
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
 var App = window.App = {};
 var Util = App.Util = {};
 var Api = App.Api = {};
@@ -128,42 +164,6 @@ $(function () {
 
     // dispatch
     Util.dispatcher(pathname);
-});
-
-var host = 'https://www.sohuhxh.com/';
-var API_root = 'main';
-var API_host = host + API_root;
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-var csrftoken = getCookie('csrftoken');
-var setionid = getCookie('setionid');
-
-
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function (xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
 });
 
 Util.call_login = function ($dom, str) {
@@ -386,8 +386,8 @@ owner.login = function (login_info, callback) {
             owner.createState(login_info.phone, callback);
             setTimeout(function () {
                 mui.openWindow({
-                    url: 'index.html',
-                    id: 'index'
+                    url: 'person.html',
+                    id: 'person'
                 })
             }, 1000);
         })
@@ -435,11 +435,11 @@ owner.reg = function (reg_info, callback) {
             setTimeout(function () {
 
                 mui.openWindow({
-                    url: 'reg_login.html',
-                    id: 'reg'
+                    url: 'person.html',
+                    id: 'person'
                 })
             }, 1000);
-            return callback('注册成功，为您跳转登录');
+            return callback('注册成功!');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
@@ -709,7 +709,7 @@ Util.like=function ($dom, status) {
                 console.log(_data);
                 if(status){
                     $dom.removeClass('is-like');
-                    $dom.text('关注');
+                    $dom.text('收藏');
                     $dom.attr('data-status','false');
                 }else{
                     $dom.addClass('is-like');
@@ -1284,6 +1284,14 @@ Page.activity = (function () {
         });
         mui.ready(function () {
             Util.swiper();
+            Api.banner_activity.fetch()
+                .done(function (_data) {
+                    render_banner(_data);
+                    bind_banner();
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
 
             Util.go_to_detail($('.swiper-slide'));
 
@@ -1291,6 +1299,14 @@ Page.activity = (function () {
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);
         });
+    };
+
+    var render_banner =function(_data){
+        var template = Handlebars.compile($('#template_banner').html());
+        $('#banner_con').html(template(_data.list));
+    };
+    var bind_banner = function () {
+        Util.go_to_detail($('.swiper-slide'));
     };
     return {
         init: init

@@ -8,7 +8,7 @@ Util.like=function ($dom, status) {
                 console.log(_data);
                 if(status){
                     $dom.removeClass('is-like');
-                    $dom.text('关注');
+                    $dom.text('收藏');
                     $dom.attr('data-status','false');
                 }else{
                     $dom.addClass('is-like');

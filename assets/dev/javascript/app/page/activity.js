@@ -20,6 +20,14 @@ Page.activity = (function () {
         });
         mui.ready(function () {
             Util.swiper();
+            Api.banner_activity.fetch()
+                .done(function (_data) {
+                    render_banner(_data);
+                    bind_banner();
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
 
             Util.go_to_detail($('.swiper-slide'));
 
@@ -27,6 +35,14 @@ Page.activity = (function () {
             mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
             window.scrollTo(0, 0);
         });
+    };
+
+    var render_banner =function(_data){
+        var template = Handlebars.compile($('#template_banner').html());
+        $('#banner_con').html(template(_data.list));
+    };
+    var bind_banner = function () {
+        Util.go_to_detail($('.swiper-slide'));
     };
     return {
         init: init

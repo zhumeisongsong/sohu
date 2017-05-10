@@ -122,7 +122,12 @@ $(function () {
             Page.search.init();
         });
     }
-
+    else if (pathname == Route.form) {
+        Util.dispatcher(Route.form, function () {
+            Config.currentPage = Route.form;
+            Page.form.init();
+        });
+    }
 
     // dispatch
     Util.dispatcher(pathname);

@@ -17,6 +17,7 @@
   background-color: map-get($global-color, a);
   color: #fff;
   border-radius: 5px;
+  margin-bottom: 30px;
   .mui-icon-star:before {
     color: map-get($global-color, d);
     content: '\e438';
@@ -27,7 +28,6 @@
   .score-info {
     font-size: 1.2rem;
   }
-  margin-bottom: 50px;
 }
 
 .label-active {
@@ -84,7 +84,6 @@
   margin-bottom: 20px;
   h2 {
     padding: 12px 0;
-    border-bottom: 1px solid map-get($global-color, f);
   }
   .price-text {
     width: 100%;
@@ -119,7 +118,6 @@
   background-color: #fff;
   h2 {
     padding: 12px 0;
-    border-bottom: 1px solid map-get($global-color, f);
   }
 }
 

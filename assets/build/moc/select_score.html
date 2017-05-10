@@ -64,7 +64,7 @@
       </header>
 
       <section class="price-info">
-        <h2>您可以</h2>
+        <h2 class="ui-border-b">您可以</h2>
         <div class="price-text">
           <div class="total-price"><span class="price-title">购买总价</span>
             <span class="text-advanced total-price-top text-num"></span>
@@ -80,38 +80,41 @@
         </div>
       </section>
 
-      <script type="text/x-handlebars-template" id="template_building">
-        {{#each this}}
-        <div class="list-item mui-table-view-cell no-padding">
-          {{#if is_like}}
-          <div class="list-badge like-btn is-like" data-id="{{id}}" data-status="true">取消</div>
-          {{else}}
-          <div class="list-badge like-btn" data-id="{{id}}" data-status="false">关注</div>
-          {{/if}}
 
-          <div class="wrapper">
-            <div class="cover-large img-con list-tap" data-href="{{detail_url}}">
-              <img src="{{cover_img cover}}" alt="{{cover}}">
-
-              <h2 class="title-text">{{title}}</h2>
-            </div>
-            <div class="item-info">
-              <h3 class="location-text">{{location}}</h3>
-              <div class="price-con">
-                <a class="phone-num img-con" href="tel:{{phone}}">
-                  <img src="../image/icon/icon-phone.png" alt="icon-phone">
-                </a>
-                约<span>{{price}}</span>元/㎡
-              </div>
-            </div>
-            <div class="clear"></div>
-          </div>
-        </div>
-        {{/each}}
-      </script>
       <section class="footer-recommend">
-        <h2>为您推荐</h2>
+        <h2 class="ui-border-b">为您推荐</h2>
         <div class="list-con mui-table-view" id="list_con">
+          <!--<script type="text/x-handlebars-template" id="template_building">-->
+            <!--{{#each this}}-->
+            <div class="list-item mui-table-view-cell no-padding">
+
+              <div class="wrapper mui-row">
+                <div class="img-con list-tap mui-col-xs-4" data-href="{{detail_url}}">
+                  <img src="{{cover_img cover}}" alt="{{cover}}">
+                </div>
+                <div class="mui-col-xs-8">
+                  <h2 class="title-text mui-col-xs-8">{{title}}</h2>
+                  <!--{{#if is_like}}-->
+                  <div class="list-badge like-btn is-like mui-col-xs-4" data-id="{{id}}" data-status="true">取消</div>
+                  <!--{{else}}-->
+                  <!--<div class="list-badge like-btn" data-id="{{id}}" data-status="false">关注</div>-->
+                  <!--{{/if}}-->
+
+                  <h3 class="location-text mui-col-xs-12">{{location}}</h3>
+                  <h4 class=""></h4>
+                  <div class="price-con">
+                    <a class="phone-num img-con" href="tel:{{phone}}">
+                      <img src="../image/icon/icon-phone.png" alt="icon-phone">
+                    </a>
+                    约<span>{{price}}</span>元/㎡
+                  </div>
+                </div>
+                <!--<div class="clear"></div>-->
+              </div>
+
+            </div>
+            <!--{{/each}}-->
+          <!--</script>-->
         </div>
       </section>
 

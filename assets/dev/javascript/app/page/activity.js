@@ -38,6 +38,7 @@ Page.activity = (function () {
     };
 
     var render_banner =function(_data){
+        console.log(_data);
         var template = Handlebars.compile($('#template_banner').html());
         $('#banner_con').html(template(_data.list));
     };

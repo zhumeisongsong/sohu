@@ -2,9 +2,13 @@ Api.info = function ($) {
     var fetch = function () {
         var $defer = $.Deferred();
         var options = {
-            type: 'get',
-            url: 'user_info/'
+            type: 'post',
+            url: 'user_info/',
+            data:{
+                "user_id":owner.getState().user_id
+            }
         };
+
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {

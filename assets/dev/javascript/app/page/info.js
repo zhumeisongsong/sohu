@@ -2,10 +2,30 @@ Page.info = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            render();
+            Api.info.fetch()
+                .done(function (_data) {
+                    console.log(_data)
+                    render(_data)
+
+                })
+                .fail(function () {
+
+                });
             bind();
         })
     };
+
+    //fetch
+    var render = function (_data) {
+        $('#name').val(_data.user_info.name);
+        $('#wechat').val(_data.user_info.weichat);
+        $('#address').val(_data.user_info.address);
+
+        $('#gender').val(_data.user_info.gender);
+        $('#location').val(_data.user_info.regions);
+        $('#type').val(_data.user_info.styles);
+    };
+
     var picker_sex = function () {
         var picker = new mui.PopPicker();
         picker.setData([
@@ -119,16 +139,6 @@ Page.info = (function () {
         }, false);
     };
 
-    //fetch
-    var render = function () {
-        // $('#name').val(localStorage.getItem('name'));
-        // $('#wechat').val(localStorage.getItem('wechat'));
-        // $('#address').val(localStorage.getItem('address'));
-        //
-        // $('#gender').val(localStorage.getItem('gender'));
-        // $('#location').val(localStorage.getItem('location'));
-        // $('#type').val(localStorage.getItem('type'));
-    };
 
     var bind = function () {
         picker_sex();

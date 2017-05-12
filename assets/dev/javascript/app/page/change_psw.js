@@ -7,21 +7,19 @@ Page.change= (function () {
     };
 
     var bind = function () {
-        console.log('in')
         $('#change_psw_btn').on('tap', function () {
             var old_password = $.trim($("#old_password").val());
             var password0 = $.trim($("#password").val());
             var password1 = $.trim($("#password_confirm").val());
 
-            var change_info = {
-                "old_password": old_password,
+            var _info = {
+                "old_passwd": old_password,
                 "password0": password0,
                 "password1": password1,
                 "user_id":owner.getState().user_id
             };
-            console.log(change_info)
 
-            owner.changePassword(change_info, function (err) {
+            owner.changePassword(_info, function (err) {
                 if (err) {
                     mui.toast(err);
                 }

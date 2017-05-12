@@ -1,9 +1,9 @@
-Api.forget_psw = function ($) {
+Api.info= function ($) {
     var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'forget/',
+            url: 'user_info/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -15,7 +15,7 @@ Api.forget_psw = function ($) {
     };
 
     return {
-        submit:submit
+        submit: submit
     };
 
 }(jQuery);

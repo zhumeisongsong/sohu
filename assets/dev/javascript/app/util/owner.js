@@ -53,6 +53,10 @@ owner.login = function (login_info, callback) {
     login_info.phone = login_info.phone || '';
     login_info.password = login_info.password || '';
 
+    if (login_info.phone=='' || login_info.password=='') {
+        return callback("请填写完整");
+    }
+
     if (!owner.check_phone(login_info.phone)) {
         return callback("请填写正确的手机号码");
     }
@@ -66,7 +70,6 @@ owner.login = function (login_info, callback) {
     Api.login.submit(login_info)
 
         .done(function (_data) {
-            console.log(_data);
             owner.createState(login_info.phone, callback);
             setTimeout(function () {
                 mui.openWindow({
@@ -74,10 +77,11 @@ owner.login = function (login_info, callback) {
                     id: 'person'
                 })
             }, 1000);
+            return callback('登录成功');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
@@ -92,14 +96,17 @@ owner.reg = function (reg_info, callback) {
     reg_info.password = reg_info.password || '';
     reg_info.password2 = reg_info.password || '';
 
-    console.log(owner.check_phone(reg_info.phone));
+    if (reg_info.phone=='' || reg_info.email=='' || reg_info.password=='' || reg_info.password2=='') {
+        return callback("请填写完整");
+    }
+
     if (!owner.check_phone(reg_info.phone)) {
         return callback("请填写正确的手机号码");
     }
+
     if (!owner.check_email(reg_info.email)) {
         return callback("请填写正确的邮箱");
     }
-
 
     if (reg_info.password.length < 8) {
         return callback('密码最短为8个字符');
@@ -123,58 +130,73 @@ owner.reg = function (reg_info, callback) {
                     id: 'person'
                 })
             }, 1000);
-            return callback('注册成功!');
+            return callback('注册成功');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
 /**
  * 忘记密码
  **/
-owner.forgetPassword = function (change_info, callback) {
+owner.forgetPassword = function (_info, callback) {
     callback = callback || $.noop;
-    change_info = change_info || {};
-    change_info.email = change_info.email || '';
+    _info = _info || {};
+    _info.email = _info.email || '';
 
-    if (!owner.check_email(change_info.email)) {
+    if(_info.email==''){
+        return callback("请填写完整");
+    }
+
+    if (!owner.check_email(_info.email)) {
         return callback("请填写正确的邮箱");
     }
 
-    Api.forget_psw.submit(change_info)
+    Api.forget_psw.submit(_info)
         .done(function (_data) {
-            setTimeout(function () {
-                mui.openWindow({
-                    url: 'reg_login.html',
-                    id: 'reg'
-                })
-            }, 1000);
-            return callback(_data.message);
+            return callback('邮件已发送，请查收');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
 /**
  * 修改密码
  **/
-owner.changePassword = function (change_info, callback) {
+owner.changePassword = function (_info, callback) {
+
     callback = callback || $.noop;
-    change_info = change_info || {};
-    change_info.old_password = change_info.old_password || '';
-    change_info.password0 = change_info.password0 || '';
-    change_info.password1 = change_info.password1 || '';
+    _info = _info || {};
+    _info.old_passwd = _info.old_passwd || '';
+    _info.password0 = _info.password0 || '';
+    _info.password1 = _info.password1 || '';
+
+    if (_info.old_passwd == "" || _info.password0 == "" || _info.password1 == "") {
+        return callback("请填写完整")
+    }
+
+    if (_info.password0.length < 8||_info.password1.length<8||_info.old_passwd.length<8) {
+        return callback('密码最短为8个字符');
+    }
+
+    if (_info.password0 != _info.password1) {
+        return callback('两次密码输入不一致');
+    }
+    if (_info.password0 == _info.old_passwd) {
+        return callback('新旧密码一致，请修改');
+    }
 
     //加密
-    change_info.old_password = jQuery.md5(change_info.old_password);
-    change_info.password0 = jQuery.md5(change_info.password0);
-    change_info.password1 = jQuery.md5(change_info.password1);
+    _info.old_passwd = jQuery.md5(_info.old_passwd);
+    _info.password0 = jQuery.md5(_info.password0);
+    _info.password1 = jQuery.md5(_info.password1);
 
-    Api.change_psw.submit(change_info)
+
+    Api.change_psw.submit(_info)
         .done(function (_data) {
             setTimeout(function () {
                 mui.openWindow({
@@ -182,10 +204,10 @@ owner.changePassword = function (change_info, callback) {
                     id: 'reg'
                 })
             }, 1000);
-            return callback(_data.message);
+            return callback(_data);
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };

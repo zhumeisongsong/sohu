@@ -374,6 +374,10 @@ owner.login = function (login_info, callback) {
     login_info.phone = login_info.phone || '';
     login_info.password = login_info.password || '';
 
+    if (login_info.phone=='' || login_info.password=='') {
+        return callback("请填写完整");
+    }
+
     if (!owner.check_phone(login_info.phone)) {
         return callback("请填写正确的手机号码");
     }
@@ -387,7 +391,6 @@ owner.login = function (login_info, callback) {
     Api.login.submit(login_info)
 
         .done(function (_data) {
-            console.log(_data);
             owner.createState(login_info.phone, callback);
             setTimeout(function () {
                 mui.openWindow({
@@ -395,10 +398,11 @@ owner.login = function (login_info, callback) {
                     id: 'person'
                 })
             }, 1000);
+            return callback('登录成功');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
@@ -413,14 +417,17 @@ owner.reg = function (reg_info, callback) {
     reg_info.password = reg_info.password || '';
     reg_info.password2 = reg_info.password || '';
 
-    console.log(owner.check_phone(reg_info.phone));
+    if (reg_info.phone=='' || reg_info.email=='' || reg_info.password=='' || reg_info.password2=='') {
+        return callback("请填写完整");
+    }
+
     if (!owner.check_phone(reg_info.phone)) {
         return callback("请填写正确的手机号码");
     }
+
     if (!owner.check_email(reg_info.email)) {
         return callback("请填写正确的邮箱");
     }
-
 
     if (reg_info.password.length < 8) {
         return callback('密码最短为8个字符');
@@ -444,58 +451,73 @@ owner.reg = function (reg_info, callback) {
                     id: 'person'
                 })
             }, 1000);
-            return callback('注册成功!');
+            return callback('注册成功');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
 /**
  * 忘记密码
  **/
-owner.forgetPassword = function (change_info, callback) {
+owner.forgetPassword = function (_info, callback) {
     callback = callback || $.noop;
-    change_info = change_info || {};
-    change_info.email = change_info.email || '';
+    _info = _info || {};
+    _info.email = _info.email || '';
 
-    if (!owner.check_email(change_info.email)) {
+    if(_info.email==''){
+        return callback("请填写完整");
+    }
+
+    if (!owner.check_email(_info.email)) {
         return callback("请填写正确的邮箱");
     }
 
-    Api.forget_psw.submit(change_info)
+    Api.forget_psw.submit(_info)
         .done(function (_data) {
-            setTimeout(function () {
-                mui.openWindow({
-                    url: 'reg_login.html',
-                    id: 'reg'
-                })
-            }, 1000);
-            return callback(_data.message);
+            return callback('邮件已发送，请查收');
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
 /**
  * 修改密码
  **/
-owner.changePassword = function (change_info, callback) {
+owner.changePassword = function (_info, callback) {
+
     callback = callback || $.noop;
-    change_info = change_info || {};
-    change_info.old_password = change_info.old_password || '';
-    change_info.password0 = change_info.password0 || '';
-    change_info.password1 = change_info.password1 || '';
+    _info = _info || {};
+    _info.old_passwd = _info.old_passwd || '';
+    _info.password0 = _info.password0 || '';
+    _info.password1 = _info.password1 || '';
+
+    if (_info.old_passwd == "" || _info.password0 == "" || _info.password1 == "") {
+        return callback("请填写完整")
+    }
+
+    if (_info.password0.length < 8||_info.password1.length<8||_info.old_passwd.length<8) {
+        return callback('密码最短为8个字符');
+    }
+
+    if (_info.password0 != _info.password1) {
+        return callback('两次密码输入不一致');
+    }
+    if (_info.password0 == _info.old_passwd) {
+        return callback('新旧密码一致，请修改');
+    }
 
     //加密
-    change_info.old_password = jQuery.md5(change_info.old_password);
-    change_info.password0 = jQuery.md5(change_info.password0);
-    change_info.password1 = jQuery.md5(change_info.password1);
+    _info.old_passwd = jQuery.md5(_info.old_passwd);
+    _info.password0 = jQuery.md5(_info.password0);
+    _info.password1 = jQuery.md5(_info.password1);
 
-    Api.change_psw.submit(change_info)
+
+    Api.change_psw.submit(_info)
         .done(function (_data) {
             setTimeout(function () {
                 mui.openWindow({
@@ -503,11 +525,11 @@ owner.changePassword = function (change_info, callback) {
                     id: 'reg'
                 })
             }, 1000);
-            return callback(_data.message);
+            return callback(_data);
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);
-            mui.toast(err_msg.responseText)
+            return callback(err_msg.responseText)
         });
 };
 
@@ -994,7 +1016,7 @@ Api.change_psw = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'change_password/',
+            url: 'change_passwd/',
             data: _option
         };
 
@@ -1016,7 +1038,7 @@ Api.forget_psw = function ($) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'forget',
+            url: 'forget/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -1068,6 +1090,28 @@ Api.form_submit = function ($) {
         });
         return $defer.promise();
     };
+    return {
+        submit: submit
+    };
+
+}(jQuery);
+
+Api.info= function ($) {
+    var submit = function (_option) {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'post',
+            url: 'user_info/',
+            data: _option
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+
     return {
         submit: submit
     };
@@ -1341,21 +1385,19 @@ Page.change= (function () {
     };
 
     var bind = function () {
-        console.log('in')
         $('#change_psw_btn').on('tap', function () {
             var old_password = $.trim($("#old_password").val());
             var password0 = $.trim($("#password").val());
             var password1 = $.trim($("#password_confirm").val());
 
-            var change_info = {
-                "old_password": old_password,
+            var _info = {
+                "old_passwd": old_password,
                 "password0": password0,
                 "password1": password1,
                 "user_id":owner.getState().user_id
             };
-            console.log(change_info)
 
-            owner.changePassword(change_info, function (err) {
+            owner.changePassword(_info, function (err) {
                 if (err) {
                     mui.toast(err);
                 }
@@ -1368,7 +1410,35 @@ Page.change= (function () {
     }
 })();
 
+Page.forget = (function () {
+    var init = function () {
+        mui.init();
+        mui.ready(function () {
+            bind();
+        })
+    };
+    var bind = function () {
+        $('#forget_psw_btn').on('tap', function () {
+            var email = $.trim($("#email").val());
 
+            var _info = {
+                "email": email,
+                "user_id": owner.getState().user_id
+            };
+
+            owner.forgetPassword(_info, function (err) {
+                if (err) {
+                    mui.toast(err);
+                }
+            });
+        })
+    };
+
+    return {
+        init: init
+    }
+
+})();
 
 Page.form = (function () {
     var init = function () {
@@ -1376,7 +1446,7 @@ Page.form = (function () {
         mui.ready(function () {
             var id = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
 
-            Api.form_get.fetch(id)
+            Api.form_get.fetch(3)
                 .done(function (_data) {
                     render(_data);
                     bind();
@@ -1526,61 +1596,167 @@ Page.info = (function () {
     var init = function () {
         mui.init();
         mui.ready(function () {
-            render()
+            render();
             bind();
         })
     };
     var picker_sex = function () {
-        var userPicker = new $.PopPicker();
-        userPicker.setData([
+        var picker = new mui.PopPicker();
+        picker.setData([
+            {text: '男'},
+            {text: '女'}
+        ]);
+        var picker_btn = document.getElementById('gender');
+        picker_btn.addEventListener('tap', function (event) {
+            picker.show(function (items) {
+                console.log(items)
+                picker_btn.innerText = items[0].text;
+                localStorage.setItem('gender', items[0].text);
+                $('#gender').val(localStorage.getItem('gender'));
+            });
+        }, false);
+    };
+
+    var picker_location = function () {
+        var picker = new mui.PopPicker();
+        picker.setData([
             {
-                value: 'male',
-                text: '男'
+                text: "锦江"
             },
             {
-                value: 'famal',
-                text: '女'
+                text: "青羊"
+            },
+            {
+                text: "金牛"
+            },
+            {
+                text: "武侯"
+            },
+            {
+                text: "成华"
+            },
+            {
+                text: "高新西区"
+            },
+            {
+                text: "温江"
+            },
+            {
+                text: "双流"
+            },
+            {
+                text: "龙泉驿"
+            },
+            {
+                text: "新都"
+            },
+            {
+                text: "郫县"
+            },
+            {
+                text: "都江堰"
+            },
+            {
+                text: "青白江"
+            },
+            {
+                text: "彭州"
+            },
+            {
+                text: "浦江"
+            },
+            {
+                text: "大邑"
+            },
+            {
+                text: "新津"
+            },
+            {
+                text: "崇州"
+            },
+            {
+                text: "邛崃"
+            },
+            {
+                text: "金堂"
             }
         ]);
-        var showUserPickerButton = doc.getElementById('sex');
-        var userResult = doc.getElementById('sex_result');
-        showUserPickerButton.addEventListener('tap', function (event) {
-            userPicker.show(function (items) {
-                userResult.innerText = JSON.stringify(items[0]);
-                //返回 false 可以阻止选择框的关闭
-                //return false;
+        var picker_btn = document.getElementById('location');
+        picker_btn.addEventListener('tap', function (event) {
+
+            picker.show(function (items) {
+                console.log(items);
+                picker_btn.innerText = items[0].text;
+                localStorage.setItem('location', items[0].text);
+                $('#location').val(localStorage.getItem('location'));
+            });
+        }, false);
+    };
+
+    var picker_type = function () {
+        var picker = new mui.PopPicker();
+        picker.setData([
+            {text: '普通住宅'},
+            {text: '花园洋房'},
+            {text: '别墅'},
+            {text: '商铺'},
+            {text: '写字楼'},
+            {text: '公寓'}
+        ]);
+        var picker_btn = document.getElementById('type');
+        picker_btn.addEventListener('tap', function (event) {
+            picker.show(function (items) {
+                picker_btn.innerText = items[0].text;
+                localStorage.setItem('type', items[0].text);
+                $('#type').val(localStorage.getItem('type'));
             });
         }, false);
     };
 
     //fetch
     var render = function () {
+        $('#name').val(localStorage.getItem('name'));
+        $('#wechat').val(localStorage.getItem('wechat'));
+        $('#address').val(localStorage.getItem('address'));
 
-
+        $('#gender').val(localStorage.getItem('gender'));
+        $('#location').val(localStorage.getItem('location'));
+        $('#type').val(localStorage.getItem('type'));
     };
 
     var bind = function () {
         picker_sex();
+        picker_location();
+        picker_type();
+
         $('#info_btn').on('tap', function () {
             var name = $.trim($("#name").val());
-            var weichat = $.trim($("#wechat").val());
-            var sex;
-            var location;
-            var style;
-            var address;
+            var wechat = $.trim($("#wechat").val());
+            var address = $.trim($("#address").val());
+
+            localStorage.setItem('name', name);
+            localStorage.setItem('wechat', wechat);
+            localStorage.setItem('address', address);
 
             var _option = {
-                "weichat": weichat,
-                "name": name,
-                "address": address,
-                "styles": style,
-                "gender": sex,
-                "regions ": location
+                "weichat": localStorage.getItem('wechat'),
+                "name": localStorage.getItem('name'),
+                "address": localStorage.getItem('address'),
+                "styles": localStorage.getItem('type'),
+                "gender": localStorage.getItem('gender'),
+                "regions ": localStorage.getItem('location'),
+                "user_id": owner.getState().user_id
             };
+            console.log(_option);
 
-            Api.info.submit = function (_option) {
-
-            };
+            Api.info.submit(_option)
+                .done(function (_data) {
+                    console.log(_data);
+                    mui.toast('资料提交成功')
+                })
+                .fail(function (err_msg, error) {
+                    console.log(err_msg);
+                });
         })
     };
 
@@ -1665,7 +1841,8 @@ Page.like = (function () {
                 $('#like_con').html(template(_data.list));
             } else {
                 var div ='<div>暂无收藏</div>';
-                $('.empty-con').html(div);
+
+                $('.empty-con').css('height',$(window).height()).html(div);
             }
         };
 
@@ -1813,7 +1990,6 @@ Page.reg = (function () {
             };
 
             owner.reg(reg_info, function (err) {
-                console.log(err);
                 if (err) {
                     mui.toast(err);
                 }

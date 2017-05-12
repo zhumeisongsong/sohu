@@ -21,7 +21,6 @@ Page.reg = (function () {
             };
 
             owner.reg(reg_info, function (err) {
-                console.log(err);
                 if (err) {
                     mui.toast(err);
                 }

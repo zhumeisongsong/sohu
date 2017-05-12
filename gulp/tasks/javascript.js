@@ -15,7 +15,9 @@ gulp.task('js.vendor', function () {
         config.js.entry + 'vendor/handlebars-v4.0.5.js',
         config.js.entry + 'vendor/mui.min.js',
         config.js.entry + 'vendor/swiper.jquery.min.js',
-        config.js.entry + 'vendor/jQuery.md5.js'
+        config.js.entry + 'vendor/jQuery.md5.js',
+        config.js.entry + 'vendor/mui.picker.js',
+        config.js.entry + 'vendor/mui.poppicker.js'
     ])
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest(config.js.dest));

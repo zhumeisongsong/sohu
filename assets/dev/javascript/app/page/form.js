@@ -4,7 +4,7 @@ Page.form = (function () {
         mui.ready(function () {
             var id = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
 
-            Api.form_get.fetch(id)
+            Api.form_get.fetch(3)
                 .done(function (_data) {
                     render(_data);
                     bind();

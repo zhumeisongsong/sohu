@@ -121,13 +121,13 @@ Page.info = (function () {
 
     //fetch
     var render = function () {
-        $('#name').val(localStorage.getItem('name'));
-        $('#wechat').val(localStorage.getItem('wechat'));
-        $('#address').val(localStorage.getItem('address'));
-
-        $('#gender').val(localStorage.getItem('gender'));
-        $('#location').val(localStorage.getItem('location'));
-        $('#type').val(localStorage.getItem('type'));
+        // $('#name').val(localStorage.getItem('name'));
+        // $('#wechat').val(localStorage.getItem('wechat'));
+        // $('#address').val(localStorage.getItem('address'));
+        //
+        // $('#gender').val(localStorage.getItem('gender'));
+        // $('#location').val(localStorage.getItem('location'));
+        // $('#type').val(localStorage.getItem('type'));
     };
 
     var bind = function () {
@@ -150,7 +150,7 @@ Page.info = (function () {
                 "address": localStorage.getItem('address'),
                 "styles": localStorage.getItem('type'),
                 "gender": localStorage.getItem('gender'),
-                "regions ": localStorage.getItem('location'),
+                "regions": localStorage.getItem('location'),
                 "user_id": owner.getState().user_id
             };
             console.log(_option);

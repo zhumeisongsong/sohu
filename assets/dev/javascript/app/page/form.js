@@ -4,7 +4,7 @@ Page.form = (function () {
         mui.ready(function () {
             var id = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
 
-            Api.form_get.fetch(3)
+            Api.form.fetch(3)
                 .done(function (_data) {
                     render(_data);
                     bind();
@@ -51,7 +51,7 @@ Page.form = (function () {
     var bind = function () {
         $('#form_btn').on('tap',function () {
             alert('in');
-            Api.form_submit.submit(_option)
+            Api.form.submit(_option)
                 .done(function (_data) {
                     render(_data);
                     bind();

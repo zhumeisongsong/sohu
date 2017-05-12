@@ -726,28 +726,26 @@ Util.scroll = function () {
     }
 };
 
-Util.like=function ($dom, status) {
+Util.like = function ($dom, status) {
     var id = $dom.data('id');
     var status = $dom.data('status');
-    alert(status)
+    Api.like_set.fetch(id)
+        .done(function (_data) {
+            console.log(_data);
+            if (status) {
+                $dom.removeClass('is-like');
+                $dom.text('收藏');
+                $dom.attr('data-status', 'false');
+            } else {
+                $dom.addClass('is-like');
+                $dom.text('取消');
+                $dom.attr('data-status', 'true');
+            }
 
-        Api.like_set.fetch(id)
-            .done(function (_data) {
-                console.log(_data);
-                if(status){
-                    $dom.removeClass('is-like');
-                    $dom.text('收藏');
-                    $dom.attr('data-status','false');
-                }else{
-                    $dom.addClass('is-like');
-                    $dom.text('取消');
-                    $dom.attr('data-status','true');
-                }
-
-            })
-            .fail(function (err_msg, error) {
-                console.log(err_msg);
-            });
+        })
+        .fail(function (err_msg, error) {
+            console.log(err_msg);
+        });
 };
 
 /*
@@ -826,7 +824,6 @@ Util.go_to_detail = function ($cell) {
     $cell.on('tap', function () {
         event.stopPropagation();
         var url = $(this).data('href');
-        alert(url);
         mui.openWindow({
             url: url,
             id: 'detail'
@@ -975,6 +972,7 @@ Api.building = function ($) {
                 "user_id":owner.getState().user_id
             }
         };
+
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {
@@ -1055,7 +1053,7 @@ Api.forget_psw = function ($) {
 
 }(jQuery);
 
-Api.form_get = function ($) {
+Api.form = function ($) {
     var fetch = function (id) {
         var $defer = $.Deferred();
         var options = {
@@ -1069,13 +1067,7 @@ Api.form_get = function ($) {
         });
         return $defer.promise();
     };
-    return {
-        fetch: fetch
-    };
 
-}(jQuery);
-
-Api.form_submit = function ($) {
     var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
@@ -1090,18 +1082,34 @@ Api.form_submit = function ($) {
         });
         return $defer.promise();
     };
+
     return {
+        fetch: fetch,
         submit: submit
     };
 
 }(jQuery);
 
-Api.info= function ($) {
+Api.info = function ($) {
+    var fetch = function () {
+        var $defer = $.Deferred();
+        var options = {
+            type: 'get',
+            url: 'user_info/'
+        };
+        Util.ajax(options).done(function (result) {
+            $defer.resolve(result);
+        }).fail(function (xhr) {
+            $defer.reject(xhr);
+        });
+        return $defer.promise();
+    };
+
     var submit = function (_option) {
         var $defer = $.Deferred();
         var options = {
             type: 'post',
-            url: 'user_info/',
+            url: 'set_user_info/',
             data: _option
         };
         Util.ajax(options).done(function (result) {
@@ -1113,6 +1121,7 @@ Api.info= function ($) {
     };
 
     return {
+        fetch: fetch,
         submit: submit
     };
 
@@ -1446,7 +1455,7 @@ Page.form = (function () {
         mui.ready(function () {
             var id = window.location.href.match(".+/(.+?)([\?#;].*)?$")[1];
 
-            Api.form_get.fetch(3)
+            Api.form.fetch(3)
                 .done(function (_data) {
                     render(_data);
                     bind();
@@ -1493,7 +1502,7 @@ Page.form = (function () {
     var bind = function () {
         $('#form_btn').on('tap',function () {
             alert('in');
-            Api.form_submit.submit(_option)
+            Api.form.submit(_option)
                 .done(function (_data) {
                     render(_data);
                     bind();
@@ -1715,13 +1724,13 @@ Page.info = (function () {
 
     //fetch
     var render = function () {
-        $('#name').val(localStorage.getItem('name'));
-        $('#wechat').val(localStorage.getItem('wechat'));
-        $('#address').val(localStorage.getItem('address'));
-
-        $('#gender').val(localStorage.getItem('gender'));
-        $('#location').val(localStorage.getItem('location'));
-        $('#type').val(localStorage.getItem('type'));
+        // $('#name').val(localStorage.getItem('name'));
+        // $('#wechat').val(localStorage.getItem('wechat'));
+        // $('#address').val(localStorage.getItem('address'));
+        //
+        // $('#gender').val(localStorage.getItem('gender'));
+        // $('#location').val(localStorage.getItem('location'));
+        // $('#type').val(localStorage.getItem('type'));
     };
 
     var bind = function () {
@@ -1744,7 +1753,7 @@ Page.info = (function () {
                 "address": localStorage.getItem('address'),
                 "styles": localStorage.getItem('type'),
                 "gender": localStorage.getItem('gender'),
-                "regions ": localStorage.getItem('location'),
+                "regions": localStorage.getItem('location'),
                 "user_id": owner.getState().user_id
             };
             console.log(_option);

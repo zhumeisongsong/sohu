@@ -8,6 +8,7 @@ Api.building = function ($) {
                 "user_id":owner.getState().user_id
             }
         };
+
         Util.ajax(options).done(function (result) {
             $defer.resolve(result);
         }).fail(function (xhr) {

@@ -1613,7 +1613,6 @@ Page.info = (function () {
                 .done(function (_data) {
                     console.log(_data)
                     render(_data)
-
                 })
                 .fail(function () {
 
@@ -1624,13 +1623,37 @@ Page.info = (function () {
 
     //fetch
     var render = function (_data) {
-        $('#name').val(_data.user_info.name);
-        $('#wechat').val(_data.user_info.weichat);
-        $('#address').val(_data.user_info.address);
+        var name = _data.user_info.name;
+        var weichat = _data.user_info.weichat;
+        var address = _data.user_info.address;
+        var gender = _data.user_info.gender;
+        var regions = _data.user_info.regions;
+        var styles = _data.user_info.styles;
 
-        $('#gender').val(_data.user_info.gender);
-        $('#location').val(_data.user_info.regions);
-        $('#type').val(_data.user_info.styles);
+        if (name != null) {
+            $('#name').val(name);
+            localStorage.setItem('name', name);
+        }
+        if (weichat != null) {
+            $('#wechat').val(weichat);
+            localStorage.setItem('weichat', weichat);
+        }
+        if (address != null) {
+            $('#address').val(address);
+            localStorage.setItem('address', address);
+        }
+        if (gender != null) {
+            $('#gender').val(gender);
+            localStorage.setItem('gender', gender);
+        }
+        if (regions != null) {
+            $('#location').val(regions);
+            localStorage.setItem('regions', regions);
+        }
+        if (styles != null) {
+            $('#type').val(styles);
+            localStorage.setItem('styles', styles);
+        }
     };
 
     var picker_sex = function () {
@@ -1720,8 +1743,8 @@ Page.info = (function () {
             picker.show(function (items) {
                 console.log(items);
                 picker_btn.innerText = items[0].text;
-                localStorage.setItem('location', items[0].text);
-                $('#location').val(localStorage.getItem('location'));
+                localStorage.setItem('regions', items[0].text);
+                $('#location').val(localStorage.getItem('regions'));
             });
         }, false);
     };
@@ -1740,8 +1763,8 @@ Page.info = (function () {
         picker_btn.addEventListener('tap', function (event) {
             picker.show(function (items) {
                 picker_btn.innerText = items[0].text;
-                localStorage.setItem('type', items[0].text);
-                $('#type').val(localStorage.getItem('type'));
+                localStorage.setItem('styles', items[0].text);
+                $('#type').val(localStorage.getItem('styles'));
             });
         }, false);
     };
@@ -1765,9 +1788,9 @@ Page.info = (function () {
                 "weichat": localStorage.getItem('wechat'),
                 "name": localStorage.getItem('name'),
                 "address": localStorage.getItem('address'),
-                "styles": localStorage.getItem('type'),
+                "styles": localStorage.getItem('styles'),
                 "gender": localStorage.getItem('gender'),
-                "regions": localStorage.getItem('location'),
+                "regions": localStorage.getItem('regions'),
                 "user_id": owner.getState().user_id
             };
             console.log(_option);

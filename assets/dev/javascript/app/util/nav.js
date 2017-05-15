@@ -5,7 +5,7 @@ Util.active = function (pathname) {
     else if (pathname == Route.activity) {
         $('.img-activities').addClass('item-active')
     }
-    else if (pathname == Route.select) {
+    else if (pathname == Route.select||pathname == Route.input||pathname == Route.score) {
         $('.img-select').addClass('item-active')
         Util.call_login($('.nav-select'), 'select');
     }

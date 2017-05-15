@@ -57,8 +57,27 @@
 }
 
 .item-active {
-  background-position-y: -24px!important;
-  &+.mui-tab-label{
-    color: map-get($global-color,a);
+  background-position-y: -24px !important;
+  & + .mui-tab-label {
+    color: map-get($global-color, a);
+  }
+}
+
+@media (min-width: 415px) {
+  .footer-navbar {
+    top: 0;
+    bottom: auto;
+    &.mui-bar-tab{
+      display: block;
+    }
+    .wrapper{
+      max-width: 1000px;
+      margin:0 auto;
+    }
+    .nav-item{
+      display: inline-block;
+      width: 70px;
+      line-height: 50px;
+    }
   }
 }

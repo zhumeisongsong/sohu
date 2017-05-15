@@ -89,12 +89,13 @@
     position: relative;
     width: 100%;
     .input-title {
-      position: absolute;
       width: 80px;
+      position: absolute;
       left: 12px;
-      top: 13px;
+      top: 0;
       font-weight: 400;
       font-size: 14px;
+      line-height: 50px;
     }
     input {
       width: 100%;
@@ -129,5 +130,17 @@
     left: 0;
     text-align: center;
     color: map-get($global-color, h);
+  }
+}
+
+@media (min-width: 415px) {
+  .main-pc{
+    &.main-person{
+      max-width: 1000px;
+      margin: 50px auto 0;
+    }
+    .page-person{
+      width: 150px;
+    }
   }
 }

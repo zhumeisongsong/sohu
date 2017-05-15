@@ -1,3 +1,7 @@
+.page-select {
+  margin-bottom: 50px;
+}
+
 .select-header {
   width: 100%;
   padding: 20px 12px 0 12px;
@@ -67,16 +71,17 @@
 }
 
 /*score*/
-.page-score{
-  .mui-table-view{
-    &:before{
+.page-score {
+  .mui-table-view {
+    &:before {
       display: none;
     }
-    &:after{
+    &:after {
       display: none;
     }
   }
 }
+
 .price-info {
   width: 100%;
   padding: 0 12px;
@@ -89,30 +94,30 @@
     width: 100%;
     padding: 8px 0 15px;
     font-size: 1.4rem;
-    color: map-get($global-color,g);
-    .price-title{
+    color: map-get($global-color, g);
+    .price-title {
       margin-right: 10px;
     }
-    .text-num{
+    .text-num {
       font-weight: 400;
     }
     .text-advanced {
       color: map-get($global-color, a);
     }
-    .text-normal{
+    .text-normal {
       font-size: 1.3rem;
     }
-    .price-tips{
+    .price-tips {
       padding-top: 5px;
       font-size: 1.2rem;
       line-height: 1;
       text-align: justify;
-      color: map-get($global-color,h);
+      color: map-get($global-color, h);
     }
   }
 }
 
-.footer-recommend{
+.footer-recommend {
   width: 100%;
   padding: 0 12px;
   background-color: #fff;
@@ -121,41 +126,55 @@
   }
 }
 
-.page-select-input{
-  .input-item{
+.page-select-input {
+  .input-item {
     height: 40px;
-    border:0;
+    border: 0;
     padding-right: 50px;
   }
-  .input-unit{
+  .input-unit {
     position: absolute;
     top: 10px;
     right: 10px;
   }
-  .input-tip{
+  .input-tip {
     font-size: 1.2rem;
-    color: map-get($global-color,d);
+    color: map-get($global-color, d);
   }
 }
-.fix-bottom{
+
+.fix-bottom {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  .mui-btn-block{
+  .mui-btn-block {
     margin-bottom: 0;
   }
 }
 
-@media (min-width: 414px) {
-  .fix-bottom{
-   width: 414px;
+@media (min-width: 415px) {
+  .main-pc {
+    position: relative;
+    &.main-select {
+      max-width: 1000px;
+      margin: 55px auto 0;
+      background-color: map-get($global-color, c);
+    }
+  }
+  .md-fix-bottom {
+    width: 100%;
+    max-width: 1000px;
     position: fixed;
     bottom: 0;
-    left: 50%;
-    margin-left: -207px;
+    left: 0;
   }
 }
-.page-select{
-  margin-bottom: 50px;
+
+@media (min-width: 1001px) {
+  .md-fix-bottom {
+    width: 1000px;
+    margin-left: -500px;
+    left: 50%;
+  }
 }

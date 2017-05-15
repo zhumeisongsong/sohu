@@ -47,36 +47,42 @@ $(function () {
     if (pathname == Route.top) {
         Util.dispatcher(Route.top, function () {
             Config.currentPage = Route.top;
+            Util.is_pc();
             Page.index.init();
         });
     }
     else if (pathname == Route.activity) {
         Util.dispatcher(Route.activity, function () {
             Config.currentPage = Route.activity;
+            Util.is_pc();
             Page.activity.init();
         });
     }
     else if (pathname == Route.select) {
         Util.dispatcher(Route.select, function () {
             Config.currentPage = Route.select;
+            Util.is_pc();
             Page.select.init();
         });
     }
     else if (pathname == Route.input) {
         Util.dispatcher(Route.input, function () {
             Config.currentPage = Route.input;
+            Util.is_pc();
             Page.input.init();
         });
     }
     else if (pathname == Route.score) {
         Util.dispatcher(Route.score, function () {
             Config.currentPage = Route.score;
+            Util.is_pc();
             Page.score.init();
         });
     }
     else if (pathname == Route.person) {
         Util.dispatcher(Route.person, function () {
             Config.currentPage = Route.person;
+            Util.is_pc();
             Page.person.init();
         });
     }

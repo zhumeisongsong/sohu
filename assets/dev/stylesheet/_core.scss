@@ -13,13 +13,6 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-.img-con {
-  line-height: 0 !important;
-  img {
-    width: 100%;
-  }
-}
-
 a {
   padding: 0;
   margin: 0;
@@ -49,14 +42,19 @@ p {
 .main {
   width: 100%;
   height: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
   font-weight: 200;
   background-color: map-get($global-color, e);
 }
 
 .clear {
   clear: both;
+}
+
+.img-con {
+  line-height: 0 !important;
+  img {
+    width: 100%;
+  }
 }
 
 /*--------------------------1px hack*/
@@ -211,7 +209,7 @@ p {
   display: none;
 }
 
-.page-cover{
+.page-cover {
   width: 100%;
   height: 100%;
 }
@@ -219,4 +217,16 @@ p {
 .refresh-list {
   left: 0;
   bottom: 50px;
+}
+
+@media (max-width: 414px) {
+  .sm-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 415px) {
+  .md-hidden {
+    display: none;
+  }
 }

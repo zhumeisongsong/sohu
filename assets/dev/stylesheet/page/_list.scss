@@ -6,8 +6,11 @@
   &.mui-table-view {
     background: none;
   }
+  .mui-table-view:after, .mui-table-view:before{
+    display: none;
+  }
   .list-item {
-    margin-bottom: 5px;
+   padding-bottom: 0!important;
     .title-text {
       height: 35px;
       line-height: 35px;
@@ -20,6 +23,7 @@
 
 .activity-banner {
   min-height: 38px;
+  margin-bottom: 5px;
   .swiper-pagination {
     bottom: 0 !important;
   }

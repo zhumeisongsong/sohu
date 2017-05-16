@@ -9,7 +9,7 @@ Util.active = function (pathname) {
         $('.img-select').addClass('item-active')
         Util.call_login($('.nav-select'), 'select');
     }
-    else if (pathname == Route.person) {
+    else if (pathname == Route.person||pathname == Route.like||pathname == Route.info||pathname == Route.change) {
         $('.img-person').addClass('item-active')
         Util.call_login($('.nav-person'), 'person');
     }

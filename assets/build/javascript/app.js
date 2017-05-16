@@ -77,6 +77,7 @@ $(function () {
      */
     Util.dispatcher('.', function () {
         Page.all.init();
+        Util.is_pc(pathname);
     });
 
     /*
@@ -85,42 +86,36 @@ $(function () {
     if (pathname == Route.top) {
         Util.dispatcher(Route.top, function () {
             Config.currentPage = Route.top;
-            Util.is_pc();
             Page.index.init();
         });
     }
     else if (pathname == Route.activity) {
         Util.dispatcher(Route.activity, function () {
             Config.currentPage = Route.activity;
-            Util.is_pc();
             Page.activity.init();
         });
     }
     else if (pathname == Route.select) {
         Util.dispatcher(Route.select, function () {
             Config.currentPage = Route.select;
-            Util.is_pc();
             Page.select.init();
         });
     }
     else if (pathname == Route.input) {
         Util.dispatcher(Route.input, function () {
             Config.currentPage = Route.input;
-            Util.is_pc();
             Page.input.init();
         });
     }
     else if (pathname == Route.score) {
         Util.dispatcher(Route.score, function () {
             Config.currentPage = Route.score;
-            Util.is_pc();
             Page.score.init();
         });
     }
     else if (pathname == Route.person) {
         Util.dispatcher(Route.person, function () {
             Config.currentPage = Route.person;
-            Util.is_pc();
             Page.person.init();
         });
     }
@@ -276,11 +271,56 @@ Handlebars.registerHelper("location_trans", function (location) {
     return location_name
 });
 
-Util.is_pc = function () {
-    if ($(window).width() > 414) {
-        $('.main').addClass('main-pc');
-        // $('.no-scroll-pc').removeClass('mui-scroll');
-    }
+Util.is_pc = function (pathname) {
+
+    var render = function () {
+        if ($(window).width() > 414) {
+            $('.main').addClass('main-pc');
+            if (pathname == Route.person) {
+                $('.tab-con').removeClass('hidden');
+                $('#user_info').find('a').attr('href', 'javascript:;');
+                $('#user_like').find('a').attr('href', 'javascript:;');
+                $('#change_psw').find('a').attr('href', 'javascript:;');
+                Page.like.init();
+                bind()
+            }
+        }
+    };
+    var list_status_change = function ($this) {
+        $('.mui-table-view-cell').removeClass('is-active');
+        $this.addClass('is-active');
+    };
+    var bind = function () {
+        var $info = $('.page-info');
+        var $change = $('.page-change-psw');
+        var $like = $('.like-list');
+
+
+        $('#user_info').click(function () {
+            list_status_change($(this));
+            $info.removeClass('hidden');
+            $change.addClass('hidden');
+            $like.addClass('hidden')
+            Page.info.init();
+        });
+
+        $('#user_like').click(function () {
+            list_status_change($(this));
+            $like.removeClass('hidden');
+            $change.addClass('hidden');
+            $info.addClass('hidden')
+        });
+
+        $('#change_psw').click(function () {
+            list_status_change($(this));
+            $change.removeClass('hidden');
+            $info.addClass('hidden');
+            $like.addClass('hidden');
+            Page.change.init();
+        })
+    };
+    render();
+
 };
 
 /*
@@ -318,7 +358,7 @@ Util.active = function (pathname) {
         $('.img-select').addClass('item-active')
         Util.call_login($('.nav-select'), 'select');
     }
-    else if (pathname == Route.person) {
+    else if (pathname == Route.person||pathname == Route.like||pathname == Route.info||pathname == Route.change) {
         $('.img-person').addClass('item-active')
         Util.call_login($('.nav-person'), 'person');
     }
@@ -1395,7 +1435,6 @@ Page.all = (function () {
     var init = function () {
         Util.string.path_join();
         Util.string.format();
-        
     };
     return {
         init: init

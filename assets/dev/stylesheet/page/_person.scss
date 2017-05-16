@@ -84,7 +84,9 @@
   }
 }
 
+//info
 .page-info {
+  width: 100%;
   .mui-input-row {
     position: relative;
     width: 100%;
@@ -96,12 +98,14 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 50px;
+      color: map-get($global-color, b);
     }
     input {
       width: 100%;
       height: 100%;
       padding-left: 80px;
       text-align: left;
+      color: map-get($global-color, g);
     }
   }
 }
@@ -114,10 +118,15 @@
   margin-top: 0;
 }
 
+//page like list
 .like-list {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: map-get($global-color, e);
+
+  .thumb-img {
+    max-width: 60px;
+  }
 }
 
 .empty-con {
@@ -134,13 +143,65 @@
 }
 
 @media (min-width: 415px) {
-  .main-pc{
-    &.main-person{
+  .main-pc {
+    &.main-person {
       max-width: 1000px;
-      margin: 50px auto 0;
+      margin: 60px auto 0;
     }
-    .page-person{
-      width: 150px;
+  }
+
+  .page-person {
+    width: 200px;
+    height: 100%;
+    position: relative;
+    background-color: map-get($global-color, b);
+    .mui-navigate-right:after {
+      display: none;
+    }
+    .mui-table-view-cell {
+      background-color: map-get($global-color, g);
+      color: #fff;
+      height: 40px;
+      padding-top: 12px;
+      &:hover{
+        background-color: map-get($global-color,a);
+      }
+    }
+    .is-active{
+      background-color:map-get($global-color,a) ;
+    }
+  }
+
+  .tab-con {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 200px;
+    background: #fff;
+    .like-list {
+      background-color: #fff;
+      .like-con{
+        margin-top: 1px;
+      }
+    }
+    .is-active{
+      display: block;
+    }
+  }
+
+  .main-pc {
+    .page-login {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .page-reg {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .page-info {
+      max-width: 500px;
+      margin: 0 auto;
     }
   }
 }

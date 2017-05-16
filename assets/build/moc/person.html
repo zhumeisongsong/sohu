@@ -58,11 +58,11 @@
           <a class="mui-navigate-right" href="reg_info.html">
             我的资料
           </a></li>
-        <li class="mui-table-view-cell" id="change_pw">
+        <li class="mui-table-view-cell" id="change_psw">
           <a class="mui-navigate-right" href="reg_change.html">
             修改密码
           </a></li>
-        <li class="mui-table-view-cell" id="user-like">
+        <li class="mui-table-view-cell is-active" id="user_like">
           <a class="mui-navigate-right" href="reg_like.html">
             我的收藏
           </a></li>
@@ -76,6 +76,100 @@
     </div>
     <!--list end-->
   </div>
+
+  <div class="tab-con hidden">
+    <!--like-->
+    <section class="mui-content like-list">
+      <script type="text/x-handlebars-template" id="template_like_cell">
+        {{#each this}}
+        <div class="mui-table-view-cell  mui-media">
+          <div class="mui-slider-right mui-disabled">
+            <a class="mui-btn mui-btn-red delete-btn" data-id="{{id}}">删除</a>
+          </div>
+
+          <div class="mui-slider-handle mui-table like-cell mui-navigate-right" data-href="{{detail_url}}">
+            <div class="mui-table-cell">
+              <img class="mui-media-object mui-pull-left thumb-img" src="{{cover_img cover}}">
+              <div class="mui-media-body">
+                {{title}}
+                <p class='mui-ellipsis'>{{location}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </script>
+
+      <div class="mui-table-view like-con" id="like_con">
+      </div>
+
+      <div class="empty-con">
+      </div>
+    </section>
+    <!--change psw-->
+    <div class="mui-content page-reg page-change-psw hidden">
+
+      <form class="mui-input-group">
+        <div class="mui-input-row ui-border-b">
+          <input id='old_password' name="old_password" type="password" class="mui-input-clear input-mode"
+                 placeholder="旧密码" oninput="if(value.length>20)value=value.slice(0,20)">
+        </div>
+
+        <div class="mui-input-row ui-border-b">
+          <input id='password' name="password" type="password" class="mui-input-clear input-mode" placeholder="新密码"
+                 oninput="if(value.length>20)value=value.slice(0,20)">
+        </div>
+
+        <div class="mui-input-row ui-border-b">
+          <input id='password_confirm' name="password_confirm" type="password" class="mui-input-clear input-mode"
+                 placeholder="确认新密码" oninput="if(value.length>20)value=value.slice(0,20)">
+        </div>
+
+      </form>
+
+      <div class="submit-con">
+        <button id='change_psw_btn' class="mui-btn mui-red mui-btn-block" type="button">提交</button>
+      </div>
+    </div>
+    <!--info-->
+    <div class="mui-content page-info hidden">
+
+      <form id='info_form' class="mui-input-group form-input">
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">姓名：</span>
+          <input id='name' name="name" title="name" type="text" class="mui-input-clear mui-input input-padding-right" oninput="if(value.length>20)value=value.slice(0,20)">
+        </div>
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">微信号：</span>
+          <input id='wechat' name="email" title="wechat" type="text" class="mui-input-clear mui-input input-padding-right"
+                 oninput="if(value.length>30)value=value.slice(0,30)">
+        </div>
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">住址：</span>
+          <input id='address' name="email" title="address" type="text" class="mui-input-clear mui-input input-padding-right"
+                 oninput="if(value.length>30)value=value.slice(0,30)">
+        </div>
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">性别：</span>
+          <input id='gender' name="gender" title="gender" type="text" class="picker-btn mui-input input-padding-right">
+        </div>
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">意向区域：</span>
+          <input id='location' name="location" title="location" type="text" class="picker-btn mui-input input-padding-right">
+        </div>
+        <div class="mui-input-row ui-border-b">
+          <span class="input-title">意向类型：</span>
+          <input id='type' name="type" type="text" title="type" class="picker-btn mui-input input-padding-right">
+        </div>
+      </form>
+
+      <div class="submit-con">
+        <button id='info_btn' class="mui-btn mui-red mui-btn-block" type="button">提交</button>
+      </div>
+    </div>
+
+  </div>
+
 
   <!--footer nav bar-->
   <nav class="mui-bar mui-bar-tab footer-navbar">

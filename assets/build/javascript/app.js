@@ -192,7 +192,6 @@ Util.call_login = function ($dom, str) {
             })
         } else {
             var url = $dom.data('href');
-            console.log(url);
             mui.openWindow({
                 url: url
             })
@@ -377,7 +376,6 @@ Util.active = function (pathname) {
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
-    console.log(JSON.parse(stateText));
     return JSON.parse(stateText);
 };
 
@@ -404,7 +402,6 @@ owner.createState = function (user_id, callback) {
 
     state.user_id = user_id;
     owner.setState(state);
-
     return callback('登录成功!');
 };
 
@@ -590,21 +587,22 @@ owner.changePassword = function (_info, callback) {
  *refresh
  */
 Util.refresh = function () {
-    /**
-     * 下拉刷新具体业务实现
+
+    /*
+     *pull down
      */
     var pulldownRefresh = function () {
         window.location.reload();
         mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
     };
-    var page = 1;
-    /**
-     * 上拉加载具体业务实现
-     */
 
-    var render_building = function (_data) {
+    var page = 1;
+
+    /*
+     * pull up
+     */
+    var render_building = function (template,_data) {
         console.log(_data);
-        var template = Handlebars.compile($('#template_building').html());
         if (_data.list.length == 0) {
             mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
         }
@@ -617,30 +615,38 @@ Util.refresh = function () {
             mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
         }
     };
-
     var bind_building = function () {
+
+        // go to detail
         Util.go_to_detail($('.list-tap'));
+
+        // like or not
         $('.like-btn').on('tap', function () {
-            Util.call_login($(this),'like')
+            Util.call_login($(this),'like');
             if (Util.call_login($(this),'like')) {
                 Util.like($(this));
             }
-
         })
     };
 
-    var pullupRefresh_building = function () {
+    /*
+     * fetch
+     */
+
+    //index building
+    var fetch_building = function () {
         Api.building.fetch(page)
             .done(function (_data) {
-                render_building(_data);
+                var template = Handlebars.compile($('#template_building').html());
+                render_building(template,_data);
                 bind_building();
             })
             .fail(function (err_msg, error) {
                 console.log(err_msg);
             });
     };
-
-    var pullupRefresh_activity = function () {
+    //activity
+    var fetch_activity = function () {
         Api.activity.fetch(page)
             .done(function (_data) {
                 render(_data);
@@ -673,8 +679,8 @@ Util.refresh = function () {
         };
 
     };
-
-    var pullupRefresh_building_select = function () {
+    //select building
+    var fetch_building_select = function () {
         var location = localStorage.getItem('location').replace(/[\r\n]/g, "").replace(/\ +/g, "");
         if (location == '不限') {
             location = '';
@@ -704,12 +710,11 @@ Util.refresh = function () {
             });
     };
 
-
     return {
         pulldownRefresh: pulldownRefresh,
-        pullupRefresh_building: pullupRefresh_building,
-        pullupRefresh_activity: pullupRefresh_activity,
-        pullupRefresh_building_select: pullupRefresh_building_select
+        pullupRefresh_building: fetch_building,
+        pullupRefresh_activity: fetch_activity,
+        pullupRefresh_building_select: fetch_building_select
     }
 };
 
@@ -779,22 +784,18 @@ Util.scroll = function () {
     }
 };
 
-Util.like = function ($dom, status) {
+Util.like = function ($dom) {
     var id = $dom.data('id');
-    var status = $dom.data('status');
     Api.like_set.fetch(id)
         .done(function (_data) {
             console.log(_data);
-            if (status) {
-                $dom.removeClass('is-like');
-                $dom.text('收藏');
-                $dom.attr('data-status', 'false');
-            } else {
+            if (_data.match('成功') != null) {
                 $dom.addClass('is-like');
                 $dom.text('取消');
-                $dom.attr('data-status', 'true');
+            } else {
+                $dom.removeClass('is-like');
+                $dom.text('收藏');
             }
-
         })
         .fail(function (err_msg, error) {
             console.log(err_msg);

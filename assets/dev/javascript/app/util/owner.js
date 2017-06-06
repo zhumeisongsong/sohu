@@ -3,7 +3,6 @@
  **/
 owner.getState = function () {
     var stateText = localStorage.getItem('$state') || "{}";
-    console.log(JSON.parse(stateText));
     return JSON.parse(stateText);
 };
 
@@ -30,7 +29,6 @@ owner.createState = function (user_id, callback) {
 
     state.user_id = user_id;
     owner.setState(state);
-
     return callback('登录成功!');
 };
 

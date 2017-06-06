@@ -18,7 +18,6 @@ Util.call_login = function ($dom, str) {
             })
         } else {
             var url = $dom.data('href');
-            console.log(url);
             mui.openWindow({
                 url: url
             })
